@@ -1,0 +1,47 @@
+{
+  "system": "Aurelian Omega Sigma Master Connector",
+  "status": "ready_to_deploy",
+  "repo_path": "/aurelian-os/",
+  "source_files": [
+    {
+      "path": "aurelian-os/DEPLOY_NOW.md",
+      "role": "deployment status marker",
+      "status": "committed"
+    },
+    {
+      "path": "aurelian-os/README_DEPLOY.md",
+      "role": "human deployment guide",
+      "status": "committed"
+    },
+    {
+      "path": "aurelian-os/aurelian-os.schema.json",
+      "role": "local schema source",
+      "status": "available in ZIP"
+    },
+    {
+      "path": "aurelian-os/package-registry.json",
+      "role": "canonical package registry",
+      "status": "available in ZIP"
+    },
+    {
+      "path": "aurelian-os/diploi.yaml",
+      "role": "Diploi deployment blueprint",
+      "status": "available in ZIP"
+    }
+  ],
+  "connected_packages": 18,
+  "launch_phases": [
+    "connector_lock",
+    "public_content_ignition",
+    "entry_product_launch",
+    "core_bundle_build",
+    "consulting_gate",
+    "app_shell_community_hub"
+  ],
+  "first_product": "hydra_character_content_system_package",
+  "privacy_gate": {
+    "public_ok": ["public", "public_sanitized"],
+    "do_not_publish_raw": ["private_internal", "restricted_professional", "customer_only"]
+  },
+  "copilot_instruction": "Use package-registry.json as source of truth. Build public outputs only from packages marked public or public_sanitized. Route private and restricted packages to internal Notion or private consulting workflows only."
+}
