@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 const sampleStats = [
   { subid: 'velrya-tiktok-bio-shadow-v1', clicks: 312, epc: '$2.87', revenue: '$143.54', lastActive: '2h ago' },
@@ -20,14 +20,33 @@ export default function AffiliateTracker() {
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
 
-  const trackingString = `?sub1=${form.sub1 || 'velrya'}&sub2=${form.sub2 || 'tiktok'}&sub3=${form.sub3 || 'bio'}&sub4=${form.sub4 || 'shadow-monastery-intro'}&sub5=${form.sub5 || 'v1'}`;
-  const fullUrl = `https://ourdream.ai/?ref=hydra${trackingString}`;
+  const trackingString = (() => {
+    const params = new URLSearchParams();
+    params.set('sub1', form.sub1 || 'velrya');
+    params.set('sub2', form.sub2 || 'tiktok');
+    params.set('sub3', form.sub3 || 'bio');
+    params.set('sub4', form.sub4 || 'shadow-monastery-intro');
+    params.set('sub5', form.sub5 || 'v1');
+    return '?' + params.toString();
+  })();
+  const fullUrl = (() => {
+    const base = new URL('https://ourdream.ai/');
+    base.searchParams.set('ref', 'hydra');
+    ['sub1','sub2','sub3','sub4','sub5'].forEach(k =>
+      base.searchParams.set(k, form[k] || { sub1:'velrya', sub2:'tiktok', sub3:'bio', sub4:'shadow-monastery-intro', sub5:'v1' }[k])
+    );
+    return base.toString();
+  })();
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(fullUrl).catch(() => {});
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+  const handleCopy = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(fullUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // clipboard unavailable — do not show false success state
+    }
+  }, [fullUrl]);
 
   return (
     <div className="space-y-8">

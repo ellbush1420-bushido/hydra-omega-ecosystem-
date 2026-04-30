@@ -5,7 +5,7 @@ const products = [
   { price: '$15', title: 'Character Identity Prompt Pack', desc: '10 prompts', tier: 'prompt', badge: 'badge-blue' },
   { price: '$29', title: 'Faction Novella', desc: '15,000 words', tier: 'novella', badge: 'badge-amber' },
   { price: '$49', title: 'Mature Gothic Codex', desc: '50,000 words — age-gated', tier: 'codex', badge: 'badge-red', gated: true },
-  { price: '$99', title: 'Collector Anthology', desc: 'Complete works', tier: 'anthology', badge: 'badge-gold' },
+  { price: '$99', title: 'Collector Anthology', desc: 'Complete works', tier: 'anthology', badge: 'badge-amber' },
   { price: '$29/mo', title: 'Velvet Vault Membership', desc: 'Serial chapters, monthly', tier: 'membership', badge: 'badge-green' },
 ];
 

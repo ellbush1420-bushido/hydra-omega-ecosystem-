@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 const metrics = [
   { label: 'Faction Coverage Score', value: 87, max: 100, unit: '%', color: 'bg-violet-500' },
@@ -20,11 +20,18 @@ const recommendations = [
 export default function EvolutionScanner() {
   const [scanning, setScanning] = useState(false);
   const [scanDone, setScanDone] = useState(false);
+  const timerRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
 
   const handleScan = () => {
     setScanning(true);
     setScanDone(false);
-    setTimeout(() => {
+    timerRef.current = setTimeout(() => {
       setScanning(false);
       setScanDone(true);
     }, 2000);

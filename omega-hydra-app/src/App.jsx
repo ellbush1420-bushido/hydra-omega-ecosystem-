@@ -54,7 +54,7 @@ export default function App() {
               <path fillRule="evenodd" d="M3 5h14a1 1 0 010 2H3a1 1 0 010-2zm0 4h14a1 1 0 010 2H3a1 1 0 010-2zm0 4h14a1 1 0 010 2H3a1 1 0 010-2z" clipRule="evenodd"/>
             </svg>
           </button>
-          <div className="text-xs text-amber-400 font-semibold hidden sm:block">
+          <div className="text-[10px] sm:text-xs text-amber-400 font-semibold flex-1 text-center mx-2 sm:mx-4 leading-tight">
             ⚠️ AI-generated fantasy characters. Affiliate links may generate commissions. 18+ destinations are age-gated.
           </div>
           <div className="flex items-center gap-2">
