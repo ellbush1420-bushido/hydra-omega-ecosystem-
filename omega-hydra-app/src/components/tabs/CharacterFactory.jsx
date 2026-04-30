@@ -59,9 +59,16 @@ export default function CharacterFactory() {
   const [copied, setCopied] = useState(null);
 
   const handleCopy = (url, name) => {
-    navigator.clipboard.writeText(url).catch(() => {});
-    setCopied(name);
-    setTimeout(() => setCopied(null), 2000);
+    navigator.clipboard.writeText(url).then(
+      () => {
+        setCopied(name);
+        setTimeout(() => setCopied(null), 2000);
+      },
+      () => {
+        setCopied(`${name}-error`);
+        setTimeout(() => setCopied(null), 2000);
+      }
+    );
   };
 
   return (
@@ -142,7 +149,7 @@ export default function CharacterFactory() {
                 className="btn-outline w-full text-xs"
                 onClick={() => handleCopy(char.affiliateUrl, char.name)}
               >
-                {copied === char.name ? '✅ Copied!' : '📋 Copy Affiliate URL'}
+                {copied === `${char.name}-error` ? '❌ Copy failed' : copied === char.name ? '✅ Copied!' : '📋 Copy Affiliate URL'}
               </button>
             </div>
           ))}

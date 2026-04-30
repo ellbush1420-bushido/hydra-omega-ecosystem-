@@ -20,7 +20,7 @@ export default function AffiliateTracker() {
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
 
-  const trackingString = `?sub1=${form.sub1 || 'velrya'}&sub2=${form.sub2}&sub3=${form.sub3}&sub4=${form.sub4 || 'shadow-monastery-intro'}&sub5=${form.sub5 || 'v1'}`;
+  const trackingString = `?sub1=${form.sub1 || 'velrya'}&sub2=${form.sub2 || 'tiktok'}&sub3=${form.sub3 || 'bio'}&sub4=${form.sub4 || 'shadow-monastery-intro'}&sub5=${form.sub5 || 'v1'}`;
   const fullUrl = `https://ourdream.ai/?ref=hydra${trackingString}`;
 
   const handleCopy = () => {

@@ -61,7 +61,7 @@ const pythons = [
     desc: 'Persona consistency, visual prompt management',
     status: 'Active',
     lastAction: 'Updated Velrya CelebMaker prompt v3',
-    color: 'border-crimson-700',
+    color: 'border-red-700',
   },
   {
     name: 'Growth Python',
