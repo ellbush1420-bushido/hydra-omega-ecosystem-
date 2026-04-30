@@ -1,0 +1,139 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #0a0a0f;
+  color: #e2e8f0;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #12121a;
+}
+::-webkit-scrollbar-thumb {
+  background: #7c3aed;
+  border-radius: 3px;
+}
+
+.sidebar-item {
+  @apply flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer transition-all duration-200 text-gray-400 hover:text-white hover:bg-[#1a1a2e];
+}
+.sidebar-item.active {
+  @apply text-white bg-[#1a1a2e] border-l-2 border-violet-500;
+}
+
+.card {
+  @apply bg-[#12121a] border border-[#1a1a2e] rounded-xl p-5;
+}
+
+.metric-card {
+  @apply bg-[#12121a] border border-[#1a1a2e] rounded-xl p-4;
+}
+
+.btn-primary {
+  @apply bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded-lg transition-colors font-medium text-sm;
+}
+
+.btn-crimson {
+  @apply bg-red-700 hover:bg-red-800 text-white px-4 py-2 rounded-lg transition-colors font-medium text-sm;
+}
+
+.btn-gold {
+  @apply bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg transition-colors font-medium text-sm;
+}
+
+.btn-emerald {
+  @apply bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2 rounded-lg transition-colors font-medium text-sm;
+}
+
+.btn-outline {
+  @apply border border-violet-500 text-violet-400 hover:bg-violet-900/30 px-4 py-2 rounded-lg transition-colors font-medium text-sm;
+}
+
+.input-field {
+  @apply bg-[#0a0a0f] border border-[#2a2a3e] text-white rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:border-violet-500 transition-colors;
+}
+
+.select-field {
+  @apply bg-[#0a0a0f] border border-[#2a2a3e] text-white rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:border-violet-500 transition-colors;
+}
+
+.textarea-field {
+  @apply bg-[#0a0a0f] border border-[#2a2a3e] text-white rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:border-violet-500 transition-colors resize-none;
+}
+
+.badge-green {
+  @apply bg-emerald-900/50 text-emerald-400 border border-emerald-700 text-xs px-2 py-0.5 rounded-full;
+}
+
+.badge-amber {
+  @apply bg-amber-900/50 text-amber-400 border border-amber-700 text-xs px-2 py-0.5 rounded-full;
+}
+
+.badge-red {
+  @apply bg-red-900/50 text-red-400 border border-red-700 text-xs px-2 py-0.5 rounded-full;
+}
+
+.badge-violet {
+  @apply bg-violet-900/50 text-violet-400 border border-violet-700 text-xs px-2 py-0.5 rounded-full;
+}
+
+.badge-blue {
+  @apply bg-blue-900/50 text-blue-400 border border-blue-700 text-xs px-2 py-0.5 rounded-full;
+}
+
+.section-title {
+  @apply text-xl font-bold text-white mb-1;
+}
+
+.section-subtitle {
+  @apply text-sm text-gray-500 mb-6;
+}
+
+.table-container {
+  @apply overflow-x-auto rounded-xl border border-[#1a1a2e];
+}
+
+table {
+  @apply w-full text-sm;
+}
+
+thead {
+  @apply bg-[#12121a] border-b border-[#1a1a2e];
+}
+
+th {
+  @apply text-left px-4 py-3 text-gray-400 font-medium text-xs uppercase tracking-wider;
+}
+
+tbody tr {
+  @apply border-b border-[#1a1a2e]/50 hover:bg-[#1a1a2e]/30 transition-colors;
+}
+
+td {
+  @apply px-4 py-3 text-gray-300;
+}
+
+.progress-bar {
+  @apply h-2 bg-[#1a1a2e] rounded-full overflow-hidden;
+}
+
+.progress-fill {
+  @apply h-full rounded-full transition-all duration-700;
+}
+
+.glow-violet {
+  box-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+}
+
+.glow-crimson {
+  box-shadow: 0 0 20px rgba(220, 38, 38, 0.3);
+}
+
+.glow-gold {
+  box-shadow: 0 0 20px rgba(217, 119, 6, 0.3);
+}
