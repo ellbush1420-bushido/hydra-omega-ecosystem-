@@ -26,10 +26,10 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: ${{ vars.AWS_REGION }}
 
       - name: Upload binary to S3
         run: |
           aws s3 cp target/release/${{ env.BINARY_NAME }} \
-            s3://${{ secrets.AWS_S3_BUCKET }}/${{ env.BINARY_NAME }} \
+            s3://${{ vars.AWS_S3_BUCKET }}/${{ env.BINARY_NAME }} \
             --no-progress
