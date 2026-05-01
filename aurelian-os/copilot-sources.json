@@ -14,6 +14,16 @@
       "status": "committed"
     },
     {
+      "path": "aurelian-os/black-sun-archive-doctrine.md",
+      "role": "primary Black Sun Archive doctrine, style lock, warden command, public/private containment gate",
+      "status": "committed"
+    },
+    {
+      "path": "aurelian-os/sovereign-serpent-doctrine.md",
+      "role": "safe Sovereign Serpent interlock: symbolic alchemy, lunar/solar campaign engine, zanshin, moving sigil, public-safe ritual framing",
+      "status": "committed"
+    },
+    {
       "path": "aurelian-os/aurelian-os.schema.json",
       "role": "local schema source",
       "status": "available in ZIP"
@@ -29,9 +39,11 @@
       "status": "available in ZIP"
     }
   ],
-  "connected_packages": 18,
+  "connected_packages": 20,
   "launch_phases": [
     "connector_lock",
+    "black_sun_archive_lock",
+    "sovereign_serpent_interlock",
     "public_content_ignition",
     "entry_product_launch",
     "core_bundle_build",
@@ -39,9 +51,12 @@
     "app_shell_community_hub"
   ],
   "first_product": "hydra_character_content_system_package",
+  "primary_doctrine": "black_sun_archive_doctrine",
+  "safe_interlock_doctrine": "sovereign_serpent_doctrine",
+  "visual_style_lock": "Black Sun Archive Codex: obsidian parchment, antique gold serif typography, jackal/eclipse/serpent/lotus iconography, ritual archive table, tactical matrices, nine-gate panels, public-safe dark fantasy doctrine board aesthetic.",
   "privacy_gate": {
-    "public_ok": ["public", "public_sanitized"],
-    "do_not_publish_raw": ["private_internal", "restricted_professional", "customer_only"]
+    "public_ok": ["public", "public_sanitized", "symbolic_lore", "mindset", "visual_style", "fictional_codex"],
+    "do_not_publish_raw": ["private_internal", "restricted_professional", "customer_only", "explicit_adult", "real_world_tactical_instruction", "medical_or_sexual_instruction"]
   },
-  "copilot_instruction": "Use package-registry.json as source of truth. Build public outputs only from packages marked public or public_sanitized. Route private and restricted packages to internal Notion or private consulting workflows only."
+  "copilot_instruction": "Use package-registry.json as source of truth. Treat black-sun-archive-doctrine.md as the primary doctrine/style/control patch. Treat sovereign-serpent-doctrine.md as a safe symbolic interlock only: fiction, lore, breath awareness, journaling, archetypal movement, and product framing. Build public outputs only from packages marked public, public_sanitized, symbolic_lore, mindset, visual_style, or fictional_codex. Route private, restricted, adult, medical, sexual, and real-world tactical material to internal-only or sanitized fictional workflows."
 }
