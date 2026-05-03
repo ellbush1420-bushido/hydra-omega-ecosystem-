@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GateEntry Metadata Extension",
+  "description": "Schema for extending gate entry records with Whop membership metadata",
+  "type": "object",
+  "required": ["gate_id", "user_id", "timestamp", "whop_metadata"],
+  "properties": {
+    "gate_id": {
+      "type": "string",
+      "description": "Unique identifier for this gate entry"
+    },
+    "user_id": {
+      "type": "string",
+      "description": "Internal user ID (linked to Whop user_id)"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of gate entry"
+    },
+    "gate_type": {
+      "type": "string",
+      "enum": ["sfw", "nsfw", "premium", "elite", "founder"],
+      "description": "Type of content gate accessed"
+    },
+    "access_granted": {
+      "type": "boolean",
+      "description": "Whether access was granted"
+    },
+    "whop_metadata": {
+      "type": "object",
+      "required": ["product_id", "tier", "status"],
+      "properties": {
+        "product_id": {
+          "type": "string",
+          "description": "Whop product ID that granted access"
+        },
+        "membership_id": {
+          "type": "string",
+          "description": "Whop membership identifier"
+        },
+        "tier": {
+          "type": "string",
+          "enum": ["free", "basic", "premium", "elite", "founder"],
+          "description": "Membership tier level"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "paused", "cancelled", "expired"],
+          "description": "Membership status at time of gate entry"
+        },
+        "subscription_start": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Subscription start date"
+        },
+        "subscription_end": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Subscription end/renewal date (null if cancelled)"
+        }
+      }
+    },
+    "content_metadata": {
+      "type": "object",
+      "description": "Metadata about the gated content accessed",
+      "properties": {
+        "content_id": {
+          "type": "string",
+          "description": "Unique content identifier"
+        },
+        "content_type": {
+          "type": "string",
+          "enum": ["post", "image", "video", "book", "prompt_pack", "discord_channel"],
+          "description": "Type of content accessed"
+        },
+        "faction": {
+          "type": "string",
+          "description": "Content faction (e.g., Shadow Monastery, Scarlet Temple)"
+        }
+      }
+    },
+    "denial_reason": {
+      "type": "string",
+      "description": "Reason for denial if access_granted is false",
+      "enum": ["insufficient_tier", "expired_membership", "paused_membership", "not_verified", "compliance_flag"]
+    }
+  }
+}
