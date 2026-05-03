@@ -1,0 +1,124 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Manifest Delivery Log",
+  "description": "Schema for tracking digital product delivery ledger",
+  "type": "object",
+  "required": ["delivery_id", "user_id", "product_id", "timestamp", "status"],
+  "properties": {
+    "delivery_id": {
+      "type": "string",
+      "description": "Unique delivery record identifier"
+    },
+    "user_id": {
+      "type": "string",
+      "description": "Recipient user ID"
+    },
+    "whop_user_id": {
+      "type": "string",
+      "description": "Linked Whop user identifier"
+    },
+    "product_id": {
+      "type": "string",
+      "description": "Whop product/plan ID that triggered delivery"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Delivery timestamp (ISO 8601)"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["pending", "delivered", "failed", "revoked"],
+      "description": "Delivery status"
+    },
+    "manifest": {
+      "type": "object",
+      "description": "Manifest of delivered items",
+      "required": ["items"],
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["type", "id", "name"],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["discord_role", "content_access", "prompt_pack", "ebook", "character_preset"],
+                "description": "Type of delivered item"
+              },
+              "id": {
+                "type": "string",
+                "description": "Unique item identifier"
+              },
+              "name": {
+                "type": "string",
+                "description": "Human-readable item name"
+              },
+              "metadata": {
+                "type": "object",
+                "description": "Item-specific metadata",
+                "additionalProperties": true
+              }
+            }
+          }
+        },
+        "total_items": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total number of items in manifest"
+        }
+      }
+    },
+    "delivery_method": {
+      "type": "string",
+      "enum": ["discord_webhook", "email", "direct_access", "download_link"],
+      "description": "Method used for delivery"
+    },
+    "retry_count": {
+      "type": "integer",
+      "minimum": 0,
+      "default": 0,
+      "description": "Number of delivery retry attempts"
+    },
+    "error_message": {
+      "type": "string",
+      "description": "Error message if status is 'failed'"
+    },
+    "delivered_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Actual delivery completion timestamp"
+    },
+    "revoked_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Revocation timestamp if status is 'revoked'"
+    },
+    "audit_trail": {
+      "type": "array",
+      "description": "Audit log of delivery state changes",
+      "items": {
+        "type": "object",
+        "required": ["timestamp", "status", "actor"],
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string"
+          },
+          "actor": {
+            "type": "string",
+            "description": "System component or user that triggered state change"
+          },
+          "note": {
+            "type": "string",
+            "description": "Optional note about state change"
+          }
+        }
+      }
+    }
+  }
+}

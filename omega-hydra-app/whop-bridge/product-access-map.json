@@ -1,0 +1,205 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Product Access Map",
+  "description": "Mapping of Whop product IDs to permission tiers and access grants",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Schema version for compatibility tracking",
+      "default": "1.0.0"
+    },
+    "last_updated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last update timestamp"
+    },
+    "products": {
+      "type": "array",
+      "description": "List of Whop products and their access mappings",
+      "items": {
+        "type": "object",
+        "required": ["product_id", "name", "tier", "permissions"],
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "description": "Whop product identifier"
+          },
+          "name": {
+            "type": "string",
+            "description": "Human-readable product name"
+          },
+          "tier": {
+            "type": "string",
+            "enum": ["free", "basic", "premium", "elite", "founder"],
+            "description": "Access tier level"
+          },
+          "tier_rank": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Numeric tier ranking for comparison (higher = more access)"
+          },
+          "permissions": {
+            "type": "object",
+            "description": "Granted permissions for this product",
+            "properties": {
+              "sfw_content": {
+                "type": "boolean",
+                "default": true,
+                "description": "Access to SFW content pipeline"
+              },
+              "nsfw_content": {
+                "type": "boolean",
+                "default": false,
+                "description": "Access to 18+ content pipeline"
+              },
+              "prompt_packs": {
+                "type": "boolean",
+                "default": false,
+                "description": "Access to premium prompt packs"
+              },
+              "discord_elite": {
+                "type": "boolean",
+                "default": false,
+                "description": "Access to elite Discord channels"
+              },
+              "ebooks": {
+                "type": "boolean",
+                "default": false,
+                "description": "Access to exclusive ebooks"
+              },
+              "character_presets": {
+                "type": "boolean",
+                "default": false,
+                "description": "Access to character generation presets"
+              },
+              "early_access": {
+                "type": "boolean",
+                "default": false,
+                "description": "Early access to new content"
+              },
+              "commercial_license": {
+                "type": "boolean",
+                "default": false,
+                "description": "Commercial usage rights"
+              }
+            }
+          },
+          "includes": {
+            "type": "array",
+            "description": "Specific content IDs or packages included",
+            "items": {
+              "type": "string"
+            }
+          },
+          "active": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether this product is currently active"
+          }
+        }
+      }
+    },
+    "tier_hierarchy": {
+      "type": "object",
+      "description": "Tier inheritance rules",
+      "properties": {
+        "free": {
+          "rank": 0,
+          "inherits": []
+        },
+        "basic": {
+          "rank": 25,
+          "inherits": ["free"]
+        },
+        "premium": {
+          "rank": 50,
+          "inherits": ["free", "basic"]
+        },
+        "elite": {
+          "rank": 75,
+          "inherits": ["free", "basic", "premium"]
+        },
+        "founder": {
+          "rank": 100,
+          "inherits": ["free", "basic", "premium", "elite"]
+        }
+      }
+    },
+    "example_products": {
+      "type": "array",
+      "description": "Example product configurations",
+      "items": [
+        {
+          "product_id": "prod_whop_basic_001",
+          "name": "Shadow Monastery Basic",
+          "tier": "basic",
+          "tier_rank": 25,
+          "permissions": {
+            "sfw_content": true,
+            "nsfw_content": false,
+            "prompt_packs": false,
+            "discord_elite": false,
+            "ebooks": false,
+            "character_presets": true,
+            "early_access": false,
+            "commercial_license": false
+          },
+          "active": true
+        },
+        {
+          "product_id": "prod_whop_premium_001",
+          "name": "Black Grin Premium",
+          "tier": "premium",
+          "tier_rank": 50,
+          "permissions": {
+            "sfw_content": true,
+            "nsfw_content": true,
+            "prompt_packs": true,
+            "discord_elite": false,
+            "ebooks": true,
+            "character_presets": true,
+            "early_access": false,
+            "commercial_license": false
+          },
+          "active": true
+        },
+        {
+          "product_id": "prod_whop_elite_001",
+          "name": "Hydra Elite Circle",
+          "tier": "elite",
+          "tier_rank": 75,
+          "permissions": {
+            "sfw_content": true,
+            "nsfw_content": true,
+            "prompt_packs": true,
+            "discord_elite": true,
+            "ebooks": true,
+            "character_presets": true,
+            "early_access": true,
+            "commercial_license": false
+          },
+          "active": true
+        },
+        {
+          "product_id": "prod_whop_founder_001",
+          "name": "Founder's Python",
+          "tier": "founder",
+          "tier_rank": 100,
+          "permissions": {
+            "sfw_content": true,
+            "nsfw_content": true,
+            "prompt_packs": true,
+            "discord_elite": true,
+            "ebooks": true,
+            "character_presets": true,
+            "early_access": true,
+            "commercial_license": true
+          },
+          "active": true
+        }
+      ]
+    }
+  }
+}

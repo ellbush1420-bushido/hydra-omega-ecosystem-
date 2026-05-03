@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Whop Webhook Validation Spec",
+  "description": "Dry-run webhook validation specification for Whop integration",
+  "type": "object",
+  "required": ["event", "timestamp", "signature", "data"],
+  "properties": {
+    "event": {
+      "type": "string",
+      "description": "Webhook event type",
+      "enum": [
+        "membership.created",
+        "membership.updated",
+        "membership.cancelled",
+        "payment.succeeded",
+        "payment.failed",
+        "user.updated"
+      ]
+    },
+    "timestamp": {
+      "type": "integer",
+      "description": "Unix timestamp of event occurrence",
+      "minimum": 0
+    },
+    "signature": {
+      "type": "string",
+      "description": "HMAC-SHA256 signature for webhook verification",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "data": {
+      "type": "object",
+      "description": "Event-specific payload data",
+      "required": ["user_id", "product_id"],
+      "properties": {
+        "user_id": {
+          "type": "string",
+          "description": "Whop user identifier"
+        },
+        "product_id": {
+          "type": "string",
+          "description": "Whop product/plan identifier"
+        },
+        "membership_id": {
+          "type": "string",
+          "description": "Unique membership identifier (optional)"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "paused", "cancelled", "expired"],
+          "description": "Current membership status"
+        },
+        "metadata": {
+          "type": "object",
+          "description": "Additional event metadata",
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "validation": {
+    "signature_algorithm": "HMAC-SHA256",
+    "signature_header": "X-Whop-Signature",
+    "timestamp_tolerance_seconds": 300,
+    "replay_protection": true
+  }
+}

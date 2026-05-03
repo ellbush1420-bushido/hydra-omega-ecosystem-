@@ -13,6 +13,7 @@ import AffiliateTracker from './components/tabs/AffiliateTracker';
 import ComplianceCenter from './components/tabs/ComplianceCenter';
 import CEOPythons from './components/tabs/CEOPythons';
 import EvolutionScanner from './components/tabs/EvolutionScanner';
+import WhopBridge from './components/tabs/WhopBridge';
 
 const tabComponents = {
   dashboard: Dashboard,
@@ -26,6 +27,7 @@ const tabComponents = {
   compliance: ComplianceCenter,
   pythons: CEOPythons,
   scanner: EvolutionScanner,
+  whop: WhopBridge,
 };
 
 export default function App() {

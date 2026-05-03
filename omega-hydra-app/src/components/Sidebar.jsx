@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { id: 'compliance', label: 'Compliance', icon: '✅' },
   { id: 'pythons', label: 'CEO Pythons', icon: '🖤' },
   { id: 'scanner', label: 'Evolution Scanner', icon: '📡' },
+  { id: 'whop', label: 'Whop Bridge', icon: '🌉' },
 ];
 
 export default function Sidebar({ activeTab, onTabChange, isOpen, onClose }) {
