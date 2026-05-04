@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hydra Live Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { background:#000; color:#fff; font-family:Arial; padding:20px; }
+    h1 { margin-bottom:20px; }
+    .card { background:#111; padding:15px; margin-bottom:10px; border-radius:10px; }
+  </style>
+</head>
+<body>
+
+<h1>Hydra Live Dashboard</h1>
+
+<div class="card" id="views">Views: ...</div>
+<div class="card" id="clicks">Clicks: ...</div>
+<div class="card" id="joins">Joins: ...</div>
+<div class="card" id="sales">Sales: ...</div>
+<div class="card" id="revenue">Revenue: ...</div>
+
+<script>
+async function loadData() {
+  const res = await fetch('/api/stats')
+  const data = await res.json()
+
+  document.getElementById('views').innerText = 'Views: ' + data.views
+  document.getElementById('clicks').innerText = 'Clicks: ' + data.clicks
+  document.getElementById('joins').innerText = 'Joins: ' + data.joins
+  document.getElementById('sales').innerText = 'Sales: ' + data.sales
+  document.getElementById('revenue').innerText = 'Revenue: $' + data.revenue
+}
+
+setInterval(loadData, 3000)
+loadData()
+</script>
+
+</body>
+</html>
