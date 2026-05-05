@@ -75,8 +75,8 @@ export default function ScenarioScreen({ route, navigation }) {
     }
 
     // Mock joins / sales
-    if (choice.mockJoins > 0) trackJoin();
-    if (choice.mockSales > 0) trackSale('game_scenario', choice.mockRevenue || 0);
+    if ((choice.mockJoins || 0) > 0) trackJoin();
+    if ((choice.mockSales || 0) > 0) trackSale('game_scenario', choice.mockRevenue || 0);
 
     // Log to history
     dispatch({

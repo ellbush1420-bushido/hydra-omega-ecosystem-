@@ -50,7 +50,7 @@ export default function ProfileScreen({ navigation }) {
           <StatBox label="Level" value={level} color="#a78bfa" />
           <StatBox label="XP" value={xp} color="#f59e0b" />
           <StatBox label="Codex" value={codexUnlocks.length} color="#059669" />
-          <StatBox label="Scenarios" value={scenarioHistory.length} color="#3b82f6" />
+          <StatBox label="Scenarios" value={new Set(scenarioHistory.filter(h => h.scenarioId).map(h => h.scenarioId)).size} color="#3b82f6" />
         </View>
 
         <HydraEyesPanel events={eventLog} />

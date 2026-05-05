@@ -39,7 +39,7 @@ export default function CodexScreen({ navigation }) {
 
   const handleMockPurchase = (codex) => {
     trackClick('codex_purchase', codex.id);
-    const amount = parseFloat(codex.tier.replace('$', '').replace('/mo', ''));
+    const amount = parseFloat(codex.tier.replace(/\$/g, '').replace(/\/mo/g, ''));
     trackSale(codex.title, amount);
     trackCodexUnlock(codex.id);
   };

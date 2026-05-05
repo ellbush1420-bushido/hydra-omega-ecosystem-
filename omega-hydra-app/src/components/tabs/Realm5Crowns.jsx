@@ -206,8 +206,8 @@ function ScenarioPanel({ scenarios, label, emoji, color, onChoice, completedIds 
                             <div className="flex flex-wrap gap-1 mt-1">
                               <span className="badge-violet">+{c.xp} XP</span>
                               <span className="badge-blue">+{c.score} Score</span>
-                              {c.revenue > 0 && <span className="badge-amber">+${c.revenue}</span>}
-                              {c.joins > 0 && <span className="badge-green">+{c.joins} Join</span>}
+                              {c.revenue != null && c.revenue > 0 && <span className="badge-amber">+${c.revenue}</span>}
+                              {(c.joins || 0) > 0 && <span className="badge-green">+{c.joins} Join</span>}
                               {c.tiger && <span className="badge-amber">🐯 {c.tiger}</span>}
                               {c.codex && <span className="badge-green">📜 Codex</span>}
                             </div>
@@ -289,7 +289,7 @@ export default function Realm5Crowns() {
                   <div className={`font-bold tracking-widest ${player.faction.accent}`}>{player.faction.short}</div>
                   <div className="text-xs text-gray-400">{player.faction.name}</div>
                 </div>
-                <button className="ml-auto btn-outline text-xs" onClick={() => setActiveTab('faction')}>Change</button>
+                <button className="ml-auto btn-outline text-xs" onClick={() => dispatch({ type: 'SET_FACTION', faction: null })}>Change</button>
               </div>
             ) : (
               <p className="text-gray-500 text-sm">No crown chosen. Select your faction below.</p>
@@ -455,7 +455,7 @@ export default function Realm5Crowns() {
                 {events.slice(0, 20).map(e => (
                   <div key={e.id} className="flex items-center justify-between text-xs py-1 border-b border-[#1a1a2e]">
                     <span className="text-violet-400">{e.type}</span>
-                    {e.xp > 0 && <span className="text-amber-400">+{e.xp} XP</span>}
+                    {(e.xp || 0) > 0 && <span className="text-amber-400">+{e.xp} XP</span>}
                     <span className="text-gray-600">{e.ts}</span>
                   </div>
                 ))}
