@@ -17,5 +17,15 @@ export default async function handler(req, res) {
     console.error('Tracking error:', err)
   }
 
-  res.redirect('https://your-link-in-bio.com')
+  const destinations = {
+    discord_entry: 'https://discord.gg/YOUR_DISCORD_INVITE',
+    instagram_entry: 'https://www.instagram.com/YOUR_INSTAGRAM_HANDLE',
+    tiktok_entry: 'https://www.tiktok.com/@YOUR_TIKTOK_HANDLE',
+    whop_entry: 'https://whop.com/YOUR_WHOP_PAGE',
+    gumroad_entry: 'https://YOUR_USERNAME.gumroad.com',
+    product_entry: 'https://YOUR_USERNAME.gumroad.com/l/YOUR_PRODUCT',
+  }
+
+  const url = destinations[src] || 'https://your-link-in-bio.com'
+  res.redirect(url)
 }
