@@ -1,0 +1,232 @@
+{
+  "shadowArena": [
+    {
+      "id": "sa_01",
+      "title": "The Veil Trial",
+      "description": "A masked opponent challenges you in the Shadow Arena. Do you fight from darkness or reveal your face?",
+      "choices": [
+        {
+          "id": "sa_01_a",
+          "text": "Strike from the shadows — conceal your identity",
+          "outcome": "You land a decisive blow. Your shadow reputation grows.",
+          "xp": 40,
+          "scaleScore": 5,
+          "factionBonus": "shadow_serpent"
+        },
+        {
+          "id": "sa_01_b",
+          "text": "Step into the light — fight with honour",
+          "outcome": "Your boldness earns the crowd's respect. Join bonus unlocked.",
+          "xp": 35,
+          "scaleScore": 4,
+          "factionBonus": "lazarus"
+        },
+        {
+          "id": "sa_01_c",
+          "text": "Negotiate — turn the duel into an alliance",
+          "outcome": "Clever. The opponent becomes a temporary ally. Prophecy scroll found.",
+          "xp": 50,
+          "scaleScore": 6,
+          "factionBonus": "ophiuchus"
+        }
+      ]
+    },
+    {
+      "id": "sa_02",
+      "title": "The Black Tiger Gauntlet",
+      "description": "The arena master offers you a Black Tiger promotion contract. Requires you to defeat three shadow-rank challengers in succession.",
+      "choices": [
+        {
+          "id": "sa_02_a",
+          "text": "Accept the gauntlet — claim the Black Tiger rank",
+          "outcome": "You survive all three. Black Tiger I rank achieved.",
+          "xp": 80,
+          "scaleScore": 10,
+          "factionBonus": "scarlet_temple",
+          "tigerPromotion": "black_tiger_I"
+        },
+        {
+          "id": "sa_02_b",
+          "text": "Decline — train further before claiming the rank",
+          "outcome": "Wise restraint. XP training bonus applied.",
+          "xp": 30,
+          "scaleScore": 3,
+          "factionBonus": "shadow_serpent"
+        }
+      ]
+    },
+    {
+      "id": "sa_03",
+      "title": "The Cipher Duel",
+      "description": "Your opponent in the arena carries a forbidden codex. Defeat them to claim it.",
+      "choices": [
+        {
+          "id": "sa_03_a",
+          "text": "Challenge them for the codex",
+          "outcome": "Victory. Cipher Codex Vol. II unlocked.",
+          "xp": 60,
+          "scaleScore": 7,
+          "codexUnlock": "cipher_vol_ii"
+        },
+        {
+          "id": "sa_03_b",
+          "text": "Let them keep it — observe their style instead",
+          "outcome": "You learn more by watching. Bonus XP for next scenario.",
+          "xp": 45,
+          "scaleScore": 4
+        }
+      ]
+    }
+  ],
+  "kingdomRaid": [
+    {
+      "id": "kr_01",
+      "title": "The First Gate",
+      "description": "Your faction prepares to raid the rival kingdom. You must choose your entry strategy.",
+      "choices": [
+        {
+          "id": "kr_01_a",
+          "text": "Breach the northern gate — overwhelming force",
+          "outcome": "The gate falls. Revenue vault captured: +$47 mock revenue.",
+          "xp": 55,
+          "scaleScore": 6,
+          "mockRevenue": 47,
+          "factionBonus": "scarlet_temple"
+        },
+        {
+          "id": "kr_01_b",
+          "text": "Infiltrate through the merchant quarter — stealth",
+          "outcome": "Undetected entry. Codex fragment recovered.",
+          "xp": 65,
+          "scaleScore": 8,
+          "codexUnlock": "merchant_scroll_i",
+          "factionBonus": "shadow_serpent"
+        },
+        {
+          "id": "kr_01_c",
+          "text": "Send a parley — attempt diplomatic conquest",
+          "outcome": "Kingdom submits without bloodshed. Join count +3.",
+          "xp": 70,
+          "scaleScore": 9,
+          "mockJoins": 3,
+          "factionBonus": "lazarus"
+        }
+      ]
+    },
+    {
+      "id": "kr_02",
+      "title": "The Treasure Vault",
+      "description": "Inside the kingdom you find the vault. A guardian stands between you and the faction treasury.",
+      "choices": [
+        {
+          "id": "kr_02_a",
+          "text": "Fight the guardian directly",
+          "outcome": "Guardian defeated. Full vault looted: +$120 mock revenue.",
+          "xp": 75,
+          "scaleScore": 8,
+          "mockRevenue": 120
+        },
+        {
+          "id": "kr_02_b",
+          "text": "Use the Cipher Codex to unlock the vault — bypass the guardian",
+          "outcome": "Vault opened silently. Revenue +$90, codex fragment recovered.",
+          "xp": 90,
+          "scaleScore": 10,
+          "mockRevenue": 90,
+          "codexUnlock": "vault_fragment_i"
+        }
+      ]
+    }
+  ],
+  "hydraLabyrinth": [
+    {
+      "id": "hl_01",
+      "title": "The Hydra's First Eye",
+      "description": "Deep in the Hydra Labyrinth, the Crown Eye activates. You must answer its question to proceed.",
+      "choices": [
+        {
+          "id": "hl_01_a",
+          "text": "I seek power through discipline",
+          "outcome": "The Crown Eye accepts. Scarlet alignment bonus.",
+          "xp": 45,
+          "scaleScore": 5,
+          "factionBonus": "scarlet_temple"
+        },
+        {
+          "id": "hl_01_b",
+          "text": "I seek power through shadow",
+          "outcome": "The Crown Eye approves. Serpent alignment bonus.",
+          "xp": 45,
+          "scaleScore": 5,
+          "factionBonus": "shadow_serpent"
+        },
+        {
+          "id": "hl_01_c",
+          "text": "I seek transformation beyond power",
+          "outcome": "The Crown Eye glows green. Void alignment detected.",
+          "xp": 50,
+          "scaleScore": 6,
+          "factionBonus": "ophiuchus"
+        }
+      ]
+    },
+    {
+      "id": "hl_02",
+      "title": "The Commerce Eye",
+      "description": "The Commerce Eye of the Hydra offers you a product ladder choice. Which pack do you carry into the next level?",
+      "choices": [
+        {
+          "id": "hl_02_a",
+          "text": "Shadow Moon Prompt Pack ($9 tier)",
+          "outcome": "Prompt Pack unlocked. Mock sale logged: +$9.",
+          "xp": 30,
+          "scaleScore": 3,
+          "mockRevenue": 9,
+          "mockSales": 1
+        },
+        {
+          "id": "hl_02_b",
+          "text": "Initiate Founders Pack ($27 tier)",
+          "outcome": "Founders Pack unlocked. Mock sale logged: +$27.",
+          "xp": 50,
+          "scaleScore": 6,
+          "mockRevenue": 27,
+          "mockSales": 1
+        },
+        {
+          "id": "hl_02_c",
+          "text": "Codex Vault Membership ($47/mo)",
+          "outcome": "Vault access granted. Mock recurring revenue: +$47/mo.",
+          "xp": 80,
+          "scaleScore": 10,
+          "mockRevenue": 47,
+          "mockSales": 1,
+          "codexUnlock": "vault_membership"
+        }
+      ]
+    },
+    {
+      "id": "hl_03",
+      "title": "The White Tiger Gate",
+      "description": "At the Labyrinth's deepest gate, the White Tiger spirit appears. Only the most disciplined may pass.",
+      "choices": [
+        {
+          "id": "hl_03_a",
+          "text": "Bow and request passage",
+          "outcome": "The Tiger honours your humility. White Tiger I rank granted.",
+          "xp": 100,
+          "scaleScore": 12,
+          "tigerPromotion": "white_tiger_I"
+        },
+        {
+          "id": "hl_03_b",
+          "text": "Challenge the Tiger — prove your worth",
+          "outcome": "The Tiger tests you for three days. White Tiger II rank granted to the worthy.",
+          "xp": 150,
+          "scaleScore": 15,
+          "tigerPromotion": "white_tiger_II"
+        }
+      ]
+    }
+  ]
+}
