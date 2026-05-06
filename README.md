@@ -5,6 +5,7 @@ This repository is the primary mono-repo for the Hydra/Omega ecosystem.
 ## Projects
 
 - `omega-hydra-app/` – React + Vite app
+- `automatic-adventure/` – Merged legacy repository placeholder
 - `realm-of-5-crowns/` – Launch module docs
 - `aurelian-os/` – Aurelian OS docs
 - `Shadow Monastery/` – Doctrine, orders, engine notes
@@ -28,4 +29,3 @@ jobs succeed even when the primary code is non-Rust.
 ```sh
 cargo test --workspace
 ```
-
