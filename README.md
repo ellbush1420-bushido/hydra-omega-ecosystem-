@@ -5,7 +5,7 @@ This repository is the primary mono-repo for the Hydra/Omega ecosystem.
 ## Projects
 
 - `omega-hydra-app/` – React + Vite app
-- `automatic-adventure/` – Merged legacy repository placeholder
+- `automatic-adventure/` – Preserved content from the former standalone repository
 - `realm-of-5-crowns/` – Launch module docs
 - `aurelian-os/` – Aurelian OS docs
 - `Shadow Monastery/` – Doctrine, orders, engine notes
