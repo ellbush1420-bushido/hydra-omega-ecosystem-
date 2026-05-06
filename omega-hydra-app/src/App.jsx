@@ -13,6 +13,7 @@ import AffiliateTracker from './components/tabs/AffiliateTracker';
 import ComplianceCenter from './components/tabs/ComplianceCenter';
 import CEOPythons from './components/tabs/CEOPythons';
 import EvolutionScanner from './components/tabs/EvolutionScanner';
+import Realm5Crowns from './components/tabs/Realm5Crowns';
 
 const tabComponents = {
   dashboard: Dashboard,
@@ -26,6 +27,7 @@ const tabComponents = {
   compliance: ComplianceCenter,
   pythons: CEOPythons,
   scanner: EvolutionScanner,
+  realm5crowns: Realm5Crowns,
 };
 
 export default function App() {
