@@ -1,10 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { usePlayer } from '../hooks/usePlayer';
+import { buildHydraEyesWorldState } from '../lib/hydraEyesWorld';
 
 export default function HydraEyesPanel({ events = [] }) {
   const { state } = usePlayer();
   const { mockStats, hydraRecommendation } = state;
+  const worldState = buildHydraEyesWorldState(state, events, 'pattern');
 
   return (
     <View style={styles.container}>
@@ -23,6 +25,18 @@ export default function HydraEyesPanel({ events = [] }) {
         <StatTile icon="🛒" label="Sales" value={mockStats.sales} color="#d97706" />
         <StatTile icon="💰" label="Revenue" value={`$${mockStats.revenue}`} color="#f59e0b" />
         <StatTile icon="📈" label="Scale Score" value={mockStats.scaleScore} color="#3b82f6" />
+      </View>
+
+      <View style={styles.insightCard}>
+        <Text style={styles.logTitle}>Pattern Read</Text>
+        <View style={styles.insightRow}>
+          <Insight label="Dominant Signal" value={worldState.dominantSignal} />
+          <Insight label="Anomalies" value={worldState.anomalyCount} />
+        </View>
+        <View style={styles.insightRow}>
+          <Insight label="Last Trial" value={worldState.lastTrial} />
+          <Insight label="Focal Point" value={worldState.focalPoint} />
+        </View>
       </View>
 
       {events.length > 0 && (
@@ -48,6 +62,17 @@ function StatTile({ icon, label, value, color }) {
       <Text style={styles.tileIcon}>{icon}</Text>
       <Text style={[styles.tileValue, { color }]}>{value}</Text>
       <Text style={styles.tileLabel}>{label}</Text>
+    </View>
+  );
+}
+
+function Insight({ label, value }) {
+  return (
+    <View style={styles.insightBox}>
+      <Text style={styles.insightLabel}>{label}</Text>
+      <Text style={styles.insightValue} numberOfLines={2}>
+        {value}
+      </Text>
     </View>
   );
 }
@@ -116,6 +141,38 @@ const styles = StyleSheet.create({
   },
   log: {
     marginTop: 10,
+  },
+  insightCard: {
+    marginTop: 10,
+    backgroundColor: '#0a0a0f',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#1a1a2e',
+    padding: 10,
+    gap: 8,
+  },
+  insightRow: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  insightBox: {
+    flex: 1,
+    backgroundColor: '#10131b',
+    borderRadius: 8,
+    padding: 8,
+  },
+  insightLabel: {
+    color: '#6b7280',
+    fontSize: 10,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    marginBottom: 4,
+  },
+  insightValue: {
+    color: '#e5e7eb',
+    fontSize: 12,
+    lineHeight: 17,
   },
   logTitle: {
     color: '#6b7280',

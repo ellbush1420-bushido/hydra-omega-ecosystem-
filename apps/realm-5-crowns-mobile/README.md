@@ -10,14 +10,14 @@ A playable React Native / Expo prototype for **The Realm of 5 Crowns**, integrat
 | Shadow Arena scenarios | ✅ |
 | Kingdom Raid scenarios | ✅ |
 | Hydra Labyrinth trials | ✅ |
-| Hydra Eyes UI (event tracking) | ✅ |
+| Hydra Eyes UI (shared event tracking) | ✅ |
 | XP / level progression | ✅ |
 | Black Tiger + White Tiger tracks | ✅ |
 | Codex unlock screen | ✅ |
 | Mock joins, sales, revenue, scale score | ✅ |
 | Hydra recommendation logic | ✅ |
 | Supabase player_state sync | ✅ |
-| 3D Realm Viewer (Expo GL + Three.js) | ✅ |
+| Hydra Eyes World Viewer (Expo GL + Three.js modes) | ✅ |
 | Supabase starter schema | ✅ |
 
 ## Quick Start
@@ -64,14 +64,15 @@ apps/realm-5-crowns-mobile/
 │   │   ├── factions.json   # Five Crown faction definitions
 │   │   └── scenarios.json  # Arena / raid / labyrinth scenarios
 │   ├── hooks/
-│   │   ├── useHydraEyes.js # Event tracking hook
+│   │   ├── useHydraEyes.js # Shared Hydra Eyes event tracking hook
 │   │   └── usePlayer.js    # Player state context (XP, faction, tiger rank)
 │   ├── lib/
+│   │   ├── hydraEyesWorld.js # Hydra Eyes world-viewer modes + derived insight state
 │   │   └── supabase.js     # Shared Supabase client + player_state helpers
 │   ├── components/
 │   │   ├── XPBar.js        # Level progress bar
 │   │   ├── TigerRankBadge.js # Tiger promotion track
-│   │   └── HydraEyesPanel.js # Hydra Eyes stats panel
+│   │   └── HydraEyesPanel.js # Hydra Eyes stats + pattern read panel
 │   └── screens/
 │       ├── HomeScreen.js          # Supabase sync dashboard
 │       ├── FactionSelectScreen.js  # Choose your crown
@@ -79,7 +80,7 @@ apps/realm-5-crowns-mobile/
 │       ├── ScenarioScreen.js       # Individual scenario play
 │       ├── CodexScreen.js          # Codex unlock + product ladder
 │       ├── ProfileScreen.js        # Player profile + Hydra Eyes
-│       └── RealmViewerScreen.js    # Expo GL / Three.js corridor viewer
+│       └── RealmViewerScreen.js    # Hydra Eyes World Viewer with mode overlays
 └── supabase/
     └── schema.sql          # Starter schema for live tracking + player_state sync
 ```
@@ -99,6 +100,7 @@ The `useHydraEyes` hook emits these event types to `hydra_events`:
 | `xp_gain` | XP awarded |
 | `tiger_promotion` | Black/White Tiger rank up |
 | `click` | Any tracked button press |
+| `world_viewer_mode` | Hydra Eyes world-viewer mode change |
 
 ## EAS Build (Android / iOS Preview)
 

@@ -66,7 +66,7 @@ function HomeStack() {
       <Stack.Screen
         name="RealmViewer"
         component={RealmViewerScreen}
-        options={{ title: '🜁 3D Realm Viewer' }}
+        options={{ title: '👁 Hydra Eyes World Viewer' }}
       />
     </Stack.Navigator>
   );

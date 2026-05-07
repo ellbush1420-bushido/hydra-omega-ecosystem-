@@ -91,7 +91,7 @@ export default function HomeScreen({ navigation }) {
         <Text style={styles.eyeLabel}>👁 HYDRA EYES — HOME EYE</Text>
         <Text style={styles.title}>Realm Home</Text>
         <Text style={styles.subtitle}>
-          Sync your Crown, Realm, and Trial state to Supabase and open the 3D Obsidian Gate.
+          Sync your Crown, Realm, and Trial state to Supabase and open the Hydra Eyes World Viewer.
         </Text>
 
         <View style={styles.heroCard}>
@@ -165,12 +165,12 @@ export default function HomeScreen({ navigation }) {
           >
             <Text style={styles.viewerEmoji}>🜁</Text>
             <View style={styles.viewerBody}>
-              <Text style={styles.viewerTitle}>Open 3D Realm Viewer</Text>
-              <Text style={styles.viewerDesc}>
-                Explore a fog-drenched corridor with real-time shadows and the Obsidian Gate.
-              </Text>
-            </View>
-          </TouchableOpacity>
+                <Text style={styles.viewerTitle}>Open Hydra Eyes World Viewer</Text>
+                <Text style={styles.viewerDesc}>
+                  Explore the Hydra Eyes World Viewer with tactical, realm, social, and pattern overlays.
+                </Text>
+              </View>
+            </TouchableOpacity>
           <TouchableOpacity
             style={styles.secondaryNav}
             onPress={() => navigation.navigate('FactionSelect')}
