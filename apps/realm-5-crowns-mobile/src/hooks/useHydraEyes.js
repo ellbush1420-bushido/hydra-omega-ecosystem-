@@ -26,6 +26,8 @@ export function useHydraEyes() {
       amount,
       xp,
       scale_score,
+      mock_joins,
+      mock_sales,
       mock,
       ...extra
     } = payload;
@@ -45,6 +47,8 @@ export function useHydraEyes() {
       ...(amount !== undefined ? { amount } : {}),
       ...(xp !== undefined ? { xp } : {}),
       ...(scale_score !== undefined ? { scale_score } : {}),
+      ...(mock_joins !== undefined ? { mock_joins } : {}),
+      ...(mock_sales !== undefined ? { mock_sales } : {}),
       ...(mock !== undefined ? { mock } : {}),
       ...(Object.keys(extra).length > 0 ? { extra } : {}),
     };

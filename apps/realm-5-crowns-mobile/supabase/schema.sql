@@ -103,6 +103,8 @@ create table if not exists public.hydra_events (
   amount        numeric(10,2),
   xp            integer,
   scale_score   integer,
+  mock_joins    integer,
+  mock_sales    integer,
   mock          boolean default false,
   session_ms    bigint,
   ts            timestamptz not null default now(),
