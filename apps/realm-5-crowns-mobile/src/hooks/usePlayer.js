@@ -197,7 +197,15 @@ export function PlayerProvider({ children }) {
 
         dispatch({
           type: 'HYDRATE_REMOTE_STATE',
-          payload: {},
+          payload: {
+            playerId: null,
+            crownId: null,
+            faction: null,
+            realmId: null,
+            selectedRealm: null,
+            trialId: null,
+            selectedTrial: null,
+          },
         });
         dispatch({
           type: 'SET_SYNC_STATUS',

@@ -18,7 +18,8 @@ export async function getOrCreatePlayerId() {
     const playerId = makePlayerId();
     await SecureStore.setItemAsync(PLAYER_ID_KEY, playerId);
     return playerId;
-  } catch {
+  } catch (error) {
+    console.warn('SecureStore player ID initialization failed.', error);
     throw new Error('Unable to create or read the local player ID.');
   }
 }
