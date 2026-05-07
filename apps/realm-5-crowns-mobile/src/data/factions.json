@@ -1,6 +1,7 @@
 [
   {
     "id": "shadow_serpent",
+    "crownId": 1,
     "name": "Shadow Serpent Monastery",
     "shortName": "SERPENT",
     "emoji": "🐍",
@@ -15,6 +16,7 @@
   },
   {
     "id": "scarlet_temple",
+    "crownId": 2,
     "name": "Crimson Coil Cathedral",
     "shortName": "SCARLET",
     "emoji": "🔴",
@@ -29,6 +31,7 @@
   },
   {
     "id": "ophiuchus",
+    "crownId": 3,
     "name": "Cult of Ophiuchus",
     "shortName": "WEB",
     "emoji": "🌀",
@@ -43,6 +46,7 @@
   },
   {
     "id": "black_sun",
+    "crownId": 4,
     "name": "Order of the Black Sun",
     "shortName": "SUN",
     "emoji": "☀️",
@@ -57,6 +61,7 @@
   },
   {
     "id": "lazarus",
+    "crownId": 5,
     "name": "Radiant Guardian Knight Society",
     "shortName": "LAZARUS",
     "emoji": "⚔️",

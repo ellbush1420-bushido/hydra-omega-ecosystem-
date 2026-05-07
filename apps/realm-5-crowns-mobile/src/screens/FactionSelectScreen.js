@@ -13,20 +13,20 @@ import { useHydraEyes } from '../hooks/useHydraEyes';
 import XPBar from '../components/XPBar';
 
 export default function FactionSelectScreen({ navigation }) {
-  const { state, dispatch } = usePlayer();
+  const { state, dispatch, selectFaction } = usePlayer();
   const { trackFactionSelect, trackClick } = useHydraEyes();
 
-  const handleSelect = (faction) => {
+  const handleSelect = async (faction) => {
     trackClick('faction_card', faction.id);
     trackFactionSelect(faction.id);
-    dispatch({ type: 'SET_FACTION', faction });
+    await selectFaction(faction);
     dispatch({ type: 'ADD_XP', amount: 25 });
     dispatch({ type: 'UNLOCK_CODEX', codexId: faction.codexUnlock });
     dispatch({
       type: 'LOG_SCENARIO',
       entry: { type: 'faction_select', factionId: faction.id },
     });
-    navigation.navigate('Profile');
+    navigation.navigate('Scenarios', { screen: 'RealmSelect' });
   };
 
   return (
@@ -55,11 +55,12 @@ export default function FactionSelectScreen({ navigation }) {
               </View>
             </View>
             <Text style={styles.lore}>{f.lore}</Text>
-            <View style={styles.bonusRow}>
-              <Text style={[styles.bonus, { color: f.accent }]}>⚡ {f.xpBonus}</Text>
-              <Text style={styles.rank}>🏅 {f.startingRank}</Text>
-            </View>
-          </TouchableOpacity>
+              <View style={styles.bonusRow}>
+                <Text style={styles.rank}>👑 Crown {f.crownId}</Text>
+                <Text style={[styles.bonus, { color: f.accent }]}>⚡ {f.xpBonus}</Text>
+                <Text style={styles.rank}>🏅 {f.startingRank}</Text>
+              </View>
+            </TouchableOpacity>
         ))}
 
         <Text style={styles.footer}>

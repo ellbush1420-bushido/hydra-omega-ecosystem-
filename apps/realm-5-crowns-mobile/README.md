@@ -7,6 +7,7 @@ A playable React Native / Expo prototype for **The Realm of 5 Crowns**, integrat
 | Feature | Status |
 |---|---|
 | Five Crown faction selection | ✅ |
+| Realm → Trial gate flow | ✅ |
 | Shadow Arena scenarios | ✅ |
 | Kingdom Raid scenarios | ✅ |
 | Hydra Labyrinth trials | ✅ |
@@ -47,7 +48,20 @@ cp .env.example .env.local
 1. Create a project at [supabase.com](https://supabase.com).
 2. Run `supabase/schema.sql` in the SQL editor.
 3. Copy your URL and anon key into `.env.local`.
-4. The `hydra_events` table will receive live tracking from the app.
+4. The app will create or update one `player_state` row per device-local player ID.
+5. The `hydra_events` table will receive live tracking from the app.
+
+### player_state contract
+
+The mobile app now writes these fields for Unity handoff:
+
+| Column | Type | Purpose |
+|---|---|---|
+| `player_id` | `text` | Device-local player key stored in SecureStore |
+| `crown_id` | `int` | Selected crown from the Crown screen |
+| `realm_id` | `int` | Selected realm gate |
+| `trial_id` | `int` | Selected trial inside the chosen realm |
+| `updated_at` | `timestamp` | Last sync time |
 
 ## Project Structure
 
@@ -59,17 +73,22 @@ apps/realm-5-crowns-mobile/
 ├── src/
 │   ├── data/
 │   │   ├── factions.json   # Five Crown faction definitions
+│   │   ├── realms.js       # Realm + trial mapping for player_state
 │   │   └── scenarios.json  # Arena / raid / labyrinth scenarios
 │   ├── hooks/
 │   │   ├── useHydraEyes.js # Event tracking hook
-│   │   └── usePlayer.js    # Player state context (XP, faction, tiger rank)
+│   │   └── usePlayer.js    # Player state context + Supabase sync
+│   ├── lib/
+│   │   ├── playerState.js  # player_state load/save helpers
+│   │   └── supabase.js     # Shared Supabase client bootstrap
 │   ├── components/
 │   │   ├── XPBar.js        # Level progress bar
 │   │   ├── TigerRankBadge.js # Tiger promotion track
 │   │   └── HydraEyesPanel.js # Hydra Eyes stats panel
 │   └── screens/
 │       ├── FactionSelectScreen.js  # Choose your crown
-│       ├── ScenariosHubScreen.js   # Arena browser
+│       ├── RealmSelectScreen.js    # Choose a realm gate
+│       ├── TrialSelectScreen.js    # Choose a realm trial
 │       ├── ScenarioScreen.js       # Individual scenario play
 │       ├── CodexScreen.js          # Codex unlock + product ladder
 │       └── ProfileScreen.js        # Player profile + Hydra Eyes
@@ -92,6 +111,24 @@ The `useHydraEyes` hook emits these event types to `hydra_events`:
 | `xp_gain` | XP awarded |
 | `tiger_promotion` | Black/White Tiger rank up |
 | `click` | Any tracked button press |
+
+## Unified selection flow
+
+```text
+[CrownSelectScreen]
+        │
+        ▼
+[RealmSelectScreen] ── save realm_id → player_state
+        │
+        ▼
+[TrialSelectScreen] ── save trial_id → player_state
+        │
+        ▼
+[ScenarioScreen / Unity handoff placeholder]
+        │
+        ▼
+[ProfileScreen] ── inspect player_id + crown_id + realm_id + trial_id
+```
 
 ## EAS Build (Android / iOS Preview)
 

@@ -13,8 +13,8 @@ import { useHydraEyes } from '../hooks/useHydraEyes';
 import XPBar from '../components/XPBar';
 
 export default function ScenarioScreen({ route, navigation }) {
-  const { scenario, scenarioType } = route.params;
-  const { dispatch } = usePlayer();
+  const { scenario, scenarioType, realm } = route.params;
+  const { state, dispatch } = usePlayer();
   const {
     trackScenarioStart,
     trackScenarioChoice,
@@ -102,6 +102,12 @@ export default function ScenarioScreen({ route, navigation }) {
         <Text style={styles.title}>{scenario.title}</Text>
         <Text style={styles.description}>{scenario.description}</Text>
 
+        <View style={styles.syncRow}>
+          <Text style={styles.syncBadge}>crown_id {state.crownId ?? '—'}</Text>
+          <Text style={styles.syncBadge}>realm_id {realm?.id ?? state.realmId ?? '—'}</Text>
+          <Text style={styles.syncBadge}>trial_id {scenario.trialId ?? state.trialId ?? '—'}</Text>
+        </View>
+
         <XPBar />
 
         <Text style={styles.choiceLabel}>Choose your path:</Text>
@@ -186,6 +192,21 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 22,
     marginBottom: 12,
+  },
+  syncRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginBottom: 12,
+  },
+  syncBadge: {
+    color: '#a78bfa',
+    fontSize: 11,
+    fontWeight: '700',
+    backgroundColor: '#1a1a2e',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 999,
   },
   choiceLabel: {
     color: '#6b7280',

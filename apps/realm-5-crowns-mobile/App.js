@@ -8,7 +8,8 @@ import { Text } from 'react-native';
 import { PlayerProvider } from './src/hooks/usePlayer';
 
 import FactionSelectScreen from './src/screens/FactionSelectScreen';
-import ScenariosHubScreen from './src/screens/ScenariosHubScreen';
+import RealmSelectScreen from './src/screens/RealmSelectScreen';
+import TrialSelectScreen from './src/screens/TrialSelectScreen';
 import ScenarioScreen from './src/screens/ScenarioScreen';
 import CodexScreen from './src/screens/CodexScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
@@ -38,9 +39,14 @@ function ScenariosStack() {
   return (
     <Stack.Navigator screenOptions={SCREEN_OPTIONS}>
       <Stack.Screen
-        name="ScenariosHub"
-        component={ScenariosHubScreen}
-        options={{ title: '⚔️ Trial Arenas' }}
+        name="RealmSelect"
+        component={RealmSelectScreen}
+        options={{ title: '🜁 Realm Gates' }}
+      />
+      <Stack.Screen
+        name="TrialSelect"
+        component={TrialSelectScreen}
+        options={{ title: '⚔️ Trial Select' }}
       />
       <Stack.Screen
         name="Scenario"
@@ -77,7 +83,7 @@ function MainTabs() {
         name="Scenarios"
         component={ScenariosStack}
         options={{
-          title: 'Arenas',
+          title: 'Gates',
           tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>⚔️</Text>,
           headerShown: false,
         }}

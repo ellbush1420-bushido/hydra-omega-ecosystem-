@@ -1,6 +1,8 @@
-// Global player state context — XP, faction, tiger rank, codex, scenario history
+// Global player state context — XP, faction, crown/realm/trial sync, tiger rank, codex, scenario history
 
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useReducer } from 'react';
+
+import { getOrCreatePlayerId, loadPlayerState, mapRemoteStateToSelection, savePlayerState } from '../lib/playerState';
 
 const LEVEL_THRESHOLDS = [0, 100, 250, 450, 700, 1000, 1400, 1900, 2500, 3200, 4000];
 
@@ -20,10 +22,20 @@ function xpToNextLevel(xp) {
 }
 
 const initialState = {
+  playerId: null,
+  hydrationStatus: 'loading',
+  syncStatus: 'idle',
+  syncMessage: 'Preparing player link...',
+  lastSyncedAt: null,
   xp: 0,
   level: 1,
   xpToNext: 100,
+  crownId: null,
   faction: null,
+  realmId: null,
+  selectedRealm: null,
+  trialId: null,
+  selectedTrial: null,
   tigerRank: null, // null | 'black_tiger_I' | 'black_tiger_II' | 'white_tiger_I' | 'white_tiger_II'
   codexUnlocks: [],
   scenarioHistory: [],
@@ -57,8 +69,51 @@ function computeRecommendation(state) {
 
 function playerReducer(state, action) {
   switch (action.type) {
+    case 'SET_PLAYER_ID':
+      return { ...state, playerId: action.playerId };
+
+    case 'HYDRATE_REMOTE_STATE':
+      return {
+        ...state,
+        ...action.payload,
+        hydrationStatus: 'ready',
+      };
+
+    case 'SET_SYNC_STATUS':
+      return {
+        ...state,
+        syncStatus: action.status,
+        syncMessage: action.message || null,
+        lastSyncedAt: action.status === 'synced' ? new Date().toISOString() : state.lastSyncedAt,
+      };
+
     case 'SET_FACTION':
-      return { ...state, faction: action.faction };
+      return {
+        ...state,
+        faction: action.faction,
+        crownId: action.faction?.crownId ?? null,
+        realmId: null,
+        selectedRealm: null,
+        trialId: null,
+        selectedTrial: null,
+      };
+
+    case 'SET_REALM':
+      return {
+        ...state,
+        realmId: action.realm?.id ?? null,
+        selectedRealm: action.realm,
+        trialId: null,
+        selectedTrial: null,
+      };
+
+    case 'SET_TRIAL':
+      return {
+        ...state,
+        trialId: action.trial?.trialId ?? null,
+        selectedTrial: action.trial,
+        realmId: action.trial?.realmId ?? state.realmId,
+      };
 
     case 'ADD_XP': {
       const newXp = state.xp + action.amount;
@@ -111,8 +166,104 @@ const PlayerContext = createContext(null);
 
 export function PlayerProvider({ children }) {
   const [state, dispatch] = useReducer(playerReducer, initialState);
+
+  useEffect(() => {
+    let active = true;
+
+    async function bootstrapPlayer() {
+      const playerId = await getOrCreatePlayerId();
+      if (!active) return;
+
+      dispatch({ type: 'SET_PLAYER_ID', playerId });
+
+      const result = await loadPlayerState(playerId);
+      if (!active) return;
+
+      dispatch({
+        type: 'HYDRATE_REMOTE_STATE',
+        payload: {
+          playerId,
+          ...mapRemoteStateToSelection(result.data),
+        },
+      });
+      dispatch({
+        type: 'SET_SYNC_STATUS',
+        status: result.status,
+        message: result.message,
+      });
+    }
+
+    bootstrapPlayer();
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const persistSelection = useCallback(
+    async (selection) => {
+      if (!state.playerId) return;
+
+      dispatch({
+        type: 'SET_SYNC_STATUS',
+        status: 'syncing',
+        message: 'Syncing player_state to Supabase...',
+      });
+
+      const result = await savePlayerState({
+        playerId: state.playerId,
+        crownId: selection.crownId,
+        realmId: selection.realmId,
+        trialId: selection.trialId,
+      });
+
+      dispatch({
+        type: 'SET_SYNC_STATUS',
+        status: result.status,
+        message: result.message,
+      });
+    },
+    [state.playerId]
+  );
+
+  const selectFaction = useCallback(
+    async (faction) => {
+      dispatch({ type: 'SET_FACTION', faction });
+      await persistSelection({
+        crownId: faction.crownId,
+        realmId: null,
+        trialId: null,
+      });
+    },
+    [persistSelection]
+  );
+
+  const selectRealm = useCallback(
+    async (realm) => {
+      dispatch({ type: 'SET_REALM', realm });
+      await persistSelection({
+        crownId: state.crownId,
+        realmId: realm.id,
+        trialId: null,
+      });
+    },
+    [persistSelection, state.crownId]
+  );
+
+  const selectTrial = useCallback(
+    async (trial) => {
+      dispatch({ type: 'SET_TRIAL', trial });
+      await persistSelection({
+        crownId: state.crownId,
+        realmId: trial.realmId,
+        trialId: trial.trialId,
+      });
+    },
+    [persistSelection, state.crownId]
+  );
+
   return (
-    <PlayerContext.Provider value={{ state, dispatch }}>
+    <PlayerContext.Provider value={{ state, dispatch, selectFaction, selectRealm, selectTrial }}>
       {children}
     </PlayerContext.Provider>
   );

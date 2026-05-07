@@ -46,6 +46,23 @@ export default function ProfileScreen({ navigation }) {
         <XPBar />
         <TigerRankBadge />
 
+        <View style={styles.syncCard}>
+          <Text style={styles.syncTitle}>Unified player_state</Text>
+          <Text style={styles.syncLine}>player_id: {state.playerId || 'loading...'}</Text>
+          <Text style={styles.syncLine}>crown_id: {state.crownId ?? '—'}</Text>
+          <Text style={styles.syncLine}>realm_id: {state.realmId ?? '—'}</Text>
+          <Text style={styles.syncLine}>trial_id: {state.trialId ?? '—'}</Text>
+          <Text
+            style={[
+              styles.syncStatus,
+              state.syncStatus === 'synced' && styles.syncStatusGood,
+              state.syncStatus === 'error' && styles.syncStatusBad,
+            ]}
+          >
+            {state.syncMessage || 'Ready'}
+          </Text>
+        </View>
+
         <View style={styles.statsRow}>
           <StatBox label="Level" value={level} color="#a78bfa" />
           <StatBox label="XP" value={xp} color="#f59e0b" />
@@ -74,10 +91,10 @@ export default function ProfileScreen({ navigation }) {
         <View style={styles.navGrid}>
           <TouchableOpacity
             style={styles.navCard}
-            onPress={() => { trackClick('nav_scenarios', 'profile'); navigation.navigate('Scenarios'); }}
+            onPress={() => { trackClick('nav_scenarios', 'profile'); navigation.navigate('Scenarios', { screen: 'RealmSelect' }); }}
           >
             <Text style={styles.navCardEmoji}>⚔️</Text>
-            <Text style={styles.navCardLabel}>Trial Arenas</Text>
+            <Text style={styles.navCardLabel}>Realm Gates</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.navCard}
@@ -147,6 +164,36 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 8,
     marginVertical: 8,
+  },
+  syncCard: {
+    backgroundColor: '#0d0d14',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#1a1a2e',
+    padding: 14,
+    marginTop: 8,
+  },
+  syncTitle: {
+    color: '#a78bfa',
+    fontSize: 12,
+    fontWeight: '800',
+    marginBottom: 8,
+  },
+  syncLine: {
+    color: '#d1d5db',
+    fontSize: 12,
+    marginBottom: 4,
+  },
+  syncStatus: {
+    color: '#6b7280',
+    fontSize: 11,
+    marginTop: 6,
+  },
+  syncStatusGood: {
+    color: '#10b981',
+  },
+  syncStatusBad: {
+    color: '#ef4444',
   },
   statBox: {
     flex: 1,

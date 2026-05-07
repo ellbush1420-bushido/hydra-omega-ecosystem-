@@ -42,8 +42,24 @@ create trigger players_updated_at
   for each row execute procedure public.set_updated_at();
 
 -- ─────────────────────────────────────────────────────────────────────────────
--- 2. CODEX UNLOCKS
+-- 2. PLAYER STATE (Expo → Unity handoff)
 -- ─────────────────────────────────────────────────────────────────────────────
+create table if not exists public.player_state (
+  player_id   text primary key,
+  crown_id    integer,
+  realm_id    integer,
+  trial_id    integer,
+  updated_at  timestamptz not null default now()
+);
+
+drop trigger if exists player_state_updated_at on public.player_state;
+create trigger player_state_updated_at
+  before update on public.player_state
+  for each row execute procedure public.set_updated_at();
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- 3. CODEX UNLOCKS
+ -- ─────────────────────────────────────────────────────────────────────────────
 create table if not exists public.codex_unlocks (
   id          uuid primary key default gen_random_uuid(),
   player_id   uuid references public.players(id) on delete cascade,
@@ -53,7 +69,7 @@ create table if not exists public.codex_unlocks (
 );
 
 -- ─────────────────────────────────────────────────────────────────────────────
--- 3. SCENARIO HISTORY
+-- 4. SCENARIO HISTORY
 -- ─────────────────────────────────────────────────────────────────────────────
 create table if not exists public.scenario_history (
   id              uuid primary key default gen_random_uuid(),
@@ -71,7 +87,7 @@ create table if not exists public.scenario_history (
 );
 
 -- ─────────────────────────────────────────────────────────────────────────────
--- 4. HYDRA EVENTS  (Hydra Eyes tracking)
+-- 5. HYDRA EVENTS  (Hydra Eyes tracking)
 -- ─────────────────────────────────────────────────────────────────────────────
 create table if not exists public.hydra_events (
   id            text primary key,          -- client-generated evt_<ts>_<rand>
@@ -98,9 +114,10 @@ create index if not exists hydra_events_type_idx on public.hydra_events(event_ty
 create index if not exists hydra_events_ts_idx on public.hydra_events(ts desc);
 
 -- ─────────────────────────────────────────────────────────────────────────────
--- 5. ROW LEVEL SECURITY (RLS)
+-- 6. ROW LEVEL SECURITY (RLS)
 -- ─────────────────────────────────────────────────────────────────────────────
 alter table public.players enable row level security;
+alter table public.player_state enable row level security;
 alter table public.codex_unlocks enable row level security;
 alter table public.scenario_history enable row level security;
 alter table public.hydra_events enable row level security;
@@ -108,6 +125,18 @@ alter table public.hydra_events enable row level security;
 -- Allow anonymous inserts (device-scoped; tighten for production)
 create policy "anon insert players"
   on public.players for insert to anon with check (true);
+
+drop policy if exists "anon select player_state" on public.player_state;
+create policy "anon select player_state"
+  on public.player_state for select to anon using (true);
+
+drop policy if exists "anon insert player_state" on public.player_state;
+create policy "anon insert player_state"
+  on public.player_state for insert to anon with check (player_id is not null);
+
+drop policy if exists "anon update player_state" on public.player_state;
+create policy "anon update player_state"
+  on public.player_state for update to anon using (player_id is not null) with check (player_id is not null);
 
 create policy "anon insert events"
   on public.hydra_events for insert to anon with check (true);
@@ -121,6 +150,10 @@ create policy "anon insert scenarios"
 -- Service role (backend) can read everything
 create policy "service select players"
   on public.players for select to service_role using (true);
+
+drop policy if exists "service select player_state" on public.player_state;
+create policy "service select player_state"
+  on public.player_state for select to service_role using (true);
 
 create policy "service select events"
   on public.hydra_events for select to service_role using (true);
