@@ -2,7 +2,24 @@
 -- Run this in your Supabase SQL editor to bootstrap the live tracking tables.
 
 -- ─────────────────────────────────────────────────────────────────────────────
--- 1. PLAYERS
+-- 1. PLAYER STATE
+-- ─────────────────────────────────────────────────────────────────────────────
+create table if not exists public.player_state (
+  id            uuid primary key default gen_random_uuid(),
+  device_id     text not null unique,
+  crown         text,
+  realm         text,
+  trial         text,
+  faction_id    text,
+  tiger_rank    text,
+  level         integer not null default 1,
+  xp            integer not null default 0,
+  created_at    timestamptz not null default now(),
+  updated_at    timestamptz not null default now()
+);
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- 2. PLAYERS
 -- ─────────────────────────────────────────────────────────────────────────────
 create table if not exists public.players (
   id            uuid primary key default gen_random_uuid(),
@@ -37,12 +54,16 @@ begin
 end;
 $$;
 
+create trigger player_state_updated_at
+  before update on public.player_state
+  for each row execute procedure public.set_updated_at();
+
 create trigger players_updated_at
   before update on public.players
   for each row execute procedure public.set_updated_at();
 
 -- ─────────────────────────────────────────────────────────────────────────────
--- 2. CODEX UNLOCKS
+-- 3. CODEX UNLOCKS
 -- ─────────────────────────────────────────────────────────────────────────────
 create table if not exists public.codex_unlocks (
   id          uuid primary key default gen_random_uuid(),
@@ -53,7 +74,7 @@ create table if not exists public.codex_unlocks (
 );
 
 -- ─────────────────────────────────────────────────────────────────────────────
--- 3. SCENARIO HISTORY
+-- 4. SCENARIO HISTORY
 -- ─────────────────────────────────────────────────────────────────────────────
 create table if not exists public.scenario_history (
   id              uuid primary key default gen_random_uuid(),
@@ -71,7 +92,7 @@ create table if not exists public.scenario_history (
 );
 
 -- ─────────────────────────────────────────────────────────────────────────────
--- 4. HYDRA EVENTS  (Hydra Eyes tracking)
+-- 5. HYDRA EVENTS  (Hydra Eyes tracking)
 -- ─────────────────────────────────────────────────────────────────────────────
 create table if not exists public.hydra_events (
   id            text primary key,          -- client-generated evt_<ts>_<rand>
@@ -98,14 +119,24 @@ create index if not exists hydra_events_type_idx on public.hydra_events(event_ty
 create index if not exists hydra_events_ts_idx on public.hydra_events(ts desc);
 
 -- ─────────────────────────────────────────────────────────────────────────────
--- 5. ROW LEVEL SECURITY (RLS)
+-- 6. ROW LEVEL SECURITY (RLS)
 -- ─────────────────────────────────────────────────────────────────────────────
+alter table public.player_state enable row level security;
 alter table public.players enable row level security;
 alter table public.codex_unlocks enable row level security;
 alter table public.scenario_history enable row level security;
 alter table public.hydra_events enable row level security;
 
 -- Allow anonymous inserts (device-scoped; tighten for production)
+create policy "anon select player_state"
+  on public.player_state for select to anon using (true);
+
+create policy "anon insert player_state"
+  on public.player_state for insert to anon with check (true);
+
+create policy "anon update player_state"
+  on public.player_state for update to anon using (true) with check (true);
+
 create policy "anon insert players"
   on public.players for insert to anon with check (true);
 
@@ -119,6 +150,9 @@ create policy "anon insert scenarios"
   on public.scenario_history for insert to anon with check (true);
 
 -- Service role (backend) can read everything
+create policy "service select player_state"
+  on public.player_state for select to service_role using (true);
+
 create policy "service select players"
   on public.players for select to service_role using (true);
 
