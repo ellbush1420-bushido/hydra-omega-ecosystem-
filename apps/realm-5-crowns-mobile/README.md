@@ -17,7 +17,7 @@ A playable React Native / Expo prototype for **The Realm of 5 Crowns**, integrat
 | Mock joins, sales, revenue, scale score | ✅ |
 | Hydra recommendation logic | ✅ |
 | Supabase player_state sync | ✅ |
-| 3D Realm Viewer (Expo GL + Three.js) | ✅ |
+| 3D Realm Viewer (Expo GL + Three.js + Hydra Eyes HUD) | ✅ |
 | Supabase starter schema | ✅ |
 
 ## Quick Start
@@ -66,12 +66,15 @@ apps/realm-5-crowns-mobile/
 │   ├── hooks/
 │   │   ├── useHydraEyes.js # Event tracking hook
 │   │   └── usePlayer.js    # Player state context (XP, faction, tiger rank)
-│   ├── lib/
-│   │   └── supabase.js     # Shared Supabase client + player_state helpers
 │   ├── components/
 │   │   ├── XPBar.js        # Level progress bar
 │   │   ├── TigerRankBadge.js # Tiger promotion track
-│   │   └── HydraEyesPanel.js # Hydra Eyes stats panel
+│   │   ├── HydraEyesPanel.js # Hydra Eyes stats panel
+│   │   ├── HydraEyesOverlay.js # Hydra Eyes combat HUD overlay
+│   │   └── RealmCanvas.js   # Three.js realm corridor canvas
+│   ├── lib/
+│   │   ├── supabase.js      # Shared Supabase client + player_state helpers
+│   │   └── realmState.js    # Realm/trial labels + Hydra Eyes HUD metrics
 │   └── screens/
 │       ├── HomeScreen.js          # Supabase sync dashboard
 │       ├── FactionSelectScreen.js  # Choose your crown
@@ -79,7 +82,7 @@ apps/realm-5-crowns-mobile/
 │       ├── ScenarioScreen.js       # Individual scenario play
 │       ├── CodexScreen.js          # Codex unlock + product ladder
 │       ├── ProfileScreen.js        # Player profile + Hydra Eyes
-│       └── RealmViewerScreen.js    # Expo GL / Three.js corridor viewer
+│       └── RealmViewerScreen.js    # Hydra Eyes viewer composed from canvas + HUD
 └── supabase/
     └── schema.sql          # Starter schema for live tracking + player_state sync
 ```

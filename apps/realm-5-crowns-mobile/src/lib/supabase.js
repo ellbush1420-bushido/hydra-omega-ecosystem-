@@ -3,6 +3,8 @@ import * as SecureStore from 'expo-secure-store';
 import { Platform } from 'react-native';
 import { createClient } from '@supabase/supabase-js';
 
+import { getRealmLabel, getTrialLabel } from './realmState';
+
 const DEVICE_ID_KEY = 'realm5crowns.deviceId';
 let memoryDeviceId = '';
 
@@ -27,27 +29,6 @@ function logPlayerState(event, payload) {
   if (__DEV__) {
     console.info(event, payload);
   }
-}
-
-function toTitle(value) {
-  if (!value) return 'Awakening';
-  return value
-    .replace(/_/g, ' ')
-    .replace(/\b\w/g, (letter) => letter.toUpperCase());
-}
-
-function getRealmLabel(state) {
-  if (state.tigerRank?.startsWith('white_tiger')) return 'Obsidian Gate';
-  if (state.tigerRank?.startsWith('black_tiger')) return 'Shadow Arena';
-  if (state.faction?.shortName) return `${state.faction.shortName} Crown`;
-  return 'Unclaimed Threshold';
-}
-
-function getTrialLabel(state) {
-  const mostRecentScenario = state.scenarioHistory.filter((entry) => entry.scenarioId)[0];
-  if (mostRecentScenario) return toTitle(mostRecentScenario.scenarioId);
-  if (state.faction) return 'Crown Selection';
-  return 'Awakening';
 }
 
 async function readStoredDeviceId() {
