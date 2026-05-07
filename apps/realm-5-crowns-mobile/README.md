@@ -58,16 +58,22 @@ apps/realm-5-crowns-mobile/
 ├── eas.json                # EAS Build config
 ├── src/
 │   ├── data/
+│   │   ├── crowns.js       # Lightweight Crown selection list
 │   │   ├── factions.json   # Five Crown faction definitions
 │   │   └── scenarios.json  # Arena / raid / labyrinth scenarios
 │   ├── hooks/
 │   │   ├── useHydraEyes.js # Event tracking hook
 │   │   └── usePlayer.js    # Player state context (XP, faction, tiger rank)
+│   ├── lib/
+│   │   └── supabase.js     # Expo Supabase client bootstrap
 │   ├── components/
 │   │   ├── XPBar.js        # Level progress bar
 │   │   ├── TigerRankBadge.js # Tiger promotion track
 │   │   └── HydraEyesPanel.js # Hydra Eyes stats panel
 │   └── screens/
+│       ├── CrownSelectScreen.js   # Choose your crown
+│       ├── HomeScreen.js          # Current realm + trial summary
+│       ├── RealmViewerScreen.js   # Placeholder 3D realm viewer
 │       ├── FactionSelectScreen.js  # Choose your crown
 │       ├── ScenariosHubScreen.js   # Arena browser
 │       ├── ScenarioScreen.js       # Individual scenario play

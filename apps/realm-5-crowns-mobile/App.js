@@ -1,20 +1,22 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StatusBar } from 'expo-status-bar';
 import { Text } from 'react-native';
 
+import { initSupabase } from './src/hooks/useHydraEyes';
 import { PlayerProvider } from './src/hooks/usePlayer';
-
-import FactionSelectScreen from './src/screens/FactionSelectScreen';
-import ScenariosHubScreen from './src/screens/ScenariosHubScreen';
-import ScenarioScreen from './src/screens/ScenarioScreen';
+import { supabase } from './src/lib/supabase';
+import CrownSelectScreen from './src/screens/CrownSelectScreen';
+import HomeScreen from './src/screens/HomeScreen';
 import CodexScreen from './src/screens/CodexScreen';
-import ProfileScreen from './src/screens/ProfileScreen';
+import RealmViewerScreen from './src/screens/RealmViewerScreen';
 
-const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+
+if (supabase) {
+  initSupabase(supabase);
+}
 
 const NAV_THEME = {
   dark: true,
@@ -27,29 +29,6 @@ const NAV_THEME = {
     notification: '#7c3aed',
   },
 };
-
-const SCREEN_OPTIONS = {
-  headerStyle: { backgroundColor: '#0d0d14' },
-  headerTintColor: '#e5e7eb',
-  headerTitleStyle: { fontWeight: '700', fontSize: 15 },
-};
-
-function ScenariosStack() {
-  return (
-    <Stack.Navigator screenOptions={SCREEN_OPTIONS}>
-      <Stack.Screen
-        name="ScenariosHub"
-        component={ScenariosHubScreen}
-        options={{ title: '⚔️ Trial Arenas' }}
-      />
-      <Stack.Screen
-        name="Scenario"
-        component={ScenarioScreen}
-        options={({ route }) => ({ title: route.params?.scenario?.title || 'Scenario' })}
-      />
-    </Stack.Navigator>
-  );
-}
 
 function MainTabs() {
   return (
@@ -65,8 +44,8 @@ function MainTabs() {
       }}
     >
       <Tab.Screen
-        name="FactionSelect"
-        component={FactionSelectScreen}
+        name="Crown"
+        component={CrownSelectScreen}
         options={{
           title: 'Crown',
           tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>👑</Text>,
@@ -74,12 +53,12 @@ function MainTabs() {
         }}
       />
       <Tab.Screen
-        name="Scenarios"
-        component={ScenariosStack}
+        name="Home"
+        component={HomeScreen}
         options={{
-          title: 'Arenas',
-          tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>⚔️</Text>,
-          headerShown: false,
+          title: 'Home',
+          tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>🏰</Text>,
+          headerTitle: 'Shadow Crown',
         }}
       />
       <Tab.Screen
@@ -92,12 +71,12 @@ function MainTabs() {
         }}
       />
       <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
+        name="Realm"
+        component={RealmViewerScreen}
         options={{
-          title: 'Profile',
-          tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>👁</Text>,
-          headerTitle: 'Operative Profile',
+          title: 'Realm',
+          tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>🌀</Text>,
+          headerTitle: 'Obsidian Gate',
         }}
       />
     </Tab.Navigator>
