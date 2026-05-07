@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
   emoji: { fontSize: 32 },
   cardTitle: { flex: 1 },
   shortName: { fontSize: 14, fontWeight: '800', letterSpacing: 2 },
-  fullName: { color: '#d1d5db', fontSize: 12, marginTop: 2 },
+  fullName: { color: '#9ca3af', fontSize: 12, marginTop: 2 },
   currentBadge: {
     color: '#e5e7eb',
     fontSize: 10,
@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     borderRadius: 999,
   },
-  lore: { color: '#e5e7eb', fontSize: 13, lineHeight: 20, marginBottom: 12 },
+  lore: { color: '#d1d5db', fontSize: 13, lineHeight: 20, marginBottom: 10 },
   metaGrid: {
     gap: 8,
   },
