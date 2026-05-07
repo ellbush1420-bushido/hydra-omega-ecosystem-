@@ -50,13 +50,14 @@ export default function CodexScreen({ navigation }) {
   }, []);
 
   const entries = useMemo(() => {
-    const source = (remoteEntries.length ? remoteEntries : LOCAL_CODEX_ENTRIES).filter(Boolean);
+    const source = remoteEntries.length ? remoteEntries : LOCAL_CODEX_ENTRIES;
     const seen = new Set();
-    return source.filter((entry) => {
-      if (!entry.key || seen.has(entry.key)) return false;
+    return source.reduce((result, entry) => {
+      if (!entry || !entry.key || seen.has(entry.key)) return result;
       seen.add(entry.key);
-      return true;
-    });
+      result.push(entry);
+      return result;
+    }, []);
   }, [remoteEntries]);
 
   const unlockedKeys = useMemo(

@@ -192,8 +192,12 @@ export async function fetchCodexCatalogForPlayer() {
       supabase.from('codex_unlocks').select('codex_key').eq('player_id', playerId),
     ]);
 
-  if (entriesError) throw entriesError;
-  if (unlocksError) throw unlocksError;
+  if (entriesError) {
+    throw new Error(`Failed to fetch codex entries: ${entriesError.message}`);
+  }
+  if (unlocksError) {
+    throw new Error(`Failed to fetch codex unlocks for ${playerId}: ${unlocksError.message}`);
+  }
 
   return {
     playerId,

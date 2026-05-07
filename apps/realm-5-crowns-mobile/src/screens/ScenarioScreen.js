@@ -18,6 +18,7 @@ import {
   getEncounterPlayerMaxHp,
   getEncounterWardenMaxHp,
   getStatLabel,
+  hasShadowCrownPerk,
   getTrialById,
   getTrialStatOptions,
 } from '../data/realmGate';
@@ -72,7 +73,7 @@ export default function ScenarioScreen({ route, navigation }) {
   const dc = difficultyFor(trial.type, realm.realmNumber);
   const damageProfile = damageProfileFor(trial.type, realm.realmNumber);
   const statOptions = getTrialStatOptions(trial.type);
-  const rankAura = state.level >= 10;
+  const rankAura = hasShadowCrownPerk(state.level, 'ascendant_aura');
 
   const recordCodexUnlock = (codexKey) => {
     if (!codexKey || state.codexUnlocks.includes(codexKey)) return;
@@ -110,7 +111,19 @@ export default function ScenarioScreen({ route, navigation }) {
   }, []);
 
   const appendLog = (entry) => {
-    setCombatLog((previous) => [entry, ...previous].slice(0, 6));
+    setCombatLog((previous) => [
+      { id: `${Date.now()}_${Math.random().toString(36).slice(2, 7)}`, text: entry },
+      ...previous,
+    ].slice(0, 6));
+  };
+
+  const buildResolutionSummary = ({ statKey, success, note }) => {
+    if (success) {
+      return `${getStatLabel(statKey)} succeeds at DC ${dc}. ${damageProfile.successDamage} damage dealt. ${note}`.trim();
+    }
+
+    const penaltyText = trial.type === 'void' ? '+1' : '';
+    return `${getStatLabel(statKey)} fails at DC ${dc}. ${damageProfile.failureDamage}${penaltyText} damage taken. ${note}`.trim();
   };
 
   const finishEncounter = (result, summary) => {
@@ -142,7 +155,7 @@ export default function ScenarioScreen({ route, navigation }) {
         recordCodexUnlock(trial.victoryCodexKey);
       }
 
-      if (state.level >= 9) {
+      if (hasShadowCrownPerk(state.level, 'shadow_dominion')) {
         dispatch({ type: 'GRANT_VEIL_AUTOWIN', realmId: realm.id });
       }
 
@@ -180,7 +193,7 @@ export default function ScenarioScreen({ route, navigation }) {
       const firstRoll = randomDie();
       const secondRoll = randomDie();
       const hasDominionCharge = (state.shadowDominionCharges[realm.id] || 0) > 0;
-      const useDeepFade = statKey === 'veil' && state.level >= 5 && !usedDeepFade;
+      const useDeepFade = statKey === 'veil' && hasShadowCrownPerk(state.level, 'deep_fade') && !usedDeepFade;
       const roll = useDeepFade ? Math.max(firstRoll, secondRoll) : firstRoll;
       const total = statValue + roll;
       let success = statKey === 'veil' && hasDominionCharge;
@@ -200,7 +213,7 @@ export default function ScenarioScreen({ route, navigation }) {
         resolutionNote = 'Shadow Dominion spends a stored Veil auto-win.';
       }
 
-      if (!success && statKey === 'veil' && state.level >= 7 && !usedEchoStep) {
+      if (!success && statKey === 'veil' && hasShadowCrownPerk(state.level, 'echo_step') && !usedEchoStep) {
         success = true;
         setUsedEchoStep(true);
         resolutionNote = 'Echo Step erases the failed Veil test.';
@@ -217,9 +230,11 @@ export default function ScenarioScreen({ route, navigation }) {
         setPlayerHp(nextPlayerHp);
       }
 
-      const summary = success
-        ? `${getStatLabel(statKey)} succeeds at DC ${dc}. ${damageProfile.successDamage} damage dealt. ${resolutionNote}`.trim()
-        : `${getStatLabel(statKey)} fails at DC ${dc}. ${damageProfile.failureDamage}${trial.type === 'void' ? '+1' : ''} damage taken. ${resolutionNote}`.trim();
+      const summary = buildResolutionSummary({
+        statKey,
+        success,
+        note: resolutionNote,
+      });
 
       trackScenarioChoice(trial.id, statKey, {
         dc,
@@ -304,8 +319,8 @@ export default function ScenarioScreen({ route, navigation }) {
           <Text style={styles.sectionLabel}>Encounter log</Text>
           <View style={styles.logCard}>
             <Text style={styles.lastAction}>{lastAction}</Text>
-            {combatLog.map((entry, index) => (
-              <Text key={`${entry}-${index}`} style={styles.logEntry}>{entry}</Text>
+            {combatLog.map((entry) => (
+              <Text key={entry.id} style={styles.logEntry}>{entry.text}</Text>
             ))}
           </View>
         </View>

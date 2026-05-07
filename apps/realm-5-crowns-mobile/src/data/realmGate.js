@@ -451,21 +451,13 @@ export function damageProfileFor(trialType, realmNumber) {
 }
 
 export function getShadowCrownRank(xp) {
-  let low = 0;
-  let high = SHADOW_CROWN_THRESHOLDS.length - 1;
-  let rankIndex = 0;
-
-  while (low <= high) {
-    const middle = Math.floor((low + high) / 2);
-    if (xp >= SHADOW_CROWN_THRESHOLDS[middle]) {
-      rankIndex = middle;
-      low = middle + 1;
-    } else {
-      high = middle - 1;
+  for (let index = SHADOW_CROWN_THRESHOLDS.length - 1; index >= 0; index -= 1) {
+    if (xp >= SHADOW_CROWN_THRESHOLDS[index]) {
+      return Math.min(index + 1, 10);
     }
   }
 
-  return Math.min(rankIndex + 1, 10);
+  return 1;
 }
 
 export function getShadowCrownMilestone(rank) {
@@ -503,7 +495,7 @@ export function getStatLabel(statKey) {
 }
 
 export function getEncounterPlayerMaxHp(rank) {
-  return ENCOUNTER_BALANCE.bonusHpRankThreshold <= rank
+  return rank >= ENCOUNTER_BALANCE.bonusHpRankThreshold
     ? ENCOUNTER_BALANCE.playerBaseHp + ENCOUNTER_BALANCE.bonusHpAmount
     : ENCOUNTER_BALANCE.playerBaseHp;
 }
@@ -512,4 +504,13 @@ export function getEncounterWardenMaxHp(realmNumber, trialType) {
   return ENCOUNTER_BALANCE.wardenBaseHp
     + realmNumber * ENCOUNTER_BALANCE.wardenPerRealmHp
     + (trialType === 'void' ? ENCOUNTER_BALANCE.voidBonusHp : 0);
+}
+
+export function hasShadowCrownPerk(rank, perkKey) {
+  return {
+    deep_fade: rank >= 5,
+    echo_step: rank >= 7,
+    shadow_dominion: rank >= 9,
+    ascendant_aura: rank >= 10,
+  }[perkKey] || false;
 }
