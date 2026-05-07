@@ -17,6 +17,7 @@ import {
   isSupabaseConfigured,
   savePlayerState,
 } from '../lib/supabase';
+import ShadowCrownPanel from '../components/ShadowCrownPanel';
 
 function DataRow({ label, value, accent }) {
   return (
@@ -91,7 +92,7 @@ export default function HomeScreen({ navigation }) {
         <Text style={styles.eyeLabel}>👁 HYDRA EYES — HOME EYE</Text>
         <Text style={styles.title}>Realm Home</Text>
         <Text style={styles.subtitle}>
-          Sync your Crown, Realm, and Trial state to Supabase and open the 3D Obsidian Gate.
+          Sync your Shadow Crown, Realm Gate, and Trial state to Supabase and open the 3D Obsidian Gate.
         </Text>
 
         <View style={styles.heroCard}>
@@ -100,9 +101,11 @@ export default function HomeScreen({ navigation }) {
             {state.faction ? `${state.faction.emoji} ${state.faction.shortName}` : 'Unbound'}
           </Text>
           <Text style={styles.heroMeta}>
-            Level {state.level} · {state.tigerRank ? state.tigerRank.replace(/_/g, ' ') : 'initiate'}
+            Rank {state.level} · {localSnapshot.realm}
           </Text>
         </View>
+
+        <ShadowCrownPanel compact />
 
         <View style={styles.section}>
           <Text style={styles.sectionLabel}>Supabase Sync</Text>

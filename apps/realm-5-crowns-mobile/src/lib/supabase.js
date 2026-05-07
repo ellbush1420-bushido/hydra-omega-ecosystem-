@@ -2,6 +2,7 @@ import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
 import { Platform } from 'react-native';
 import { createClient } from '@supabase/supabase-js';
+import codexEntries from '../data/codexEntries';
 
 const DEVICE_ID_KEY = 'realm5crowns.deviceId';
 let memoryDeviceId = '';
@@ -37,17 +38,21 @@ function toTitle(value) {
 }
 
 function getRealmLabel(state) {
-  if (state.tigerRank?.startsWith('white_tiger')) return 'Obsidian Gate';
-  if (state.tigerRank?.startsWith('black_tiger')) return 'Shadow Arena';
-  if (state.faction?.shortName) return `${state.faction.shortName} Crown`;
-  return 'Unclaimed Threshold';
+  const deepestRealmId = state.realmUnlocks?.[state.realmUnlocks.length - 1];
+  if (!deepestRealmId) return 'Obsidian Gate';
+  return toTitle(deepestRealmId);
 }
 
 function getTrialLabel(state) {
-  const mostRecentScenario = state.scenarioHistory.filter((entry) => entry.scenarioId)[0];
-  if (mostRecentScenario) return toTitle(mostRecentScenario.scenarioId);
+  const mostRecentScenario = state.scenarioHistory.find((entry) => entry.trialTitle || entry.scenarioId);
+  if (mostRecentScenario?.trialTitle) return mostRecentScenario.trialTitle;
+  if (mostRecentScenario?.scenarioId) return toTitle(mostRecentScenario.scenarioId);
   if (state.faction) return 'Crown Selection';
   return 'Awakening';
+}
+
+function normalizeCodexKey(codexKey) {
+  return codexKey.toLowerCase().replace(/[.\s]+/g, '_');
 }
 
 async function readStoredDeviceId() {
@@ -141,4 +146,65 @@ export async function savePlayerState(state) {
   logPlayerState('Supabase player_state write', { deviceId, hasData: Boolean(data) });
 
   return { deviceId, data };
+}
+
+export async function unlockCodexEntry(codexKey) {
+  if (!supabase || !codexKey) return null;
+
+  const deviceId = await getPlayerStateDeviceId();
+  const payload = {
+    player_id: deviceId,
+    codex_key: codexKey,
+  };
+
+  const { error } = await supabase.from('codex_unlocks').upsert(payload, {
+    onConflict: 'player_id,codex_key',
+  });
+
+  if (error) {
+    if (__DEV__) {
+      console.info('Supabase codex unlock skipped', { codexKey, message: error.message });
+    }
+    return null;
+  }
+
+  return payload;
+}
+
+export async function fetchCodexCatalog(localUnlocks = []) {
+  const normalizedLocalUnlocks = new Set(localUnlocks.map(normalizeCodexKey));
+
+  if (!supabase) {
+    return codexEntries.map((entry) => ({
+      ...entry,
+      unlocked: normalizedLocalUnlocks.has(normalizeCodexKey(entry.key)),
+    }));
+  }
+
+  const deviceId = await getPlayerStateDeviceId();
+  const [{ data: entryRows, error: entriesError }, { data: unlockRows, error: unlockError }] =
+    await Promise.all([
+      supabase.from('codex_entries').select('key, title, body, unlock_condition').order('title'),
+      supabase.from('codex_unlocks').select('codex_key').eq('player_id', deviceId),
+    ]);
+
+  const sourceEntries =
+    !entriesError && Array.isArray(entryRows) && entryRows.length > 0
+      ? entryRows.map((entry) => ({
+          key: entry.key,
+          title: entry.title,
+          body: entry.body,
+          unlockCondition: entry.unlock_condition,
+        }))
+      : codexEntries;
+
+  const unlocks = new Set([
+    ...normalizedLocalUnlocks,
+    ...((unlockError ? [] : unlockRows) || []).map((entry) => normalizeCodexKey(entry.codex_key)),
+  ]);
+
+  return sourceEntries.map((entry) => ({
+    ...entry,
+    unlocked: unlocks.has(normalizeCodexKey(entry.key)),
+  }));
 }

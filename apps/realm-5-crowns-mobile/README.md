@@ -7,13 +7,12 @@ A playable React Native / Expo prototype for **The Realm of 5 Crowns**, integrat
 | Feature | Status |
 |---|---|
 | Five Crown faction selection | ✅ |
-| Shadow Arena scenarios | ✅ |
-| Kingdom Raid scenarios | ✅ |
-| Hydra Labyrinth trials | ✅ |
+| Realm Gate progression tree | ✅ |
+| Trial difficulty scaling by realm + type | ✅ |
 | Hydra Eyes UI (event tracking) | ✅ |
-| XP / level progression | ✅ |
+| Shadow Crown rank progression | ✅ |
 | Black Tiger + White Tiger tracks | ✅ |
-| Codex unlock screen | ✅ |
+| Lore Codex list + detail screens | ✅ |
 | Mock joins, sales, revenue, scale score | ✅ |
 | Hydra recommendation logic | ✅ |
 | Supabase player_state sync | ✅ |
@@ -51,6 +50,7 @@ cp .env.example .env.local
 3. Copy your URL and anon key into `.env.local`.
 4. The `hydra_events` table will receive live tracking from the app.
 5. The `player_state` table powers the Home screen sync card.
+6. `codex_entries` and `codex_unlocks` power the lore codex screens.
 
 ## Project Structure
 
@@ -61,23 +61,29 @@ apps/realm-5-crowns-mobile/
 ├── eas.json                # EAS Build config
 ├── src/
 │   ├── data/
+│   │   ├── codexEntries.js # Lore Codex seed entries
 │   │   ├── factions.json   # Five Crown faction definitions
-│   │   └── scenarios.json  # Arena / raid / labyrinth scenarios
+│   │   ├── realmTrials.js  # Realm Gate progression + trial data
+│   │   └── scenarios.json  # Legacy prototype scenarios
 │   ├── hooks/
 │   │   ├── useHydraEyes.js # Event tracking hook
-│   │   └── usePlayer.js    # Player state context (XP, faction, tiger rank)
+│   │   └── usePlayer.js    # Player state context (XP, Crown rank, realm unlocks)
 │   ├── lib/
-│   │   └── supabase.js     # Shared Supabase client + player_state helpers
+│   │   ├── shadowCrown.js  # Rank thresholds + Veil/Edge/Pulse/Flux growth
+│   │   ├── supabase.js     # Shared Supabase client + Codex/player_state helpers
+│   │   └── trials.js       # Trial DC + damage profile helpers
 │   ├── components/
-│   │   ├── XPBar.js        # Level progress bar
+│   │   ├── ShadowCrownPanel.js # Crown stats + perk milestones
+│   │   ├── XPBar.js        # Rank progress bar
 │   │   ├── TigerRankBadge.js # Tiger promotion track
 │   │   └── HydraEyesPanel.js # Hydra Eyes stats panel
 │   └── screens/
 │       ├── HomeScreen.js          # Supabase sync dashboard
 │       ├── FactionSelectScreen.js  # Choose your crown
-│       ├── ScenariosHubScreen.js   # Arena browser
-│       ├── ScenarioScreen.js       # Individual scenario play
-│       ├── CodexScreen.js          # Codex unlock + product ladder
+│       ├── ScenariosHubScreen.js   # Realm Gate browser
+│       ├── ScenarioScreen.js       # Individual trial resolution
+│       ├── CodexScreen.js          # Lore Codex unlock list
+│       ├── CodexDetailScreen.js    # Full lore entry viewer
 │       ├── ProfileScreen.js        # Player profile + Hydra Eyes
 │       └── RealmViewerScreen.js    # Expo GL / Three.js corridor viewer
 └── supabase/

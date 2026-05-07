@@ -1,23 +1,23 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { usePlayer } from '../hooks/usePlayer';
+import { SHADOW_CROWN_THRESHOLDS } from '../lib/shadowCrown';
 
 export default function XPBar() {
   const { state } = usePlayer();
   const { xp, level, xpToNext } = state;
 
-  const levelThresholds = [0, 100, 250, 450, 700, 1000, 1400, 1900, 2500, 3200, 4000];
-  const currentLevelXp = levelThresholds[level - 1] || 0;
-  const nextLevelXp = levelThresholds[level] || xp;
+  const currentLevelXp = SHADOW_CROWN_THRESHOLDS[level - 1] || 0;
+  const nextLevelXp = SHADOW_CROWN_THRESHOLDS[level] || xp;
   const range = nextLevelXp - currentLevelXp;
   const progress = range > 0 ? Math.min((xp - currentLevelXp) / range, 1) : 1;
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.levelText}>Lv {level}</Text>
+        <Text style={styles.levelText}>Shadow Crown Rank {level}</Text>
         <Text style={styles.xpText}>{xp} XP</Text>
-        {xpToNext > 0 && <Text style={styles.toNextText}>{xpToNext} to next</Text>}
+        {xpToNext > 0 && <Text style={styles.toNextText}>{xpToNext} to next rank</Text>}
       </View>
       <View style={styles.barBg}>
         <View style={[styles.barFill, { width: `${Math.round(progress * 100)}%` }]} />
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
   levelText: {
     color: '#a78bfa',
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: '700',
   },
   xpText: {

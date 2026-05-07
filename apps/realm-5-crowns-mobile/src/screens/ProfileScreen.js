@@ -9,14 +9,23 @@ import {
 } from 'react-native';
 import { usePlayer } from '../hooks/usePlayer';
 import { useHydraEyes } from '../hooks/useHydraEyes';
+import { unlockCodexEntry } from '../lib/supabase';
 import XPBar from '../components/XPBar';
 import TigerRankBadge from '../components/TigerRankBadge';
 import HydraEyesPanel from '../components/HydraEyesPanel';
+import ShadowCrownPanel from '../components/ShadowCrownPanel';
 
 export default function ProfileScreen({ navigation }) {
-  const { state } = usePlayer();
-  const { eventLog, trackClick } = useHydraEyes();
-  const { faction, level, xp, codexUnlocks, scenarioHistory, mockStats, hydraRecommendation } = state;
+  const { state, dispatch } = usePlayer();
+  const { eventLog, trackClick, trackCodexUnlock } = useHydraEyes();
+  const { faction, level, xp, codexUnlocks, scenarioHistory, hydraRecommendation, realmUnlocks } = state;
+
+  React.useEffect(() => {
+    if (level < 5 || codexUnlocks.includes('codex_shadow_crown')) return;
+    dispatch({ type: 'UNLOCK_CODEX', codexId: 'codex.shadow_crown' });
+    trackCodexUnlock('codex.shadow_crown');
+    unlockCodexEntry('codex.shadow_crown');
+  }, [level, codexUnlocks]);
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -44,14 +53,22 @@ export default function ProfileScreen({ navigation }) {
         )}
 
         <XPBar />
+        <ShadowCrownPanel />
         <TigerRankBadge />
 
         <View style={styles.statsRow}>
-          <StatBox label="Level" value={level} color="#a78bfa" />
+          <StatBox label="Rank" value={level} color="#a78bfa" />
           <StatBox label="XP" value={xp} color="#f59e0b" />
           <StatBox label="Codex" value={codexUnlocks.length} color="#059669" />
-          <StatBox label="Scenarios" value={new Set(scenarioHistory.filter(h => h.scenarioId).map(h => h.scenarioId)).size} color="#3b82f6" />
+          <StatBox label="Realms" value={realmUnlocks.length} color="#3b82f6" />
         </View>
+
+        {hydraRecommendation ? (
+          <View style={styles.recommendationCard}>
+            <Text style={styles.sectionLabel}>Hydra Recommendation</Text>
+            <Text style={styles.recommendationText}>{hydraRecommendation}</Text>
+          </View>
+        ) : null}
 
         <HydraEyesPanel events={eventLog} />
 
@@ -61,7 +78,9 @@ export default function ProfileScreen({ navigation }) {
             {scenarioHistory.slice(0, 8).map((h, i) => (
               <View key={i} style={styles.historyRow}>
                 <Text style={styles.historyType}>
-                  {h.type === 'faction_select' ? '👑 Faction chosen' : '⚔️ ' + h.scenarioId}
+                  {h.type === 'faction_select'
+                    ? '👑 Faction chosen'
+                    : `${h.victory ? '✅' : '⚔️'} ${h.trialTitle || h.scenarioId}`}
                 </Text>
                 <Text style={styles.historyTs}>
                   {new Date(h.ts).toLocaleTimeString()}
@@ -167,6 +186,20 @@ const styles = StyleSheet.create({
     borderColor: '#1a1a2e',
     padding: 12,
     marginBottom: 8,
+  },
+  recommendationCard: {
+    marginTop: 4,
+    backgroundColor: '#0d0d14',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#1a1a2e',
+    padding: 12,
+    marginBottom: 8,
+  },
+  recommendationText: {
+    color: '#d1d5db',
+    fontSize: 12,
+    lineHeight: 18,
   },
   sectionLabel: {
     color: '#6b7280',

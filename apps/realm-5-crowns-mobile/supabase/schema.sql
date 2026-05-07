@@ -62,16 +62,69 @@ create trigger players_updated_at
   before update on public.players
   for each row execute procedure public.set_updated_at();
 
+-- 3. LORE CODEX
 -- ─────────────────────────────────────────────────────────────────────────────
--- 3. CODEX UNLOCKS
--- ─────────────────────────────────────────────────────────────────────────────
+create table if not exists public.codex_entries (
+  id               uuid primary key default gen_random_uuid(),
+  key              text unique not null,
+  title            text not null,
+  body             text not null,
+  unlock_condition text not null
+);
+
 create table if not exists public.codex_unlocks (
   id          uuid primary key default gen_random_uuid(),
-  player_id   uuid references public.players(id) on delete cascade,
-  codex_id    text not null,
+  player_id   text not null,
+  codex_key   text not null,
   unlocked_at timestamptz not null default now(),
-  unique(player_id, codex_id)
+  unique(player_id, codex_key)
 );
+
+insert into public.codex_entries (key, title, body, unlock_condition)
+values
+  (
+    'codex.obsidian_gate',
+    'Obsidian Gate',
+    'The first Realm opens beneath volcanic glass and iron fog. Its wardens test whether discipline or fear rules the hand that reaches for the Crown.',
+    'First entry into Realm 1: Obsidian Gate.'
+  ),
+  (
+    'codex.gate_warden',
+    'Gate Warden',
+    'The Gate Warden stands at the threshold between oath and ascent. Defeating it brands the victor as one who can bear the weight of deeper Realms.',
+    'Win the Trial of Steel in Obsidian Gate.'
+  ),
+  (
+    'codex.golden_arena',
+    'Golden Arena',
+    'The Arena bathes every challenger in merciless light. Here chains, echoes, and steel are displayed before the watching crowd of Crown spirits.',
+    'Unlock Realm 2: Golden Arena.'
+  ),
+  (
+    'codex.silver_labyrinth',
+    'Silver Labyrinth',
+    'Every corridor of the Labyrinth returns a different truth. Masks and void-signs split the unwary from the ascendant.',
+    'Unlock Realm 3: Silver Labyrinth.'
+  ),
+  (
+    'codex.crimson_wilds',
+    'Crimson Wilds',
+    'The Wilds answer only to force and nerve. Steel, chains, and the void hunt together beneath a red horizon.',
+    'Unlock Realm 4: Crimson Wilds.'
+  ),
+  (
+    'codex.azure_spire',
+    'Azure Spire',
+    'At the final height, every trial merges into one ascent. Those who endure the Spire are judged in the Ascension Encounter.',
+    'Unlock Realm 5: Azure Spire.'
+  ),
+  (
+    'codex.shadow_crown',
+    'Shadow Crown',
+    'The Shadow Crown sharpens Veil, Edge, Pulse, and Flux in deliberate stages. Each rank is a promise that power will answer to discipline.',
+    'Reach Shadow Crown Rank 5.'
+  )
+on conflict (key) do nothing;
 
 -- ─────────────────────────────────────────────────────────────────────────────
 -- 4. SCENARIO HISTORY
@@ -80,7 +133,7 @@ create table if not exists public.scenario_history (
   id              uuid primary key default gen_random_uuid(),
   player_id       uuid references public.players(id) on delete cascade,
   scenario_id     text not null,
-  scenario_type   text not null,  -- 'shadowArena' | 'kingdomRaid' | 'hydraLabyrinth'
+  scenario_type   text not null,  -- realm id, e.g. 'obsidian_gate' | 'golden_arena'
   choice_id       text,
   outcome_text    text,
   xp_earned       integer default 0,
@@ -102,7 +155,7 @@ create table if not exists public.hydra_events (
   scenario_id   text,
   scenario_type text,
   choice_id     text,
-  codex_id      text,
+  codex_id      text,                  -- codex key, e.g. 'codex.obsidian_gate'
   element       text,
   context       text,
   amount        numeric(10,2),
@@ -123,6 +176,7 @@ create index if not exists hydra_events_ts_idx on public.hydra_events(ts desc);
 -- ─────────────────────────────────────────────────────────────────────────────
 alter table public.player_state enable row level security;
 alter table public.players enable row level security;
+alter table public.codex_entries enable row level security;
 alter table public.codex_unlocks enable row level security;
 alter table public.scenario_history enable row level security;
 alter table public.hydra_events enable row level security;
@@ -140,11 +194,20 @@ create policy "anon update player_state"
 create policy "anon insert players"
   on public.players for insert to anon with check (true);
 
+create policy "anon select codex entries"
+  on public.codex_entries for select to anon using (true);
+
+create policy "anon select codex unlocks"
+  on public.codex_unlocks for select to anon using (true);
+
 create policy "anon insert events"
   on public.hydra_events for insert to anon with check (true);
 
 create policy "anon insert codex"
   on public.codex_unlocks for insert to anon with check (true);
+
+create policy "anon update codex"
+  on public.codex_unlocks for update to anon using (true) with check (true);
 
 create policy "anon insert scenarios"
   on public.scenario_history for insert to anon with check (true);
@@ -155,6 +218,12 @@ create policy "service select player_state"
 
 create policy "service select players"
   on public.players for select to service_role using (true);
+
+create policy "service select codex entries"
+  on public.codex_entries for select to service_role using (true);
+
+create policy "service select codex unlocks"
+  on public.codex_unlocks for select to service_role using (true);
 
 create policy "service select events"
   on public.hydra_events for select to service_role using (true);

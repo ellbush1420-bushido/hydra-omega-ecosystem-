@@ -14,6 +14,7 @@ import FactionSelectScreen from './src/screens/FactionSelectScreen';
 import ScenariosHubScreen from './src/screens/ScenariosHubScreen';
 import ScenarioScreen from './src/screens/ScenarioScreen';
 import CodexScreen from './src/screens/CodexScreen';
+import CodexDetailScreen from './src/screens/CodexDetailScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import RealmViewerScreen from './src/screens/RealmViewerScreen';
 
@@ -72,6 +73,23 @@ function HomeStack() {
   );
 }
 
+function CodexStack() {
+  return (
+    <Stack.Navigator screenOptions={SCREEN_OPTIONS}>
+      <Stack.Screen
+        name="CodexVault"
+        component={CodexScreen}
+        options={{ title: '📜 Codex Vault' }}
+      />
+      <Stack.Screen
+        name="CodexDetail"
+        component={CodexDetailScreen}
+        options={({ route }) => ({ title: route.params?.entry?.title || 'Codex Entry' })}
+      />
+    </Stack.Navigator>
+  );
+}
+
 function MainTabs() {
   return (
     <Tab.Navigator
@@ -114,11 +132,11 @@ function MainTabs() {
       />
       <Tab.Screen
         name="Codex"
-        component={CodexScreen}
+        component={CodexStack}
         options={{
           title: 'Codex',
           tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>📜</Text>,
-          headerTitle: 'Codex Vault',
+          headerShown: false,
         }}
       />
       <Tab.Screen

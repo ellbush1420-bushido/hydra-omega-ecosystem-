@@ -10,11 +10,12 @@ import {
 import factions from '../data/factions.json';
 import { usePlayer } from '../hooks/usePlayer';
 import { useHydraEyes } from '../hooks/useHydraEyes';
+import { unlockCodexEntry } from '../lib/supabase';
 import XPBar from '../components/XPBar';
 
 export default function FactionSelectScreen({ navigation }) {
   const { state, dispatch } = usePlayer();
-  const { trackFactionSelect, trackClick } = useHydraEyes();
+  const { trackFactionSelect, trackClick, trackCodexUnlock } = useHydraEyes();
 
   const handleSelect = (faction) => {
     trackClick('faction_card', faction.id);
@@ -22,6 +23,8 @@ export default function FactionSelectScreen({ navigation }) {
     dispatch({ type: 'SET_FACTION', faction });
     dispatch({ type: 'ADD_XP', amount: 25 });
     dispatch({ type: 'UNLOCK_CODEX', codexId: faction.codexUnlock });
+    trackCodexUnlock(faction.codexUnlock);
+    unlockCodexEntry(faction.codexUnlock);
     dispatch({
       type: 'LOG_SCENARIO',
       entry: { type: 'faction_select', factionId: faction.id },

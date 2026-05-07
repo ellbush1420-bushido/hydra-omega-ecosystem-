@@ -1,30 +1,23 @@
-// Global player state context — XP, faction, tiger rank, codex, scenario history
+// Global player state context — XP, Crown rank, realm unlocks, codex, scenario history
 
 import React, { createContext, useContext, useReducer } from 'react';
+import {
+  getShadowCrownRank,
+  getShadowCrownState,
+  xpToNextShadowRank,
+} from '../lib/shadowCrown';
 
-const LEVEL_THRESHOLDS = [0, 100, 250, 450, 700, 1000, 1400, 1900, 2500, 3200, 4000];
-
-function getLevel(xp) {
-  let level = 1;
-  for (let i = 0; i < LEVEL_THRESHOLDS.length; i++) {
-    if (xp >= LEVEL_THRESHOLDS[i]) level = i + 1;
-    else break;
-  }
-  return Math.min(level, 10);
-}
-
-function xpToNextLevel(xp) {
-  const level = getLevel(xp);
-  if (level >= 10) return 0;
-  return LEVEL_THRESHOLDS[level] - xp;
+function normalizeCodexId(codexId) {
+  return codexId?.toLowerCase().replace(/[.\s]+/g, '_') || '';
 }
 
 const initialState = {
   xp: 0,
   level: 1,
-  xpToNext: 100,
+  xpToNext: 50,
   faction: null,
   tigerRank: null, // null | 'black_tiger_I' | 'black_tiger_II' | 'white_tiger_I' | 'white_tiger_II'
+  realmUnlocks: ['obsidian_gate'],
   codexUnlocks: [],
   scenarioHistory: [],
   mockStats: {
@@ -38,21 +31,24 @@ const initialState = {
 };
 
 function computeRecommendation(state) {
-  const { faction, tigerRank, mockStats, level } = state;
+  const { faction, mockStats, level, realmUnlocks } = state;
   if (!faction) return null;
-  if (tigerRank && tigerRank.startsWith('white_tiger')) {
-    return '🐅 White Tiger Path — You are ready for the Hydra Founders Council.';
+  if (realmUnlocks.includes('azure_spire')) {
+    return '🜁 Azure Spire open — Prepare for the Ascension Encounter.';
   }
-  if (mockStats.revenue > 100) {
-    return '💰 Commerce Eye Active — Focus on the Codex Vault Membership conversion path.';
+  if (level >= 9) {
+    return '👑 Shadow Dominion stirs — Use Veil trials to secure your ascent.';
   }
-  if (mockStats.scaleScore > 30) {
-    return '📡 Scale Score Elevated — Shadow Arena expansion recommended.';
+  if (realmUnlocks.includes('crimson_wilds')) {
+    return '🩸 Crimson Wilds unlocked — Steel and Void trials now hit harder.';
   }
   if (level >= 5) {
-    return '⬆️ Mid-Rank — Kingdom Raid campaigns are now available.';
+    return '🌒 Deep Fade awakened — Your Shadow Crown now bends Veil in your favor.';
   }
-  return '🐍 Initiate Path — Complete Shadow Arena trials to unlock your next rank.';
+  if (mockStats.scaleScore > 20) {
+    return '📡 Trial momentum rising — Push deeper into the next unlocked Realm.';
+  }
+  return '🚪 Initiate Path — Clear Obsidian Gate to open the Golden Arena.';
 }
 
 function playerReducer(state, action) {
@@ -62,19 +58,27 @@ function playerReducer(state, action) {
 
     case 'ADD_XP': {
       const newXp = state.xp + action.amount;
-      const newLevel = getLevel(newXp);
+      const newLevel = getShadowCrownRank(newXp);
       const newState = {
         ...state,
         xp: newXp,
         level: newLevel,
-        xpToNext: xpToNextLevel(newXp),
+        xpToNext: xpToNextShadowRank(newXp),
       };
       return { ...newState, hydraRecommendation: computeRecommendation(newState) };
     }
 
-    case 'UNLOCK_CODEX':
-      if (state.codexUnlocks.includes(action.codexId)) return state;
-      return { ...state, codexUnlocks: [...state.codexUnlocks, action.codexId] };
+    case 'UNLOCK_CODEX': {
+      const codexId = normalizeCodexId(action.codexId);
+      if (!codexId || state.codexUnlocks.includes(codexId)) return state;
+      return { ...state, codexUnlocks: [...state.codexUnlocks, codexId] };
+    }
+
+    case 'UNLOCK_REALM': {
+      if (!action.realmId || state.realmUnlocks.includes(action.realmId)) return state;
+      const newState = { ...state, realmUnlocks: [...state.realmUnlocks, action.realmId] };
+      return { ...newState, hydraRecommendation: computeRecommendation(newState) };
+    }
 
     case 'PROMOTE_TIGER': {
       const newState = { ...state, tigerRank: action.rank };
@@ -122,4 +126,8 @@ export function usePlayer() {
   const ctx = useContext(PlayerContext);
   if (!ctx) throw new Error('usePlayer must be used within PlayerProvider');
   return ctx;
+}
+
+export function getPlayerShadowCrown(state) {
+  return getShadowCrownState(state.level);
 }

@@ -1,5 +1,4 @@
-// Hub screen listing all scenario arenas
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   Text,
@@ -8,102 +7,114 @@ import {
   StyleSheet,
   SafeAreaView,
 } from 'react-native';
-import scenarios from '../data/scenarios.json';
+import realmTrials from '../data/realmTrials';
 import { usePlayer } from '../hooks/usePlayer';
 import { useHydraEyes } from '../hooks/useHydraEyes';
+import { unlockCodexEntry } from '../lib/supabase';
 import XPBar from '../components/XPBar';
-import TigerRankBadge from '../components/TigerRankBadge';
-
-const ARENAS = [
-  {
-    key: 'shadowArena',
-    label: 'Shadow Arena',
-    emoji: '⚔️',
-    color: '#7c3aed',
-    description: 'Test your shadow instincts in the arena of perception and restraint.',
-    scenarios: scenarios.shadowArena,
-  },
-  {
-    key: 'kingdomRaid',
-    label: 'Kingdom Raid',
-    emoji: '🏰',
-    color: '#dc2626',
-    description: 'Lead your faction in a strategic raid on a rival kingdom.',
-    scenarios: scenarios.kingdomRaid,
-  },
-  {
-    key: 'hydraLabyrinth',
-    label: 'Hydra Labyrinth',
-    emoji: '🌀',
-    color: '#059669',
-    description: 'Descend into the Hydra\'s own labyrinth and face its awakened eyes.',
-    scenarios: scenarios.hydraLabyrinth,
-  },
-];
+import ShadowCrownPanel from '../components/ShadowCrownPanel';
+import { describeTrial } from '../lib/trials';
 
 export default function ScenariosHubScreen({ navigation }) {
-  const { state } = usePlayer();
-  const { trackClick } = useHydraEyes();
+  const { state, dispatch } = usePlayer();
+  const { trackClick, trackCodexUnlock } = useHydraEyes();
 
   const completedScenarioIds = new Set(
     state.scenarioHistory
-      .filter((h) => h.type === 'scenario_choice')
-      .map((h) => h.scenarioId)
+      .filter((entry) => entry.type === 'scenario_choice' && entry.victory)
+      .map((entry) => entry.scenarioId)
   );
 
-  const handleScenario = (scenarioType, scenario) => {
-    trackClick('scenario_card', scenario.id);
-    navigation.navigate('Scenario', { scenario, scenarioType });
+  useEffect(() => {
+    realmTrials
+      .filter((realm) => state.realmUnlocks.includes(realm.id) && realm.codexKey)
+      .forEach((realm) => {
+        const normalizedKey = realm.codexKey.toLowerCase().replace(/[.\s]+/g, '_');
+        if (state.codexUnlocks.includes(normalizedKey)) return;
+        dispatch({ type: 'UNLOCK_CODEX', codexId: realm.codexKey });
+        trackCodexUnlock(realm.codexKey);
+        unlockCodexEntry(realm.codexKey);
+      });
+  }, [state.realmUnlocks, state.codexUnlocks]);
+
+  const handleScenario = (realm, scenario) => {
+    trackClick('trial_card', scenario.id);
+    navigation.navigate('Scenario', { scenario, realm });
   };
 
   return (
     <SafeAreaView style={styles.safe}>
       <ScrollView contentContainerStyle={styles.scroll}>
         <Text style={styles.eyeLabel}>👁 HYDRA EYES — LABYRINTH EYE</Text>
-        <Text style={styles.title}>Trial Arenas</Text>
+        <Text style={styles.title}>Realm Gate Progression</Text>
 
         {state.faction && (
           <View style={styles.factionBadge}>
             <Text style={styles.factionText}>
-              {state.faction.emoji} {state.faction.shortName} — Lv {state.level}
+              {state.faction.emoji} {state.faction.shortName} · Rank {state.level}
             </Text>
           </View>
         )}
 
         <XPBar />
-        <TigerRankBadge compact />
+        <ShadowCrownPanel compact />
 
-        {ARENAS.map((arena) => (
-          <View key={arena.key} style={styles.arenaSection}>
-            <View style={[styles.arenaHeader, { borderLeftColor: arena.color }]}>
-              <Text style={styles.arenaEmoji}>{arena.emoji}</Text>
-              <View>
-                <Text style={[styles.arenaName, { color: arena.color }]}>{arena.label}</Text>
-                <Text style={styles.arenaDesc}>{arena.description}</Text>
+        <View style={styles.ruleCard}>
+          <Text style={styles.ruleLabel}>Unlock rule</Text>
+          <Text style={styles.ruleText}>Victory in Realm N unlocks Realm N+1.</Text>
+        </View>
+
+        {realmTrials.map((realm) => {
+          const unlocked = state.realmUnlocks.includes(realm.id);
+          return (
+            <View
+              key={realm.id}
+              style={[styles.realmSection, !unlocked && styles.realmSectionLocked]}
+            >
+              <View style={styles.realmHeader}>
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.realmTitle}>{realm.title}</Text>
+                  <Text style={styles.realmSummary}>{realm.summary}</Text>
+                </View>
+                <Text style={unlocked ? styles.unlockedBadge : styles.lockedBadge}>
+                  {unlocked ? 'Unlocked' : 'Locked'}
+                </Text>
               </View>
-            </View>
 
-            {arena.scenarios.map((s) => {
-              const done = completedScenarioIds.has(s.id);
-              return (
-                <TouchableOpacity
-                  key={s.id}
-                  style={[styles.scenarioCard, done && styles.scenarioDone]}
-                  onPress={() => handleScenario(arena.key, s)}
-                  activeOpacity={0.8}
-                >
-                  <View style={styles.scenarioRow}>
-                    <Text style={styles.scenarioTitle}>{s.title}</Text>
-                    {done && <Text style={styles.doneBadge}>✓ Done</Text>}
-                  </View>
-                  <Text style={styles.scenarioDesc} numberOfLines={2}>
-                    {s.description}
-                  </Text>
-                </TouchableOpacity>
-              );
-            })}
-          </View>
-        ))}
+              {realm.trials.map((scenario) => {
+                const details = describeTrial(scenario.trialType, realm.tier);
+                const done = completedScenarioIds.has(scenario.id);
+                return (
+                  <TouchableOpacity
+                    key={scenario.id}
+                    style={[
+                      styles.scenarioCard,
+                      done && styles.scenarioDone,
+                      !unlocked && styles.scenarioLocked,
+                    ]}
+                    onPress={() => unlocked && handleScenario(realm, scenario)}
+                    disabled={!unlocked}
+                    activeOpacity={0.85}
+                  >
+                    <View style={styles.scenarioRow}>
+                      <Text style={styles.scenarioTitle}>{scenario.title}</Text>
+                      <View style={styles.tagRow}>
+                        {scenario.core && <Text style={styles.coreBadge}>Core</Text>}
+                        {done && <Text style={styles.doneBadge}>✓ Victory</Text>}
+                      </View>
+                    </View>
+                    <Text style={styles.scenarioDesc}>{scenario.description}</Text>
+                    <View style={styles.metaRow}>
+                      <Text style={styles.metaPill}>{scenario.trialType}</Text>
+                      <Text style={styles.metaPill}>DC {details.dc}</Text>
+                      <Text style={styles.metaPill}>+{details.damageBonus} damage</Text>
+                    </View>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          );
+        })}
       </ScrollView>
     </SafeAreaView>
   );
@@ -134,37 +145,122 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   factionText: { color: '#a78bfa', fontSize: 12, fontWeight: '600' },
-  arenaSection: { marginBottom: 20 },
-  arenaHeader: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    borderLeftWidth: 3,
-    paddingLeft: 12,
-    marginBottom: 10,
-    gap: 10,
-  },
-  arenaEmoji: { fontSize: 24, marginTop: 1 },
-  arenaName: { fontSize: 16, fontWeight: '700' },
-  arenaDesc: { color: '#6b7280', fontSize: 12, marginTop: 2 },
-  scenarioCard: {
+  ruleCard: {
     backgroundColor: '#0d0d14',
-    borderRadius: 10,
+    borderRadius: 12,
     borderWidth: 1,
     borderColor: '#1f2937',
+    padding: 12,
+    marginBottom: 12,
+  },
+  ruleLabel: {
+    color: '#6b7280',
+    fontSize: 10,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 1.5,
+    marginBottom: 4,
+  },
+  ruleText: {
+    color: '#d1d5db',
+    fontSize: 13,
+  },
+  realmSection: {
+    marginBottom: 16,
+    backgroundColor: '#0d0d14',
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: '#1f2937',
+    padding: 12,
+  },
+  realmSectionLocked: {
+    opacity: 0.5,
+  },
+  realmHeader: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 10,
+    marginBottom: 10,
+  },
+  realmTitle: {
+    color: '#e5e7eb',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  realmSummary: {
+    color: '#6b7280',
+    fontSize: 12,
+    marginTop: 2,
+    lineHeight: 18,
+  },
+  unlockedBadge: {
+    color: '#059669',
+    fontSize: 11,
+    fontWeight: '700',
+  },
+  lockedBadge: {
+    color: '#4b5563',
+    fontSize: 11,
+    fontWeight: '700',
+  },
+  scenarioCard: {
+    backgroundColor: '#0a0a0f',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#1a1a2e',
     padding: 12,
     marginBottom: 8,
   },
   scenarioDone: {
     borderColor: '#059669',
-    opacity: 0.7,
+  },
+  scenarioLocked: {
+    borderStyle: 'dashed',
   },
   scenarioRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    gap: 8,
     marginBottom: 4,
   },
-  scenarioTitle: { color: '#e5e7eb', fontSize: 14, fontWeight: '600', flex: 1 },
-  doneBadge: { color: '#059669', fontSize: 11, fontWeight: '700' },
-  scenarioDesc: { color: '#6b7280', fontSize: 12, lineHeight: 18 },
+  scenarioTitle: {
+    color: '#e5e7eb',
+    fontSize: 14,
+    fontWeight: '600',
+    flex: 1,
+  },
+  tagRow: {
+    flexDirection: 'row',
+    gap: 6,
+  },
+  coreBadge: {
+    color: '#f59e0b',
+    fontSize: 10,
+    fontWeight: '700',
+  },
+  doneBadge: {
+    color: '#059669',
+    fontSize: 10,
+    fontWeight: '700',
+  },
+  scenarioDesc: {
+    color: '#9ca3af',
+    fontSize: 12,
+    lineHeight: 18,
+  },
+  metaRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+    marginTop: 8,
+  },
+  metaPill: {
+    color: '#a78bfa',
+    fontSize: 10,
+    fontWeight: '700',
+    backgroundColor: '#16142a',
+    borderRadius: 20,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+  },
 });
