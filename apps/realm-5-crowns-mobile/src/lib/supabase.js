@@ -7,6 +7,7 @@ export const supabase =
   supabaseUrl && supabaseAnonKey
     ? createClient(supabaseUrl, supabaseAnonKey, {
         auth: {
+          // Stateless event sync for the companion prototype; auth flows are not active yet.
           persistSession: false,
           autoRefreshToken: false,
         },
