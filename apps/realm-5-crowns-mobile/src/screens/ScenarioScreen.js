@@ -39,7 +39,7 @@ export default function ScenarioScreen({ route, navigation }) {
 
     const outcomeData = {
       xp: choice.xp,
-      scaleScore: choice.scaleScore,
+      scale_score: choice.scaleScore,
       mockRevenue: choice.mockRevenue,
       mockJoins: choice.mockJoins,
       mockSales: choice.mockSales,

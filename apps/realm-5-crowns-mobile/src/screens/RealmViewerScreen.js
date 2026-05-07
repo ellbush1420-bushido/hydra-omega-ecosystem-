@@ -141,17 +141,29 @@ export default function RealmViewerScreen() {
   }, [worldState.mode.status]);
 
   useEffect(() => {
-    track('world_viewer_mode', {
+    const telemetry = {
       context: 'realm_viewer',
       element: activeMode,
       focal_point: worldState.focalPoint,
       threat_level: worldState.threatLevel,
       opportunity_level: worldState.opportunityLevel,
+    };
+
+    track('world_viewer_mode', {
+      ...telemetry,
     });
-  }, [activeMode, track]);
+  }, [
+    activeMode,
+    track,
+    worldState.focalPoint,
+    worldState.opportunityLevel,
+    worldState.threatLevel,
+  ]);
 
   const onContextCreate = useCallback(
     (gl) => {
+      cleanupRef.current();
+
       const { drawingBufferWidth: width, drawingBufferHeight: height } = gl;
       const scene = new THREE.Scene();
       scene.background = new THREE.Color(worldState.mode.background);
@@ -296,10 +308,6 @@ export default function RealmViewerScreen() {
     },
     [worldState.mode]
   );
-
-  useEffect(() => {
-    cleanupRef.current();
-  }, [activeMode]);
 
   useEffect(() => {
     return () => {

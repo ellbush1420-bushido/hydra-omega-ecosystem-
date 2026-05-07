@@ -41,7 +41,6 @@ function normalizePayload(payload = {}) {
     amount,
     xp,
     scale_score,
-    scaleScore,
     mock,
     ...extra
   } = payload;
@@ -57,7 +56,7 @@ function normalizePayload(payload = {}) {
     context,
     amount,
     xp,
-    scale_score: scale_score ?? scaleScore,
+    scale_score,
     mock,
   };
 
@@ -77,7 +76,6 @@ function normalizePayload(payload = {}) {
     localPayload: {
       ...remotePayload,
       ...cleanExtra,
-      scaleScore: normalized.scale_score,
     },
     remotePayload,
   };
