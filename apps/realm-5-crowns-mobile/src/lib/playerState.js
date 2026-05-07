@@ -2,28 +2,16 @@ import * as SecureStore from 'expo-secure-store';
 import factions from '../data/factions.json';
 import { isSupabaseConfigured, supabase } from './supabase';
 
-const DEVICE_ID_KEY = 'realm5crowns.device_id';
+const PLAYER_ID_KEY = 'realm5crowns.player_id';
 const DEFAULT_DISPLAY_NAME = 'Operative';
 
-function createDeviceId() {
-  if (typeof globalThis.crypto?.randomUUID === 'function') {
-    return `realm5c_${globalThis.crypto.randomUUID()}`;
-  }
-
-  return `realm5c_${Date.now()}_${Math.random().toString(36).slice(2)}${Math.random()
-    .toString(36)
-    .slice(2)}`;
+async function getPlayerId() {
+  return SecureStore.getItemAsync(PLAYER_ID_KEY);
 }
 
-async function getDeviceId() {
-  let deviceId = await SecureStore.getItemAsync(DEVICE_ID_KEY);
-
-  if (!deviceId) {
-    deviceId = createDeviceId();
-    await SecureStore.setItemAsync(DEVICE_ID_KEY, deviceId);
-  }
-
-  return deviceId;
+async function setPlayerId(playerId) {
+  if (!playerId) return;
+  await SecureStore.setItemAsync(PLAYER_ID_KEY, playerId);
 }
 
 function normalizeRpcResponse(data) {
@@ -34,9 +22,9 @@ function normalizeRpcResponse(data) {
 export async function saveFactionSelection(factionId) {
   if (!isSupabaseConfigured || !supabase) return null;
 
-  const deviceId = await getDeviceId();
+  const playerId = await getPlayerId();
   const { data, error } = await supabase.rpc('save_player_faction', {
-    p_device_id: deviceId,
+    p_player_id: playerId,
     p_display_name: DEFAULT_DISPLAY_NAME,
     p_faction_id: factionId,
   });
@@ -46,15 +34,24 @@ export async function saveFactionSelection(factionId) {
     return null;
   }
 
-  return normalizeRpcResponse(data);
+  const playerState = normalizeRpcResponse(data);
+
+  if (playerState?.id) {
+    await setPlayerId(playerState.id);
+  }
+
+  return playerState;
 }
 
 export async function loadPlayerState() {
   if (!isSupabaseConfigured || !supabase) return null;
 
-  const deviceId = await getDeviceId();
-  const { data, error } = await supabase.rpc('get_player_by_device', {
-    p_device_id: deviceId,
+  const playerId = await getPlayerId();
+
+  if (!playerId) return null;
+
+  const { data, error } = await supabase.rpc('get_player_by_id', {
+    p_player_id: playerId,
   });
 
   if (error) {

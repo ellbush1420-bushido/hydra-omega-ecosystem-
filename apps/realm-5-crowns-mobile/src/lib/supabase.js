@@ -7,6 +7,10 @@ const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY || extra.supab
 
 export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey);
 
+if (!isSupabaseConfigured && typeof __DEV__ !== 'undefined' && __DEV__) {
+  console.warn('Supabase is not configured. Set EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_ANON_KEY.');
+}
+
 export const supabase = isSupabaseConfigured
   ? createClient(supabaseUrl, supabaseAnonKey, {
       auth: {

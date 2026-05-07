@@ -42,7 +42,7 @@ create trigger players_updated_at
   for each row execute procedure public.set_updated_at();
 
 create or replace function public.save_player_faction(
-  p_device_id text,
+  p_player_id uuid default null,
   p_display_name text default null,
   p_faction_id text default null
 )
@@ -54,19 +54,30 @@ as $$
 declare
   player_row public.players;
 begin
-  insert into public.players as players (device_id, display_name, faction_id)
-  values (p_device_id, p_display_name, p_faction_id)
-  on conflict (device_id)
-  do update set
-    display_name = coalesce(excluded.display_name, players.display_name),
-    faction_id = excluded.faction_id
-  returning * into player_row;
+  if p_player_id is null then
+    insert into public.players (display_name, faction_id)
+    values (p_display_name, p_faction_id)
+    returning * into player_row;
+  else
+    update public.players
+    set
+      display_name = coalesce(p_display_name, display_name),
+      faction_id = p_faction_id
+    where id = p_player_id
+    returning * into player_row;
+
+    if player_row is null then
+      insert into public.players (id, display_name, faction_id)
+      values (p_player_id, p_display_name, p_faction_id)
+      returning * into player_row;
+    end if;
+  end if;
 
   return player_row;
 end;
 $$;
 
-create or replace function public.get_player_by_device(p_device_id text)
+create or replace function public.get_player_by_id(p_player_id uuid)
 returns public.players
 language sql
 security definer
@@ -74,7 +85,7 @@ set search_path = public
 as $$
   select *
   from public.players
-  where device_id = p_device_id
+  where id = p_player_id
   limit 1;
 $$;
 
@@ -155,8 +166,8 @@ create policy "anon insert codex"
 create policy "anon insert scenarios"
   on public.scenario_history for insert to anon with check (true);
 
-grant execute on function public.save_player_faction(text, text, text) to anon;
-grant execute on function public.get_player_by_device(text) to anon;
+grant execute on function public.save_player_faction(uuid, text, text) to anon;
+grant execute on function public.get_player_by_id(uuid) to anon;
 
 -- Service role (backend) can read everything
 create policy "service select players"
