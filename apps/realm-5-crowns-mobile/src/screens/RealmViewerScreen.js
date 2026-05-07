@@ -33,6 +33,30 @@ const CROWN_IDS = {
   lazarus: 5,
 };
 
+const THREAT_CONFIG = {
+  levelMultiplier: 8,
+  remoteSyncBonus: 6,
+  trialBonus: {
+    default: 12,
+    steel: 26,
+    siege: 18,
+  },
+  realmBonus: {
+    default: 6,
+    obsidian: 14,
+  },
+};
+
+const HUD_SCALE = {
+  overlayPulseDivisor: 220,
+  sceneIntentDivisor: 480,
+  opportunityOpacityDivisor: 170,
+  shadowOpacityDivisor: 170,
+  threatOpacityDivisor: 220,
+  attackOpacityDivisor: 150,
+  highlightOpacityDivisor: 180,
+};
+
 function clamp(value, min, max) {
   return Math.max(min, Math.min(max, value));
 }
@@ -63,7 +87,7 @@ function hexToRgba(hex, alpha) {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
-function getLatestScenarioId(state) {
+function getCurrentScenarioId(state) {
   return state.scenarioHistory.find((entry) => entry.scenarioId)?.scenarioId || '';
 }
 
@@ -80,19 +104,23 @@ function getRealmId(realmName) {
 
 function deriveViewerState(localState, remoteState) {
   const snapshot = buildPlayerStatePayload(localState);
-  const scenarioId = getLatestScenarioId(localState);
+  const scenarioId = getCurrentScenarioId(localState);
   const trialId = getTrialId(scenarioId);
   const realmName = remoteState?.realm || snapshot.realm;
   const trialName = remoteState?.trial || snapshot.trial;
   const realmId = getRealmId(realmName);
-  const crownId =
-    CROWN_IDS[localState.faction?.id || remoteState?.faction_id || ''] || 0;
+  const crownKey = localState.faction?.id ?? remoteState?.faction_id;
+  const crownId = crownKey ? CROWN_IDS[crownKey] || 0 : 0;
 
   const threatLevel = clamp(
-    localState.level * 8 +
-      (trialId === 1 ? 26 : trialId === 2 ? 18 : 12) +
-      (realmId === 1 ? 14 : 6) +
-      (remoteState ? 6 : 0),
+    localState.level * THREAT_CONFIG.levelMultiplier +
+      (trialId === 1
+        ? THREAT_CONFIG.trialBonus.steel
+        : trialId === 2
+          ? THREAT_CONFIG.trialBonus.siege
+          : THREAT_CONFIG.trialBonus.default) +
+      (realmId === 1 ? THREAT_CONFIG.realmBonus.obsidian : THREAT_CONFIG.realmBonus.default) +
+      (remoteState ? THREAT_CONFIG.remoteSyncBonus : 0),
     0,
     100
   );
@@ -154,7 +182,7 @@ function createFlowLine(points, color, opacity) {
 function HydraEyesHUDOverlay({ loadingRemote, pulseValue, viewerState }) {
   const pulseScale = pulseValue.interpolate({
     inputRange: [0, 1],
-    outputRange: [1, 1 + viewerState.threatLevel / 220],
+    outputRange: [1, 1 + viewerState.threatLevel / HUD_SCALE.overlayPulseDivisor],
   });
 
   const pulseOpacity = pulseValue.interpolate({
@@ -506,7 +534,7 @@ export default function RealmViewerScreen() {
       threatZone.visible = activeViewerState.trialId === 1;
       threatZone.material.opacity =
         0.12 +
-        activeViewerState.threatLevel / 220 +
+        activeViewerState.threatLevel / HUD_SCALE.threatOpacityDivisor +
         Math.max(0, Math.sin(elapsedTime * 4)) * 0.08;
 
       shadowZone.visible = activeViewerState.crownId === 1;
@@ -514,7 +542,9 @@ export default function RealmViewerScreen() {
       shadowZone.material.opacity = 0.14 + activeViewerState.shadowAdvantage / 260;
 
       intentPulse.scale.setScalar(
-        1 + Math.sin(elapsedTime * 3) * 0.1 + activeViewerState.threatLevel / 480
+        1 +
+          Math.sin(elapsedTime * 3) * 0.1 +
+          activeViewerState.threatLevel / HUD_SCALE.sceneIntentDivisor
       );
       intentPulse.material.opacity = clamp(
         0.35 +
@@ -527,22 +557,22 @@ export default function RealmViewerScreen() {
 
       openingLine.material.opacity =
         0.32 +
-        activeViewerState.opportunityLevel / 170 +
+        activeViewerState.opportunityLevel / HUD_SCALE.opportunityOpacityDivisor +
         Math.max(0, Math.sin(elapsedTime * 3.4)) * 0.08;
       shadowLine.material.opacity = shadowZone.visible
-        ? 0.42 + activeViewerState.shadowAdvantage / 170
+        ? 0.42 + activeViewerState.shadowAdvantage / HUD_SCALE.shadowOpacityDivisor
         : 0.12;
 
       attackLine.visible =
         activeViewerState.trialId === 1 || activeViewerState.threatLevel >= 45;
       attackLine.material.opacity =
         0.2 +
-        activeViewerState.threatLevel / 150 +
+        activeViewerState.threatLevel / HUD_SCALE.attackOpacityDivisor +
         (activeViewerState.enemyAboutToStrike ? 0.18 : 0);
 
       enemyHighlight.material.opacity = clamp(
         0.12 +
-          activeViewerState.threatLevel / 180 +
+          activeViewerState.threatLevel / HUD_SCALE.highlightOpacityDivisor +
           Math.max(0, Math.sin(elapsedTime * 5)) * 0.08,
         0.1,
         0.78
