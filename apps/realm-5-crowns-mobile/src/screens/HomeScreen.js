@@ -114,7 +114,7 @@ export default function HomeScreen({ navigation }) {
           ) : (
             <>
               <Text style={styles.deviceText}>
-                Device: {deviceId ? deviceId : 'Not connected yet'}
+                Device: {deviceId || 'Not connected yet'}
               </Text>
               {error ? <Text style={styles.errorText}>{error}</Text> : null}
               <View style={styles.dataCard}>
