@@ -18,6 +18,24 @@ create table if not exists public.player_state (
   updated_at    timestamptz not null default now()
 );
 
+alter table public.player_state
+  add column if not exists player_id text,
+  add column if not exists crown_id integer,
+  add column if not exists realm_id integer,
+  add column if not exists trial_id integer,
+  add column if not exists last_encounter_result text,
+  add column if not exists last_encounter_realm integer,
+  add column if not exists last_encounter_trial integer,
+  add column if not exists crown_rank integer,
+  add column if not exists crown_xp integer not null default 0,
+  add column if not exists threat integer not null default 0,
+  add column if not exists opportunity integer not null default 0,
+  add column if not exists shadow_advantage integer not null default 0;
+
+create unique index if not exists player_state_player_id_idx
+  on public.player_state(player_id)
+  where player_id is not null;
+
 -- ─────────────────────────────────────────────────────────────────────────────
 -- 2. PLAYERS
 -- ─────────────────────────────────────────────────────────────────────────────

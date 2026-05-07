@@ -1,13 +1,31 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { GLView } from 'expo-gl';
 import { Renderer } from 'expo-three';
 import * as THREE from 'three';
 
+import HydraEyesOverlay from '../components/HydraEyesOverlay';
+import { crownMap } from '../data/crowns';
+import { realmMap } from '../data/realms';
+import { trialMap } from '../data/trials';
+import { loadFullPlayerState } from '../lib/playerState';
+import { isSupabaseConfigured } from '../lib/supabase';
+
+function getHudLabel(map, id, fallback) {
+  if (id == null) {
+    return fallback;
+  }
+
+  return map[id] || fallback;
+}
+
 export default function RealmViewerScreen() {
   const frameRef = useRef(null);
   const cleanupRef = useRef(() => {});
-  const [status, setStatus] = useState('Opening the Obsidian Gate…');
+  const [projectionStatus, setProjectionStatus] = useState('Opening the Obsidian Gate…');
+  const [hudStatus, setHudStatus] = useState('Hydra Eyes awaiting sync');
+  const [playerState, setPlayerState] = useState(null);
 
   const onContextCreate = useCallback((gl) => {
     const { drawingBufferWidth: width, drawingBufferHeight: height } = gl;
@@ -113,7 +131,7 @@ export default function RealmViewerScreen() {
     corridor.add(gateHalo);
 
     scene.add(corridor);
-    setStatus('Realm projection stable');
+    setProjectionStatus('Realm projection stable');
 
     const startTime = Date.now();
 
@@ -158,6 +176,48 @@ export default function RealmViewerScreen() {
     };
   }, []);
 
+  useFocusEffect(
+    useCallback(() => {
+      let active = true;
+
+      async function syncHud() {
+        if (!isSupabaseConfigured) {
+          if (!active) return;
+          setPlayerState(null);
+          setHudStatus('Hydra Eyes offline — add Supabase credentials to sync');
+          return;
+        }
+
+        setHudStatus('Syncing Hydra Eyes…');
+
+        const state = await loadFullPlayerState();
+
+        if (!active) return;
+
+        setPlayerState(state);
+        setHudStatus(state ? 'Hydra Eyes synced from Supabase' : 'Hydra Eyes awaiting player state');
+      }
+
+      syncHud().catch((error) => {
+        if (!active) return;
+        setPlayerState(null);
+        setHudStatus(error.message || 'Hydra Eyes sync failed');
+      });
+
+      return () => {
+        active = false;
+      };
+    }, [])
+  );
+
+  const crownName = getHudLabel(crownMap, playerState?.crown_id, playerState?.crown || 'Unbound Crown');
+  const realmName = getHudLabel(realmMap, playerState?.realm_id, playerState?.realm || 'Obsidian Gate');
+  const trialName = getHudLabel(trialMap, playerState?.trial_id, playerState?.trial || 'Awakening');
+  const lastResult = playerState?.last_encounter_result || 'None';
+  const threat = playerState?.threat ?? 0;
+  const opportunity = playerState?.opportunity ?? 0;
+  const shadow = playerState?.shadow_advantage ?? 0;
+
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.header}>
@@ -168,13 +228,22 @@ export default function RealmViewerScreen() {
         </Text>
       </View>
 
-      <GLView style={styles.viewer} onContextCreate={onContextCreate} />
+      <View style={styles.viewerFrame}>
+        <GLView style={styles.viewer} onContextCreate={onContextCreate} />
+        <HydraEyesOverlay
+          crownName={crownName}
+          realmName={realmName}
+          trialName={trialName}
+          lastResult={lastResult}
+          threat={threat}
+          opportunity={opportunity}
+          shadow={shadow}
+        />
+      </View>
 
       <View style={styles.footer}>
-        <Text style={styles.status}>{status}</Text>
-        <Text style={styles.caption}>
-          The corridor geometry casts and receives shadows to keep the realm alive.
-        </Text>
+        <Text style={styles.status}>{projectionStatus}</Text>
+        <Text style={styles.caption}>{hudStatus}</Text>
       </View>
     </SafeAreaView>
   );
@@ -192,14 +261,16 @@ const styles = StyleSheet.create({
   },
   title: { color: '#e5e7eb', fontSize: 26, fontWeight: '800', marginBottom: 4 },
   subtitle: { color: '#6b7280', fontSize: 13, lineHeight: 19 },
-  viewer: {
+  viewerFrame: {
     flex: 1,
     marginHorizontal: 16,
     borderRadius: 18,
     overflow: 'hidden',
     borderWidth: 1,
     borderColor: '#1f2937',
+    position: 'relative',
   },
+  viewer: { flex: 1 },
   footer: { padding: 16 },
   status: { color: '#a78bfa', fontSize: 13, fontWeight: '700', marginBottom: 4 },
   caption: { color: '#6b7280', fontSize: 12, lineHeight: 18 },
