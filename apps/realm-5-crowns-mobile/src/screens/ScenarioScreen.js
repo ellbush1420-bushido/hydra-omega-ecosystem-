@@ -15,13 +15,13 @@ import { getNextRealmId, usePlayer } from '../hooks/usePlayer';
 import {
   damageProfileFor,
   difficultyFor,
+  getEncounterPlayerMaxHp,
+  getEncounterWardenMaxHp,
   getStatLabel,
   getTrialById,
   getTrialStatOptions,
 } from '../data/realmGate';
 import { isSupabaseConfigured, unlockCodexEntry, unlockRealmGate } from '../lib/supabase';
-
-const MAX_PLAYER_HP = 24;
 
 function randomDie() {
   return Math.floor(Math.random() * 10) + 1;
@@ -57,14 +57,18 @@ export default function ScenarioScreen({ route, navigation }) {
   const panelOpacity = useRef(new Animated.Value(0)).current;
   const [phase, setPhase] = useState('INTRO');
   const [status, setStatus] = useState('Camera pans across the gate…');
-  const [playerHp, setPlayerHp] = useState(MAX_PLAYER_HP + (state.level >= 8 ? 2 : 0));
-  const [wardenHp, setWardenHp] = useState(16 + realm.realmNumber * 4 + (trial.type === 'void' ? 2 : 0));
+  const playerMaxHp = getEncounterPlayerMaxHp(state.level);
+  const [playerHp, setPlayerHp] = useState(playerMaxHp);
+  const [wardenHp, setWardenHp] = useState(getEncounterWardenMaxHp(realm.realmNumber, trial.type));
   const [combatLog, setCombatLog] = useState([]);
   const [usedDeepFade, setUsedDeepFade] = useState(false);
   const [usedEchoStep, setUsedEchoStep] = useState(false);
   const [lastAction, setLastAction] = useState('Awaiting your choice.');
 
-  const maxWardenHp = useMemo(() => 16 + realm.realmNumber * 4 + (trial.type === 'void' ? 2 : 0), [realm.realmNumber, trial.type]);
+  const maxWardenHp = useMemo(
+    () => getEncounterWardenMaxHp(realm.realmNumber, trial.type),
+    [realm.realmNumber, trial.type]
+  );
   const dc = difficultyFor(trial.type, realm.realmNumber);
   const damageProfile = damageProfileFor(trial.type, realm.realmNumber);
   const statOptions = getTrialStatOptions(trial.type);
@@ -275,7 +279,7 @@ export default function ScenarioScreen({ route, navigation }) {
         </View>
 
         <View style={styles.hpCard}>
-          <HpBar label="Crown Bearer" hp={playerHp} maxHp={MAX_PLAYER_HP + (state.level >= 8 ? 2 : 0)} color="#7c3aed" />
+          <HpBar label="Crown Bearer" hp={playerHp} maxHp={playerMaxHp} color="#7c3aed" />
           <HpBar label="Gate Warden" hp={wardenHp} maxHp={maxWardenHp} color="#dc2626" />
         </View>
 

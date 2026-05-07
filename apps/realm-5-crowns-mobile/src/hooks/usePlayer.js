@@ -39,7 +39,6 @@ const initialState = {
   level: initialDerived.level,
   xpToNext: initialDerived.xpToNext,
   faction: null,
-  tigerRank: null,
   codexUnlocks: ['codex.shadow_crown'],
   scenarioHistory: [],
   mockStats: {
@@ -110,10 +109,6 @@ function playerReducer(state, action) {
         : { ...nextState, hydraRecommendation: computeRecommendation(nextState) };
     }
 
-    case 'PROMOTE_TIGER': {
-      const nextState = { ...state, tigerRank: action.rank };
-      return { ...nextState, hydraRecommendation: computeRecommendation(nextState) };
-    }
 
     case 'LOG_SCENARIO':
       return {

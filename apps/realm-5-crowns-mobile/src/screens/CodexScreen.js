@@ -50,10 +50,10 @@ export default function CodexScreen({ navigation }) {
   }, []);
 
   const entries = useMemo(() => {
-    const source = remoteEntries.length ? remoteEntries : LOCAL_CODEX_ENTRIES;
+    const source = (remoteEntries.length ? remoteEntries : LOCAL_CODEX_ENTRIES).filter(Boolean);
     const seen = new Set();
     return source.filter((entry) => {
-      if (!entry?.key || seen.has(entry.key)) return false;
+      if (!entry.key || seen.has(entry.key)) return false;
       seen.add(entry.key);
       return true;
     });

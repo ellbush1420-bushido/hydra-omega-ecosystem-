@@ -73,7 +73,7 @@ export default function ProfileScreen({ navigation }) {
             ))}
           </View>
           <Text style={styles.realmLine}>Active perk: {state.shadowCrownPerk}</Text>
-          <Text style={styles.realmLine}>Stored Veil auto-wins here: {state.shadowDominionCharges[state.currentRealmId] || 0}</Text>
+          <Text style={styles.realmLine}>Stored Veil auto-wins in {currentRealm.title}: {state.shadowDominionCharges[state.currentRealmId] || 0}</Text>
         </View>
 
         <HydraEyesPanel events={eventLog} />

@@ -157,7 +157,9 @@ export async function unlockCodexEntry(codexKey) {
     }
   );
 
-  if (error) throw error;
+  if (error) {
+    throw new Error(`Unable to upsert codex unlock ${codexKey} for ${playerId}: ${error.message}`);
+  }
   return { playerId, codexKey };
 }
 
@@ -174,7 +176,9 @@ export async function unlockRealmGate(realmKey) {
     }
   );
 
-  if (error) throw error;
+  if (error) {
+    throw new Error(`Unable to upsert realm unlock ${realmKey} for ${playerId}: ${error.message}`);
+  }
   return { playerId, realmKey };
 }
 

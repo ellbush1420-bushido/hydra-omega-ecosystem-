@@ -227,6 +227,15 @@ export const TRIAL_TYPE_RULES = {
 
 export const SHADOW_CROWN_THRESHOLDS = [0, 50, 120, 220, 350, 500, 700, 950, 1250, 1600];
 
+export const ENCOUNTER_BALANCE = {
+  playerBaseHp: 24,
+  bonusHpRankThreshold: 8,
+  bonusHpAmount: 2,
+  wardenBaseHp: 16,
+  wardenPerRealmHp: 4,
+  voidBonusHp: 2,
+};
+
 export const SHADOW_CROWN_MILESTONES = [
   {
     rank: 1,
@@ -442,15 +451,21 @@ export function damageProfileFor(trialType, realmNumber) {
 }
 
 export function getShadowCrownRank(xp) {
-  let rank = 1;
-  for (let index = 0; index < SHADOW_CROWN_THRESHOLDS.length; index += 1) {
-    if (xp >= SHADOW_CROWN_THRESHOLDS[index]) {
-      rank = index + 1;
+  let low = 0;
+  let high = SHADOW_CROWN_THRESHOLDS.length - 1;
+  let rankIndex = 0;
+
+  while (low <= high) {
+    const middle = Math.floor((low + high) / 2);
+    if (xp >= SHADOW_CROWN_THRESHOLDS[middle]) {
+      rankIndex = middle;
+      low = middle + 1;
     } else {
-      break;
+      high = middle - 1;
     }
   }
-  return Math.min(rank, 10);
+
+  return Math.min(rankIndex + 1, 10);
 }
 
 export function getShadowCrownMilestone(rank) {
@@ -485,4 +500,16 @@ export function getStatLabel(statKey) {
     pulse: 'Pulse',
     flux: 'Flux',
   }[statKey] || statKey;
+}
+
+export function getEncounterPlayerMaxHp(rank) {
+  return ENCOUNTER_BALANCE.bonusHpRankThreshold <= rank
+    ? ENCOUNTER_BALANCE.playerBaseHp + ENCOUNTER_BALANCE.bonusHpAmount
+    : ENCOUNTER_BALANCE.playerBaseHp;
+}
+
+export function getEncounterWardenMaxHp(realmNumber, trialType) {
+  return ENCOUNTER_BALANCE.wardenBaseHp
+    + realmNumber * ENCOUNTER_BALANCE.wardenPerRealmHp
+    + (trialType === 'void' ? ENCOUNTER_BALANCE.voidBonusHp : 0);
 }
