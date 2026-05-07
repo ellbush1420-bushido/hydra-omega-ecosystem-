@@ -19,13 +19,15 @@ export default function ProfileScreen({ navigation }) {
   const { state, dispatch } = usePlayer();
   const { eventLog, trackClick, trackCodexUnlock } = useHydraEyes();
   const { faction, level, xp, codexUnlocks, scenarioHistory, hydraRecommendation, realmUnlocks } = state;
+  const shadowCrownCodexKey = 'codex.shadow_crown';
+  const normalizedShadowCrownCodexKey = shadowCrownCodexKey.replace(/[.\s]+/g, '_');
 
   React.useEffect(() => {
-    if (level < 5 || codexUnlocks.includes('codex_shadow_crown')) return;
-    dispatch({ type: 'UNLOCK_CODEX', codexId: 'codex.shadow_crown' });
-    trackCodexUnlock('codex.shadow_crown');
-    unlockCodexEntry('codex.shadow_crown');
-  }, [level, codexUnlocks, dispatch, trackCodexUnlock]);
+    if (level < 5 || codexUnlocks.includes(normalizedShadowCrownCodexKey)) return;
+    dispatch({ type: 'UNLOCK_CODEX', codexId: shadowCrownCodexKey });
+    trackCodexUnlock(shadowCrownCodexKey);
+    unlockCodexEntry(shadowCrownCodexKey);
+  }, [level, codexUnlocks, dispatch, trackCodexUnlock, normalizedShadowCrownCodexKey, shadowCrownCodexKey]);
 
   return (
     <SafeAreaView style={styles.safe}>

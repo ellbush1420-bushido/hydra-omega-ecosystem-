@@ -88,7 +88,13 @@ export default function CodexScreen({ navigation }) {
 
             <Text style={styles.sectionLabel}>Locked ({locked.length})</Text>
             {locked.map((entry) => (
-              <View key={entry.key} style={styles.card}>
+              <View
+                key={entry.key}
+                style={styles.card}
+                accessible
+                accessibilityRole="text"
+                accessibilityLabel={`Locked codex entry. Unlock condition: ${entry.unlockCondition}`}
+              >
                 <View style={styles.cardBody}>
                   <Text style={styles.cardTitle}>???</Text>
                   <Text style={styles.cardCopy}>{entry.unlockCondition}</Text>

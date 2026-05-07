@@ -52,6 +52,7 @@ function getTrialLabel(state) {
 }
 
 function normalizeCodexKey(codexKey) {
+  if (!codexKey) return '';
   return codexKey.toLowerCase().replace(/[.\s]+/g, '_');
 }
 

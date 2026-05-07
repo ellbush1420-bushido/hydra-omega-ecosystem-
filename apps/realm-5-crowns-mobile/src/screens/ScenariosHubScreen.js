@@ -29,7 +29,8 @@ export default function ScenariosHubScreen({ navigation }) {
     realmTrials
       .filter((realm) => state.realmUnlocks.includes(realm.id) && realm.codexKey)
       .forEach((realm) => {
-        const normalizedKey = realm.codexKey.toLowerCase().replace(/[.\s]+/g, '_');
+        const normalizedKey = realm.codexKey?.toLowerCase().replace(/[.\s]+/g, '_');
+        if (!normalizedKey) return;
         if (state.codexUnlocks.includes(normalizedKey)) return;
         dispatch({ type: 'UNLOCK_CODEX', codexId: realm.codexKey });
         trackCodexUnlock(realm.codexKey);
