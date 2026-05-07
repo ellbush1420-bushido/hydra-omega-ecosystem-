@@ -83,7 +83,6 @@ export default function CrownSelectionScreen({ navigation }) {
 
         {factions.map((faction) => {
           const isSelected = selectedFaction?.id === faction.id;
-          const isCurrent = currentFactionId === faction.id;
 
           return (
             <TouchableOpacity
@@ -108,7 +107,7 @@ export default function CrownSelectionScreen({ navigation }) {
                   </View>
                 </View>
                 <View style={styles.badgeColumn}>
-                  {isCurrent && <Text style={styles.currentBadge}>ACTIVE</Text>}
+                  {faction.id === currentFactionId && <Text style={styles.currentBadge}>ACTIVE</Text>}
                   {isSelected && <Text style={styles.selectedBadge}>SELECTED</Text>}
                 </View>
               </View>
@@ -143,7 +142,7 @@ export default function CrownSelectionScreen({ navigation }) {
             </TouchableOpacity>
             {!isFirstSelection && !isCurrentSelection && (
               <Text style={styles.helperText}>
-                Switching crowns updates your active path and unlocks the new codex without awarding the initiation XP again.
+                Switching crowns updates your active path and unlocks the new codex without granting the initiation XP again.
               </Text>
             )}
           </View>
