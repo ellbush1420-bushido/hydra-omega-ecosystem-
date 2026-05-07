@@ -3,10 +3,7 @@ import { StyleSheet } from 'react-native';
 import { GLView } from 'expo-gl';
 import { Renderer } from 'expo-three';
 import * as THREE from 'three';
-
-function clamp(value) {
-  return Math.max(0, Math.min(100, value));
-}
+import { clamp } from '../lib/realmState';
 
 function disposeObject(root) {
   root.traverse((object) => {
@@ -27,13 +24,17 @@ function disposeObject(root) {
 export default function RealmCanvas({ threat = 0, opportunity = 0, shadow = 0, style }) {
   const frameRef = useRef(null);
   const cleanupRef = useRef(() => {});
-  const metricsRef = useRef({ threat: clamp(threat), opportunity: clamp(opportunity), shadow: clamp(shadow) });
+  const metricsRef = useRef({
+    threat: clamp(threat, 0, 100),
+    opportunity: clamp(opportunity, 0, 100),
+    shadow: clamp(shadow, 0, 100),
+  });
 
   useEffect(() => {
     metricsRef.current = {
-      threat: clamp(threat),
-      opportunity: clamp(opportunity),
-      shadow: clamp(shadow),
+      threat: clamp(threat, 0, 100),
+      opportunity: clamp(opportunity, 0, 100),
+      shadow: clamp(shadow, 0, 100),
     };
   }, [opportunity, shadow, threat]);
 

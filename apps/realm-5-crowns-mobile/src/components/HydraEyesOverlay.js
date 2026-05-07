@@ -1,9 +1,10 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { Animated, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { clamp } from '../lib/realmState';
 
 function clampValue(value) {
-  return Math.max(0, Math.min(100, Math.round(value)));
+  return Math.round(clamp(value, 0, 100));
 }
 
 function Meter({ label, value, accentColor, trackColor }) {
