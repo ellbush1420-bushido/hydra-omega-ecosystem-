@@ -3,6 +3,8 @@ import * as SecureStore from 'expo-secure-store';
 import { Platform } from 'react-native';
 import { createClient } from '@supabase/supabase-js';
 
+import { LOCAL_CODEX_ENTRIES, getRealmById } from '../data/realmGate';
+
 const DEVICE_ID_KEY = 'realm5crowns.deviceId';
 let memoryDeviceId = '';
 
@@ -37,15 +39,14 @@ function toTitle(value) {
 }
 
 function getRealmLabel(state) {
-  if (state.tigerRank?.startsWith('white_tiger')) return 'Obsidian Gate';
-  if (state.tigerRank?.startsWith('black_tiger')) return 'Shadow Arena';
-  if (state.faction?.shortName) return `${state.faction.shortName} Crown`;
-  return 'Unclaimed Threshold';
+  const realm = getRealmById(state.currentRealmId);
+  return realm?.title?.replace(/^Realm \d+:\s*/, '') || 'Unclaimed Threshold';
 }
 
 function getTrialLabel(state) {
   const mostRecentScenario = state.scenarioHistory.filter((entry) => entry.scenarioId)[0];
-  if (mostRecentScenario) return toTitle(mostRecentScenario.scenarioId);
+  if (mostRecentScenario?.trialTitle) return mostRecentScenario.trialTitle;
+  if (mostRecentScenario?.scenarioId) return toTitle(mostRecentScenario.scenarioId);
   if (state.faction) return 'Crown Selection';
   return 'Awakening';
 }
@@ -90,7 +91,7 @@ export function buildPlayerStatePayload(state) {
     realm: getRealmLabel(state),
     trial: getTrialLabel(state),
     faction_id: state.faction?.id || null,
-    tiger_rank: state.tigerRank || null,
+    tiger_rank: `shadow_crown_${state.level}`,
     level: state.level,
     xp: state.xp,
   };
@@ -141,4 +142,58 @@ export async function savePlayerState(state) {
   logPlayerState('Supabase player_state write', { deviceId, hasData: Boolean(data) });
 
   return { deviceId, data };
+}
+
+export async function unlockCodexEntry(codexKey) {
+  if (!supabase) throw new Error('Supabase is not configured.');
+  const playerId = await getPlayerStateDeviceId();
+  const { error } = await supabase.from('codex_unlocks').upsert(
+    {
+      player_id: playerId,
+      codex_key: codexKey,
+    },
+    {
+      onConflict: 'player_id,codex_key',
+    }
+  );
+
+  if (error) throw error;
+  return { playerId, codexKey };
+}
+
+export async function unlockRealmGate(realmKey) {
+  if (!supabase) throw new Error('Supabase is not configured.');
+  const playerId = await getPlayerStateDeviceId();
+  const { error } = await supabase.from('realm_unlocks').upsert(
+    {
+      player_id: playerId,
+      realm_key: realmKey,
+    },
+    {
+      onConflict: 'player_id,realm_key',
+    }
+  );
+
+  if (error) throw error;
+  return { playerId, realmKey };
+}
+
+export async function fetchCodexCatalogForPlayer() {
+  if (!supabase) throw new Error('Supabase is not configured.');
+
+  const playerId = await getPlayerStateDeviceId();
+  const [{ data: entries, error: entriesError }, { data: unlocks, error: unlocksError }] =
+    await Promise.all([
+      supabase.from('codex_entries').select('*').order('title'),
+      supabase.from('codex_unlocks').select('codex_key').eq('player_id', playerId),
+    ]);
+
+  if (entriesError) throw entriesError;
+  if (unlocksError) throw unlocksError;
+
+  return {
+    playerId,
+    entries: entries?.length ? entries : LOCAL_CODEX_ENTRIES,
+    unlocks: unlocks || [],
+  };
 }

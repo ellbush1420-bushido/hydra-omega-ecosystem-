@@ -1,57 +1,47 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { usePlayer } from '../hooks/usePlayer';
-
-const TIGER_INFO = {
-  black_tiger_I: { label: 'Black Tiger I', color: '#374151', emoji: '🐯' },
-  black_tiger_II: { label: 'Black Tiger II', color: '#1f2937', emoji: '🐯' },
-  white_tiger_I: { label: 'White Tiger I', color: '#d1d5db', emoji: '🐅' },
-  white_tiger_II: { label: 'White Tiger II', color: '#f3f4f6', emoji: '🐅' },
-};
-
-const TRACKS = [
-  { key: 'black_tiger_I', label: 'Black Tiger I', color: '#4b5563', emoji: '🐯' },
-  { key: 'black_tiger_II', label: 'Black Tiger II', color: '#374151', emoji: '🐯' },
-  { key: 'white_tiger_I', label: 'White Tiger I', color: '#9ca3af', emoji: '🐅' },
-  { key: 'white_tiger_II', label: 'White Tiger II', color: '#e5e7eb', emoji: '🐅' },
-];
-
-const RANK_ORDER = ['black_tiger_I', 'black_tiger_II', 'white_tiger_I', 'white_tiger_II'];
+import { SHADOW_CROWN_MILESTONES } from '../data/realmGate';
 
 export default function TigerRankBadge({ compact = false }) {
   const { state } = usePlayer();
-  const rank = state.tigerRank;
-  const currentIdx = rank ? RANK_ORDER.indexOf(rank) : -1;
+  const currentRank = state.level;
 
   if (compact) {
-    if (!rank) return null;
-    const info = TIGER_INFO[rank];
     return (
-      <View style={[styles.badge, { backgroundColor: info.color + '33', borderColor: info.color }]}>
-        <Text style={styles.badgeText}>{info.emoji} {info.label}</Text>
+      <View style={styles.badge}>
+        <Text style={styles.badgeText}>👑 Rank {currentRank} · {state.shadowCrownPerk}</Text>
       </View>
     );
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tiger Promotion Track</Text>
+      <Text style={styles.title}>Shadow Crown Evolution</Text>
       <View style={styles.track}>
-        {TRACKS.map((t, i) => {
-          const achieved = i <= currentIdx;
+        {SHADOW_CROWN_MILESTONES.map((milestone) => {
+          const achieved = milestone.rank <= currentRank;
           return (
-            <View key={t.key} style={styles.trackStep}>
-              <View style={[styles.dot, achieved ? { backgroundColor: t.color } : styles.dotInactive]}>
-                <Text style={styles.dotEmoji}>{t.emoji}</Text>
+            <View key={milestone.rank} style={styles.trackStep}>
+              <View style={[styles.dot, achieved ? styles.dotActive : styles.dotInactive]}>
+                <Text style={styles.dotText}>{milestone.rank}</Text>
               </View>
-              <Text style={[styles.trackLabel, achieved ? { color: t.color } : styles.inactiveLabel]}>
-                {t.label}
+              <Text style={[styles.trackLabel, achieved ? styles.activeLabel : styles.inactiveLabel]}>
+                {milestone.label}
               </Text>
             </View>
           );
         })}
       </View>
-      {!rank && <Text style={styles.hint}>Complete Shadow Arena trials to earn your first Tiger rank.</Text>}
+      <Text style={styles.hint}>{state.shadowCrownPerk}</Text>
+      <View style={styles.statsRow}>
+        {Object.entries(state.shadowCrownStats).map(([stat, value]) => (
+          <View key={stat} style={styles.statChip}>
+            <Text style={styles.statValue}>{value}</Text>
+            <Text style={styles.statLabel}>{stat.toUpperCase()}</Text>
+          </View>
+        ))}
+      </View>
     </View>
   );
 }
@@ -75,44 +65,86 @@ const styles = StyleSheet.create({
   },
   track: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexWrap: 'wrap',
+    gap: 8,
+    justifyContent: 'space-between',
   },
   trackStep: {
+    width: '18%',
     alignItems: 'center',
     gap: 4,
   },
   dot: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: 34,
+    height: 34,
+    borderRadius: 17,
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 1,
+  },
+  dotActive: {
+    backgroundColor: '#7c3aed33',
+    borderColor: '#7c3aed',
   },
   dotInactive: {
-    backgroundColor: '#1f2937',
+    backgroundColor: '#111827',
+    borderColor: '#1f2937',
   },
-  dotEmoji: {
-    fontSize: 18,
+  dotText: {
+    color: '#e5e7eb',
+    fontSize: 12,
+    fontWeight: '700',
   },
   trackLabel: {
     fontSize: 9,
     textAlign: 'center',
-    maxWidth: 60,
+  },
+  activeLabel: {
+    color: '#c4b5fd',
   },
   inactiveLabel: {
     color: '#4b5563',
   },
   hint: {
-    color: '#6b7280',
+    color: '#d1d5db',
     fontSize: 11,
-    marginTop: 8,
-    textAlign: 'center',
+    marginTop: 10,
+    lineHeight: 17,
+  },
+  statsRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginTop: 10,
+  },
+  statChip: {
+    minWidth: 64,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 999,
+    backgroundColor: '#141420',
+    borderWidth: 1,
+    borderColor: '#1f2937',
+    alignItems: 'center',
+  },
+  statValue: {
+    color: '#e5e7eb',
+    fontSize: 13,
+    fontWeight: '700',
+  },
+  statLabel: {
+    color: '#6b7280',
+    fontSize: 9,
+    marginTop: 2,
   },
   badge: {
     paddingHorizontal: 10,
-    paddingVertical: 4,
+    paddingVertical: 6,
     borderRadius: 20,
     borderWidth: 1,
+    borderColor: '#7c3aed',
+    backgroundColor: '#7c3aed22',
+    marginBottom: 8,
   },
   badgeText: {
     color: '#e5e7eb',

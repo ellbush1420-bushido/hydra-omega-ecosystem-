@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 
+import TigerRankBadge from '../components/TigerRankBadge';
 import { usePlayer } from '../hooks/usePlayer';
 import {
   buildPlayerStatePayload,
@@ -17,6 +18,7 @@ import {
   isSupabaseConfigured,
   savePlayerState,
 } from '../lib/supabase';
+import { REALM_PROGRESSIONS, getRealmById } from '../data/realmGate';
 
 function DataRow({ label, value, accent }) {
   return (
@@ -35,6 +37,8 @@ export default function HomeScreen({ navigation }) {
   const [deviceId, setDeviceId] = useState('');
   const [remoteState, setRemoteState] = useState(null);
 
+  const currentRealm = getRealmById(state.currentRealmId);
+  const unlockedCount = state.realmUnlocks.length;
   const localSnapshot = useMemo(() => buildPlayerStatePayload(state), [state]);
 
   const loadRemoteState = useCallback(async () => {
@@ -91,7 +95,7 @@ export default function HomeScreen({ navigation }) {
         <Text style={styles.eyeLabel}>👁 HYDRA EYES — HOME EYE</Text>
         <Text style={styles.title}>Realm Home</Text>
         <Text style={styles.subtitle}>
-          Sync your Crown, Realm, and Trial state to Supabase and open the 3D Obsidian Gate.
+          Track Shadow Crown evolution, realm unlocks, and optional Supabase progression sync.
         </Text>
 
         <View style={styles.heroCard}>
@@ -100,8 +104,48 @@ export default function HomeScreen({ navigation }) {
             {state.faction ? `${state.faction.emoji} ${state.faction.shortName}` : 'Unbound'}
           </Text>
           <Text style={styles.heroMeta}>
-            Level {state.level} · {state.tigerRank ? state.tigerRank.replace(/_/g, ' ') : 'initiate'}
+            {currentRealm.title} · Rank {state.level}
           </Text>
+          <Text style={styles.heroHint}>{state.hydraRecommendation}</Text>
+        </View>
+
+        <TigerRankBadge />
+
+        <View style={styles.section}>
+          <Text style={styles.sectionLabel}>Realm Gate Progress</Text>
+          <View style={styles.realmProgressCard}>
+            {REALM_PROGRESSIONS.map((realm) => {
+              const unlocked = state.realmUnlocks.includes(realm.id);
+              const active = realm.id === state.currentRealmId;
+              return (
+                <View key={realm.id} style={styles.realmProgressRow}>
+                  <View style={[styles.realmDot, unlocked ? styles.realmDotUnlocked : styles.realmDotLocked]} />
+                  <View style={styles.realmProgressBody}>
+                    <Text style={[styles.realmProgressTitle, active && styles.realmProgressTitleActive]}>
+                      {realm.title}
+                    </Text>
+                    <Text style={styles.realmProgressMeta}>
+                      {unlocked ? 'Unlocked' : 'Locked'} · {realm.trials.length} trials
+                    </Text>
+                  </View>
+                </View>
+              );
+            })}
+          </View>
+          <View style={styles.quickStatsRow}>
+            <View style={styles.quickStatCard}>
+              <Text style={styles.quickStatValue}>{unlockedCount}</Text>
+              <Text style={styles.quickStatLabel}>Unlocked Realms</Text>
+            </View>
+            <View style={styles.quickStatCard}>
+              <Text style={styles.quickStatValue}>{state.codexUnlocks.length}</Text>
+              <Text style={styles.quickStatLabel}>Codex Unlocks</Text>
+            </View>
+            <View style={styles.quickStatCard}>
+              <Text style={styles.quickStatValue}>{state.shadowDominionCharges[state.currentRealmId] || 0}</Text>
+              <Text style={styles.quickStatLabel}>Veil Auto-Wins</Text>
+            </View>
+          </View>
         </View>
 
         <View style={styles.section}>
@@ -113,22 +157,17 @@ export default function HomeScreen({ navigation }) {
             </View>
           ) : (
             <>
-              <Text style={styles.deviceText}>
-                Device: {deviceId || 'Not connected yet'}
-              </Text>
+              <Text style={styles.deviceText}>Device: {deviceId || 'Not connected yet'}</Text>
               {error ? <Text style={styles.errorText}>{error}</Text> : null}
               <View style={styles.dataCard}>
                 <Text style={styles.cardLabel}>Remote player_state</Text>
                 <DataRow label="Crown" value={remoteState?.crown} accent="#f59e0b" />
                 <DataRow label="Realm" value={remoteState?.realm} accent="#7c3aed" />
                 <DataRow label="Trial" value={remoteState?.trial} accent="#38bdf8" />
+                <DataRow label="Shadow Rank" value={remoteState?.level} accent="#c4b5fd" />
                 <DataRow
                   label="Updated"
-                  value={
-                    remoteState?.updated_at
-                      ? new Date(remoteState.updated_at).toLocaleString()
-                      : 'No row yet'
-                  }
+                  value={remoteState?.updated_at ? new Date(remoteState.updated_at).toLocaleString() : 'No row yet'}
                 />
               </View>
               <View style={styles.dataCard}>
@@ -136,6 +175,7 @@ export default function HomeScreen({ navigation }) {
                 <DataRow label="Crown" value={localSnapshot.crown} accent="#f59e0b" />
                 <DataRow label="Realm" value={localSnapshot.realm} accent="#7c3aed" />
                 <DataRow label="Trial" value={localSnapshot.trial} accent="#38bdf8" />
+                <DataRow label="Shadow Rank" value={localSnapshot.level} accent="#c4b5fd" />
               </View>
             </>
           )}
@@ -149,9 +189,7 @@ export default function HomeScreen({ navigation }) {
               onPress={handleSync}
               disabled={syncing}
             >
-              <Text style={styles.primaryButtonText}>
-                {syncing ? 'Syncing…' : 'Sync Local State'}
-              </Text>
+              <Text style={styles.primaryButtonText}>{syncing ? 'Syncing…' : 'Sync Local State'}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -171,11 +209,8 @@ export default function HomeScreen({ navigation }) {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.secondaryNav}
-            onPress={() => navigation.navigate('FactionSelect')}
-          >
-            <Text style={styles.secondaryNavText}>Choose or change your Crown →</Text>
+          <TouchableOpacity style={styles.secondaryNav} onPress={() => navigation.navigate('Scenarios')}>
+            <Text style={styles.secondaryNavText}>Enter the realm gate tree →</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -212,6 +247,7 @@ const styles = StyleSheet.create({
   },
   heroValue: { color: '#e5e7eb', fontSize: 24, fontWeight: '800', marginTop: 10 },
   heroMeta: { color: '#a78bfa', fontSize: 12, marginTop: 6 },
+  heroHint: { color: '#9ca3af', fontSize: 12, marginTop: 8, lineHeight: 18 },
   section: { marginBottom: 16 },
   sectionLabel: {
     color: '#6b7280',
@@ -221,6 +257,35 @@ const styles = StyleSheet.create({
     letterSpacing: 1.5,
     marginBottom: 8,
   },
+  realmProgressCard: {
+    backgroundColor: '#0d0d14',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#1f2937',
+    padding: 14,
+    marginBottom: 10,
+    gap: 10,
+  },
+  realmProgressRow: { flexDirection: 'row', gap: 12, alignItems: 'center' },
+  realmDot: { width: 10, height: 10, borderRadius: 5 },
+  realmDotUnlocked: { backgroundColor: '#7c3aed' },
+  realmDotLocked: { backgroundColor: '#374151' },
+  realmProgressBody: { flex: 1 },
+  realmProgressTitle: { color: '#d1d5db', fontSize: 13, fontWeight: '600' },
+  realmProgressTitleActive: { color: '#c4b5fd' },
+  realmProgressMeta: { color: '#6b7280', fontSize: 11, marginTop: 2 },
+  quickStatsRow: { flexDirection: 'row', gap: 10 },
+  quickStatCard: {
+    flex: 1,
+    backgroundColor: '#0d0d14',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#1f2937',
+    padding: 12,
+    alignItems: 'center',
+  },
+  quickStatValue: { color: '#e5e7eb', fontSize: 20, fontWeight: '800' },
+  quickStatLabel: { color: '#6b7280', fontSize: 10, textAlign: 'center', marginTop: 4 },
   loadingCard: {
     backgroundColor: '#0d0d14',
     borderRadius: 12,

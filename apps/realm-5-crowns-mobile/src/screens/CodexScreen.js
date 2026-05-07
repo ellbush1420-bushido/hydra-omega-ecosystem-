@@ -1,114 +1,115 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
-  View,
-  Text,
+  ActivityIndicator,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
-  SafeAreaView,
+  Text,
   TouchableOpacity,
+  View,
 } from 'react-native';
+
 import { usePlayer } from '../hooks/usePlayer';
 import { useHydraEyes } from '../hooks/useHydraEyes';
-
-const CODEX_CATALOG = [
-  { id: 'serpent_cipher_vol_i', title: 'Serpent Cipher Vol. I', faction: 'SERPENT', emoji: '🐍', tier: '$9' },
-  { id: 'crimson_codex_vol_i', title: 'Crimson Codex Vol. I', faction: 'SCARLET', emoji: '🔴', tier: '$9' },
-  { id: 'ophiuchus_prophecy_scroll_i', title: 'Ophiuchus Prophecy Scroll I', faction: 'WEB', emoji: '🌀', tier: '$9' },
-  { id: 'black_sun_ledger_vol_i', title: 'Black Sun Ledger Vol. I', faction: 'SUN', emoji: '☀️', tier: '$9' },
-  { id: 'lazarus_codex_vol_i', title: 'Lazarus Codex Vol. I', faction: 'LAZARUS', emoji: '⚔️', tier: '$9' },
-  { id: 'cipher_vol_ii', title: 'Cipher Codex Vol. II', faction: 'ALL', emoji: '📜', tier: '$27' },
-  { id: 'merchant_scroll_i', title: 'Merchant Quarter Scroll I', faction: 'ALL', emoji: '📜', tier: '$27' },
-  { id: 'vault_fragment_i', title: 'Vault Fragment I', faction: 'ALL', emoji: '🔑', tier: '$27' },
-  { id: 'vault_membership', title: 'Codex Vault Membership', faction: 'ALL', emoji: '🏛️', tier: '$47/mo' },
-];
+import { LOCAL_CODEX_ENTRIES } from '../data/realmGate';
+import { fetchCodexCatalogForPlayer, isSupabaseConfigured } from '../lib/supabase';
 
 export default function CodexScreen({ navigation }) {
   const { state } = usePlayer();
-  const { trackClick, trackSale, trackCodexUnlock } = useHydraEyes();
-  const { codexUnlocks } = state;
+  const { trackClick } = useHydraEyes();
+  const [remoteEntries, setRemoteEntries] = useState([]);
+  const [remoteUnlocks, setRemoteUnlocks] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  // Normalize unlocked IDs (lowercase, spaces→underscore)
-  const normalizedUnlocks = new Set(
-    codexUnlocks.map((id) => id.toLowerCase().replace(/\s/g, '_').replace(/\./g, ''))
+  useEffect(() => {
+    let active = true;
+
+    async function loadCodex() {
+      if (!isSupabaseConfigured) return;
+      setLoading(true);
+      setError('');
+
+      try {
+        const { entries, unlocks } = await fetchCodexCatalogForPlayer();
+        if (!active) return;
+        setRemoteEntries(entries || []);
+        setRemoteUnlocks((unlocks || []).map((entry) => entry.codex_key));
+      } catch (err) {
+        if (!active) return;
+        setError(err.message || 'Unable to load Supabase codex data.');
+      } finally {
+        if (active) setLoading(false);
+      }
+    }
+
+    loadCodex();
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const entries = useMemo(() => {
+    const source = remoteEntries.length ? remoteEntries : LOCAL_CODEX_ENTRIES;
+    const seen = new Set();
+    return source.filter((entry) => {
+      if (!entry?.key || seen.has(entry.key)) return false;
+      seen.add(entry.key);
+      return true;
+    });
+  }, [remoteEntries]);
+
+  const unlockedKeys = useMemo(
+    () => new Set([...state.codexUnlocks, ...remoteUnlocks]),
+    [state.codexUnlocks, remoteUnlocks]
   );
 
-  const isUnlocked = (id) => {
-    return normalizedUnlocks.has(id) ||
-      normalizedUnlocks.has(id.replace(/_/g, ' '));
-  };
+  const unlockedEntries = entries.filter((entry) => unlockedKeys.has(entry.key));
+  const lockedEntries = entries.filter((entry) => !unlockedKeys.has(entry.key));
 
-  const handleMockPurchase = (codex) => {
-    trackClick('codex_purchase', codex.id);
-    const amount = parseFloat(codex.tier.replace(/\$/g, '').replace(/\/mo/g, ''));
-    trackSale(codex.title, amount);
-    trackCodexUnlock(codex.id);
+  const openEntry = (entry) => {
+    trackClick('codex_entry', entry.key);
+    navigation.navigate('CodexDetail', { entry });
   };
-
-  const unlocked = CODEX_CATALOG.filter((c) => isUnlocked(c.id));
-  const locked = CODEX_CATALOG.filter((c) => !isUnlocked(c.id));
 
   return (
     <SafeAreaView style={styles.safe}>
       <ScrollView contentContainerStyle={styles.scroll}>
-        <Text style={styles.eyeLabel}>👁 HYDRA EYES — COMMERCE EYE</Text>
-        <Text style={styles.title}>Codex Vault</Text>
+        <Text style={styles.eyeLabel}>👁 HYDRA EYES — LORE EYE</Text>
+        <Text style={styles.title}>Lore Codex</Text>
         <Text style={styles.subtitle}>
-          Unlock faction codices through arena trials or the product ladder.
+          Unlocked entries open in full. Locked entries remain sealed behind “???” until the gate condition is met.
         </Text>
 
-        {unlocked.length > 0 && (
-          <>
-            <Text style={styles.sectionLabel}>✅ Unlocked ({unlocked.length})</Text>
-            {unlocked.map((c) => (
-              <View key={c.id} style={[styles.card, styles.cardUnlocked]}>
-                <Text style={styles.cardEmoji}>{c.emoji}</Text>
-                <View style={styles.cardBody}>
-                  <Text style={styles.cardTitle}>{c.title}</Text>
-                  <Text style={styles.cardFaction}>{c.faction} · {c.tier}</Text>
-                </View>
-                <Text style={styles.unlockedBadge}>✓</Text>
-              </View>
-            ))}
-          </>
+        {loading && (
+          <View style={styles.loadingCard}>
+            <ActivityIndicator color="#a78bfa" />
+            <Text style={styles.loadingText}>Querying Supabase codex tables…</Text>
+          </View>
         )}
+        {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
-        <Text style={styles.sectionLabel}>🔒 Locked ({locked.length})</Text>
-        {locked.map((c) => (
-          <TouchableOpacity
-            key={c.id}
-            style={styles.card}
-            activeOpacity={0.8}
-            onPress={() => handleMockPurchase(c)}
-          >
-            <Text style={[styles.cardEmoji, styles.lockedEmoji]}>{c.emoji}</Text>
+        <Text style={styles.sectionLabel}>Unlocked ({unlockedEntries.length})</Text>
+        {unlockedEntries.map((entry) => (
+          <TouchableOpacity key={entry.key} style={[styles.card, styles.cardUnlocked]} onPress={() => openEntry(entry)}>
             <View style={styles.cardBody}>
-              <Text style={styles.cardTitle}>{c.title}</Text>
-              <Text style={styles.cardFaction}>{c.faction} · {c.tier}</Text>
+              <Text style={styles.cardTitle}>{entry.title}</Text>
+              <Text style={styles.cardMeta}>{entry.unlockCondition || entry.unlock_condition}</Text>
             </View>
-            <Text style={styles.mockBuyBtn}>Mock Buy</Text>
+            <Text style={styles.openLabel}>Open</Text>
           </TouchableOpacity>
         ))}
 
-        <View style={styles.productLadder}>
-          <Text style={styles.ladderTitle}>Product Ladder</Text>
-          {[
-            { tier: '$9', name: 'Shadow Moon Prompt Pack', desc: 'Faction codex entry' },
-            { tier: '$27', name: 'Initiate Founders Pack', desc: 'Advanced codex + arena keys' },
-            { tier: '$47/mo', name: 'Codex Vault Membership', desc: 'Full vault + all scenarios' },
-          ].map((p) => (
-            <View key={p.tier} style={styles.ladderRow}>
-              <Text style={styles.ladderTier}>{p.tier}</Text>
-              <View>
-                <Text style={styles.ladderName}>{p.name}</Text>
-                <Text style={styles.ladderDesc}>{p.desc}</Text>
-              </View>
+        <Text style={styles.sectionLabel}>Locked ({lockedEntries.length})</Text>
+        {lockedEntries.map((entry) => (
+          <View key={entry.key} style={styles.card}>
+            <View style={styles.cardBody}>
+              <Text style={styles.cardTitle}>???</Text>
+              <Text style={styles.cardMeta}>Condition hidden until unlocked.</Text>
             </View>
-          ))}
-        </View>
-
-        <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>
-          <Text style={styles.backBtnText}>← Back</Text>
-        </TouchableOpacity>
+            <Text style={styles.lockedLabel}>Sealed</Text>
+          </View>
+        ))}
       </ScrollView>
     </SafeAreaView>
   );
@@ -133,7 +134,27 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     letterSpacing: 1.5,
     marginBottom: 8,
-    marginTop: 4,
+    marginTop: 8,
+  },
+  loadingCard: {
+    flexDirection: 'row',
+    gap: 10,
+    alignItems: 'center',
+    backgroundColor: '#0d0d14',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#1f2937',
+    padding: 12,
+    marginBottom: 10,
+  },
+  loadingText: { color: '#9ca3af', fontSize: 12 },
+  errorText: {
+    color: '#fca5a5',
+    backgroundColor: '#2a1116',
+    borderRadius: 10,
+    padding: 10,
+    fontSize: 12,
+    marginBottom: 10,
   },
   card: {
     flexDirection: 'row',
@@ -147,62 +168,12 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   cardUnlocked: {
-    borderColor: '#059669',
-    backgroundColor: '#0a1a10',
-  },
-  cardEmoji: { fontSize: 24 },
-  lockedEmoji: { opacity: 0.4 },
-  cardBody: { flex: 1 },
-  cardTitle: { color: '#e5e7eb', fontSize: 13, fontWeight: '600' },
-  cardFaction: { color: '#6b7280', fontSize: 11, marginTop: 2 },
-  unlockedBadge: { color: '#059669', fontSize: 18, fontWeight: '700' },
-  mockBuyBtn: {
-    color: '#a78bfa',
-    fontSize: 11,
-    fontWeight: '700',
-    borderWidth: 1,
     borderColor: '#7c3aed',
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 6,
+    backgroundColor: '#121022',
   },
-  productLadder: {
-    backgroundColor: '#0d0d14',
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: '#1a1a2e',
-    padding: 14,
-    marginTop: 16,
-  },
-  ladderTitle: {
-    color: '#9ca3af',
-    fontSize: 11,
-    fontWeight: '700',
-    textTransform: 'uppercase',
-    letterSpacing: 1.5,
-    marginBottom: 10,
-  },
-  ladderRow: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    marginBottom: 10,
-    gap: 10,
-  },
-  ladderTier: {
-    color: '#f59e0b',
-    fontSize: 13,
-    fontWeight: '700',
-    width: 56,
-  },
-  ladderName: { color: '#e5e7eb', fontSize: 12, fontWeight: '600' },
-  ladderDesc: { color: '#6b7280', fontSize: 11, marginTop: 2 },
-  backBtn: {
-    marginTop: 16,
-    padding: 12,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#1f2937',
-    alignItems: 'center',
-  },
-  backBtnText: { color: '#9ca3af', fontSize: 13, fontWeight: '600' },
+  cardBody: { flex: 1 },
+  cardTitle: { color: '#e5e7eb', fontSize: 13, fontWeight: '700' },
+  cardMeta: { color: '#6b7280', fontSize: 11, marginTop: 3, lineHeight: 16 },
+  openLabel: { color: '#c4b5fd', fontSize: 11, fontWeight: '700' },
+  lockedLabel: { color: '#4b5563', fontSize: 11, fontWeight: '700' },
 });

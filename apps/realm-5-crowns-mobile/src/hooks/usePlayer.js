@@ -1,31 +1,46 @@
-// Global player state context — XP, faction, tiger rank, codex, scenario history
-
 import React, { createContext, useContext, useReducer } from 'react';
 
-const LEVEL_THRESHOLDS = [0, 100, 250, 450, 700, 1000, 1400, 1900, 2500, 3200, 4000];
+import {
+  FACTION_CODEX_KEYS,
+  REALM_PROGRESSIONS,
+  SHADOW_CROWN_THRESHOLDS,
+  getNextRealm,
+  getRealmById,
+  getShadowCrownMilestone,
+  getShadowCrownRank,
+} from '../data/realmGate';
 
 function getLevel(xp) {
-  let level = 1;
-  for (let i = 0; i < LEVEL_THRESHOLDS.length; i++) {
-    if (xp >= LEVEL_THRESHOLDS[i]) level = i + 1;
-    else break;
-  }
-  return Math.min(level, 10);
+  return getShadowCrownRank(xp);
 }
 
 function xpToNextLevel(xp) {
-  const level = getLevel(xp);
-  if (level >= 10) return 0;
-  return LEVEL_THRESHOLDS[level] - xp;
+  const rank = getLevel(xp);
+  if (rank >= 10) return 0;
+  return SHADOW_CROWN_THRESHOLDS[rank] - xp;
 }
+
+function getDerivedShadowState(xp) {
+  const level = getLevel(xp);
+  const milestone = getShadowCrownMilestone(level);
+  return {
+    level,
+    xpToNext: xpToNextLevel(xp),
+    shadowCrownStats: milestone.stats,
+    shadowCrownPerk: milestone.perk,
+    shadowCrownIntroLine: milestone.introLine || '',
+  };
+}
+
+const initialDerived = getDerivedShadowState(0);
 
 const initialState = {
   xp: 0,
-  level: 1,
-  xpToNext: 100,
+  level: initialDerived.level,
+  xpToNext: initialDerived.xpToNext,
   faction: null,
-  tigerRank: null, // null | 'black_tiger_I' | 'black_tiger_II' | 'white_tiger_I' | 'white_tiger_II'
-  codexUnlocks: [],
+  tigerRank: null,
+  codexUnlocks: ['codex.shadow_crown'],
   scenarioHistory: [],
   mockStats: {
     joins: 0,
@@ -34,51 +49,70 @@ const initialState = {
     scaleScore: 0,
     clicks: 0,
   },
-  hydraRecommendation: null,
+  hydraRecommendation: 'Enter the Obsidian Gate to claim the first Crown threshold.',
+  realmUnlocks: [REALM_PROGRESSIONS[0].id],
+  currentRealmId: REALM_PROGRESSIONS[0].id,
+  shadowCrownStats: initialDerived.shadowCrownStats,
+  shadowCrownPerk: initialDerived.shadowCrownPerk,
+  shadowCrownIntroLine: initialDerived.shadowCrownIntroLine,
+  shadowDominionCharges: {},
 };
 
 function computeRecommendation(state) {
-  const { faction, tigerRank, mockStats, level } = state;
-  if (!faction) return null;
-  if (tigerRank && tigerRank.startsWith('white_tiger')) {
-    return '🐅 White Tiger Path — You are ready for the Hydra Founders Council.';
-  }
-  if (mockStats.revenue > 100) {
-    return '💰 Commerce Eye Active — Focus on the Codex Vault Membership conversion path.';
-  }
-  if (mockStats.scaleScore > 30) {
-    return '📡 Scale Score Elevated — Shadow Arena expansion recommended.';
-  }
-  if (level >= 5) {
-    return '⬆️ Mid-Rank — Kingdom Raid campaigns are now available.';
-  }
-  return '🐍 Initiate Path — Complete Shadow Arena trials to unlock your next rank.';
+  const realm = getRealmById(state.currentRealmId);
+  if (!state.faction) return 'Choose a Crown to begin shaping the Shadow Crown path.';
+  if (state.level >= 10) return 'Ascendant Crown — return to Azure Spire and hold the final threshold.';
+  if (state.realmUnlocks.includes('azure_spire')) return 'Azure Spire unlocked — only the Ascension Encounter remains.';
+  if (state.level >= 9) return 'Shadow Dominion online — store Veil victories inside the active realm.';
+  if (state.level >= 7) return 'Echo Step is active — failed Veil tests can bend once per encounter.';
+  return `Advance through ${realm.title} to push the Shadow Crown beyond Rank ${state.level}.`;
+}
+
+function unlockCodex(state, codexId) {
+  if (!codexId || state.codexUnlocks.includes(codexId)) return state;
+  return { ...state, codexUnlocks: [...state.codexUnlocks, codexId] };
 }
 
 function playerReducer(state, action) {
   switch (action.type) {
-    case 'SET_FACTION':
-      return { ...state, faction: action.faction };
+    case 'SET_FACTION': {
+      const nextState = { ...state, faction: action.faction };
+      return {
+        ...nextState,
+        hydraRecommendation: computeRecommendation(nextState),
+      };
+    }
 
     case 'ADD_XP': {
       const newXp = state.xp + action.amount;
-      const newLevel = getLevel(newXp);
-      const newState = {
+      const derived = getDerivedShadowState(newXp);
+      let newState = {
         ...state,
         xp: newXp,
-        level: newLevel,
-        xpToNext: xpToNextLevel(newXp),
+        ...derived,
       };
-      return { ...newState, hydraRecommendation: computeRecommendation(newState) };
+
+      const milestoneCodex = getShadowCrownMilestone(derived.level).unlockCodexKey;
+      if (milestoneCodex) {
+        newState = unlockCodex(newState, milestoneCodex);
+      }
+
+      return {
+        ...newState,
+        hydraRecommendation: computeRecommendation(newState),
+      };
     }
 
-    case 'UNLOCK_CODEX':
-      if (state.codexUnlocks.includes(action.codexId)) return state;
-      return { ...state, codexUnlocks: [...state.codexUnlocks, action.codexId] };
+    case 'UNLOCK_CODEX': {
+      const nextState = unlockCodex(state, action.codexId);
+      return nextState === state
+        ? state
+        : { ...nextState, hydraRecommendation: computeRecommendation(nextState) };
+    }
 
     case 'PROMOTE_TIGER': {
-      const newState = { ...state, tigerRank: action.rank };
-      return { ...newState, hydraRecommendation: computeRecommendation(newState) };
+      const nextState = { ...state, tigerRank: action.rank };
+      return { ...nextState, hydraRecommendation: computeRecommendation(nextState) };
     }
 
     case 'LOG_SCENARIO':
@@ -87,7 +121,7 @@ function playerReducer(state, action) {
         scenarioHistory: [
           { ...action.entry, ts: new Date().toISOString() },
           ...state.scenarioHistory,
-        ].slice(0, 50),
+        ].slice(0, 80),
       };
 
     case 'ADD_MOCK_STATS': {
@@ -102,6 +136,55 @@ function playerReducer(state, action) {
       return { ...newState, hydraRecommendation: computeRecommendation(newState) };
     }
 
+    case 'UNLOCK_REALM': {
+      if (!action.realmId || state.realmUnlocks.includes(action.realmId)) return state;
+      const nextState = {
+        ...state,
+        realmUnlocks: [...state.realmUnlocks, action.realmId],
+      };
+      return { ...nextState, hydraRecommendation: computeRecommendation(nextState) };
+    }
+
+    case 'SET_CURRENT_REALM': {
+      const nextState = { ...state, currentRealmId: action.realmId || state.currentRealmId };
+      return { ...nextState, hydraRecommendation: computeRecommendation(nextState) };
+    }
+
+    case 'GRANT_VEIL_AUTOWIN': {
+      if (!action.realmId) return state;
+      const current = state.shadowDominionCharges[action.realmId] || 0;
+      const nextState = {
+        ...state,
+        shadowDominionCharges: {
+          ...state.shadowDominionCharges,
+          [action.realmId]: current + 1,
+        },
+      };
+      return { ...nextState, hydraRecommendation: computeRecommendation(nextState) };
+    }
+
+    case 'CONSUME_VEIL_AUTOWIN': {
+      if (!action.realmId) return state;
+      const current = state.shadowDominionCharges[action.realmId] || 0;
+      if (current <= 0) return state;
+      const nextState = {
+        ...state,
+        shadowDominionCharges: {
+          ...state.shadowDominionCharges,
+          [action.realmId]: current - 1,
+        },
+      };
+      return { ...nextState, hydraRecommendation: computeRecommendation(nextState) };
+    }
+
+    case 'SYNC_REALM_ENTRY': {
+      const nextState = {
+        ...state,
+        currentRealmId: action.realmId || state.currentRealmId,
+      };
+      return { ...nextState, hydraRecommendation: computeRecommendation(nextState) };
+    }
+
     default:
       return state;
   }
@@ -111,15 +194,19 @@ const PlayerContext = createContext(null);
 
 export function PlayerProvider({ children }) {
   const [state, dispatch] = useReducer(playerReducer, initialState);
-  return (
-    <PlayerContext.Provider value={{ state, dispatch }}>
-      {children}
-    </PlayerContext.Provider>
-  );
+  return <PlayerContext.Provider value={{ state, dispatch }}>{children}</PlayerContext.Provider>;
 }
 
 export function usePlayer() {
   const ctx = useContext(PlayerContext);
   if (!ctx) throw new Error('usePlayer must be used within PlayerProvider');
   return ctx;
+}
+
+export function getFactionCodexKey(factionId) {
+  return FACTION_CODEX_KEYS[factionId] || null;
+}
+
+export function getNextRealmId(realmId) {
+  return getNextRealm(realmId)?.id || null;
 }

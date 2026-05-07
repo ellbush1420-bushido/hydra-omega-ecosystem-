@@ -14,6 +14,7 @@ import FactionSelectScreen from './src/screens/FactionSelectScreen';
 import ScenariosHubScreen from './src/screens/ScenariosHubScreen';
 import ScenarioScreen from './src/screens/ScenarioScreen';
 import CodexScreen from './src/screens/CodexScreen';
+import CodexDetailScreen from './src/screens/CodexDetailScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import RealmViewerScreen from './src/screens/RealmViewerScreen';
 
@@ -44,12 +45,12 @@ function ScenariosStack() {
       <Stack.Screen
         name="ScenariosHub"
         component={ScenariosHubScreen}
-        options={{ title: '⚔️ Trial Arenas' }}
+        options={{ title: '⚔️ Realm Gate' }}
       />
       <Stack.Screen
         name="Scenario"
         component={ScenarioScreen}
-        options={({ route }) => ({ title: route.params?.scenario?.title || 'Scenario' })}
+        options={({ route }) => ({ title: route.params?.trialTitle || 'Encounter' })}
       />
     </Stack.Navigator>
   );
@@ -67,6 +68,19 @@ function HomeStack() {
         name="RealmViewer"
         component={RealmViewerScreen}
         options={{ title: '🜁 3D Realm Viewer' }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function CodexStack() {
+  return (
+    <Stack.Navigator screenOptions={SCREEN_OPTIONS}>
+      <Stack.Screen name="CodexVault" component={CodexScreen} options={{ title: '📜 Codex Vault' }} />
+      <Stack.Screen
+        name="CodexDetail"
+        component={CodexDetailScreen}
+        options={({ route }) => ({ title: route.params?.entry?.title || 'Codex Entry' })}
       />
     </Stack.Navigator>
   );
@@ -107,18 +121,18 @@ function MainTabs() {
         name="Scenarios"
         component={ScenariosStack}
         options={{
-          title: 'Arenas',
+          title: 'Gates',
           tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>⚔️</Text>,
           headerShown: false,
         }}
       />
       <Tab.Screen
         name="Codex"
-        component={CodexScreen}
+        component={CodexStack}
         options={{
           title: 'Codex',
           tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>📜</Text>,
-          headerTitle: 'Codex Vault',
+          headerShown: false,
         }}
       />
       <Tab.Screen
