@@ -10,8 +10,7 @@ import {
 import realmTrials from '../data/realmTrials';
 import { usePlayer } from '../hooks/usePlayer';
 import { useHydraEyes } from '../hooks/useHydraEyes';
-import { normalizeCodexKey } from '../lib/codex';
-import { unlockCodexEntry } from '../lib/supabase';
+import { unlockCodexIfNeeded } from '../lib/codexUnlocks';
 import XPBar from '../components/XPBar';
 import ShadowCrownPanel from '../components/ShadowCrownPanel';
 import { describeTrial } from '../lib/trials';
@@ -30,12 +29,12 @@ export default function ScenariosHubScreen({ navigation }) {
     realmTrials
       .filter((realm) => state.realmUnlocks.includes(realm.id) && realm.codexKey)
       .forEach((realm) => {
-        const normalizedKey = normalizeCodexKey(realm.codexKey);
-        if (!normalizedKey) return;
-        if (state.codexUnlocks.includes(normalizedKey)) return;
-        dispatch({ type: 'UNLOCK_CODEX', codexId: realm.codexKey });
-        trackCodexUnlock(realm.codexKey);
-        unlockCodexEntry(realm.codexKey);
+        unlockCodexIfNeeded({
+          codexKey: realm.codexKey,
+          codexUnlocks: state.codexUnlocks,
+          dispatch,
+          trackCodexUnlock,
+        });
       });
   }, [state.realmUnlocks, state.codexUnlocks, dispatch, trackCodexUnlock]);
 

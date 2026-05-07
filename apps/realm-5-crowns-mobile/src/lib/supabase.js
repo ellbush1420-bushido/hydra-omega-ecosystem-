@@ -45,7 +45,7 @@ function getRealmLabel(state) {
 }
 
 function getTrialLabel(state) {
-  const mostRecentScenario = state.scenarioHistory.find((entry) => entry.trialTitle || entry.scenarioId);
+  const mostRecentScenario = state.scenarioHistory[0];
   if (mostRecentScenario?.trialTitle) return mostRecentScenario.trialTitle;
   if (mostRecentScenario?.scenarioId) return toTitle(mostRecentScenario.scenarioId);
   if (state.faction) return 'Crown Selection';

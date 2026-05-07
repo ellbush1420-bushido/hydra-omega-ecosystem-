@@ -24,9 +24,9 @@ const RANK_UPDATES = {
 
 export function getShadowCrownRank(xp) {
   let rank = 1;
-  for (let index = 0; index < SHADOW_CROWN_THRESHOLDS.length; index += 1) {
-    if (xp >= SHADOW_CROWN_THRESHOLDS[index]) {
-      rank = index + 1;
+  for (let thresholdIndex = 0; thresholdIndex < SHADOW_CROWN_THRESHOLDS.length; thresholdIndex += 1) {
+    if (xp >= SHADOW_CROWN_THRESHOLDS[thresholdIndex]) {
+      rank = thresholdIndex + 1;
     } else {
       break;
     }

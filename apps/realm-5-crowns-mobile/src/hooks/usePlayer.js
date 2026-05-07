@@ -8,13 +8,15 @@ import {
 } from '../lib/shadowCrown';
 import { normalizeCodexKey } from '../lib/codex';
 
+const DEFAULT_REALM_UNLOCKS = ['obsidian_gate'];
+
 const initialState = {
   xp: 0,
   level: 1,
   xpToNext: 50,
   faction: null,
   tigerRank: null, // null | 'black_tiger_I' | 'black_tiger_II' | 'white_tiger_I' | 'white_tiger_II'
-  realmUnlocks: ['obsidian_gate'],
+  realmUnlocks: DEFAULT_REALM_UNLOCKS,
   codexUnlocks: [],
   scenarioHistory: [],
   mockStats: {

@@ -10,7 +10,7 @@ import {
 import { usePlayer } from '../hooks/usePlayer';
 import { useHydraEyes } from '../hooks/useHydraEyes';
 import { normalizeCodexKey } from '../lib/codex';
-import { unlockCodexEntry } from '../lib/supabase';
+import { unlockCodexIfNeeded } from '../lib/codexUnlocks';
 import XPBar from '../components/XPBar';
 import TigerRankBadge from '../components/TigerRankBadge';
 import HydraEyesPanel from '../components/HydraEyesPanel';
@@ -25,9 +25,12 @@ export default function ProfileScreen({ navigation }) {
 
   React.useEffect(() => {
     if (level < 5 || codexUnlocks.includes(normalizedShadowCrownCodexKey)) return;
-    dispatch({ type: 'UNLOCK_CODEX', codexId: shadowCrownCodexKey });
-    trackCodexUnlock(shadowCrownCodexKey);
-    unlockCodexEntry(shadowCrownCodexKey);
+    unlockCodexIfNeeded({
+      codexKey: shadowCrownCodexKey,
+      codexUnlocks,
+      dispatch,
+      trackCodexUnlock,
+    });
   }, [level, codexUnlocks, dispatch, trackCodexUnlock, normalizedShadowCrownCodexKey, shadowCrownCodexKey]);
 
   return (

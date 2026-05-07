@@ -92,7 +92,6 @@ export default function CodexScreen({ navigation }) {
                 key={entry.key}
                 style={styles.card}
                 accessible
-                accessibilityRole="text"
                 accessibilityLabel={`Locked codex entry. Unlock condition: ${entry.unlockCondition}`}
               >
                 <View style={styles.cardBody}>

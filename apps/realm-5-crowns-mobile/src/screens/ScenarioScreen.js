@@ -11,8 +11,8 @@ import { usePlayer } from '../hooks/usePlayer';
 import { useHydraEyes } from '../hooks/useHydraEyes';
 import { formatStatLabel } from '../lib/codex';
 import { getShadowCrownState } from '../lib/shadowCrown';
-import { describeTrial } from '../lib/trials';
-import { unlockCodexEntry } from '../lib/supabase';
+import { describeTrial, rollD10 } from '../lib/trials';
+import { unlockCodexIfNeeded } from '../lib/codexUnlocks';
 import XPBar from '../components/XPBar';
 import ShadowCrownPanel from '../components/ShadowCrownPanel';
 
@@ -45,7 +45,7 @@ export default function ScenarioScreen({ route, navigation }) {
     trackClick('scenario_choice', choice.id);
 
     const statValue = crown.stats[choice.stat] || 0;
-    const roll = Math.floor(Math.random() * 10) + 1;
+    const roll = rollD10();
     const total = statValue + roll;
     const victory = total >= trialDetails.dc;
     const xpAward = victory ? choice.xpSuccess : choice.xpFailure;
@@ -95,9 +95,12 @@ export default function ScenarioScreen({ route, navigation }) {
     }
 
     if (codexUnlock) {
-      dispatch({ type: 'UNLOCK_CODEX', codexId: codexUnlock });
-      trackCodexUnlock(codexUnlock);
-      unlockCodexEntry(codexUnlock);
+      unlockCodexIfNeeded({
+        codexKey: codexUnlock,
+        codexUnlocks: state.codexUnlocks,
+        dispatch,
+        trackCodexUnlock,
+      });
     }
 
     dispatch({
