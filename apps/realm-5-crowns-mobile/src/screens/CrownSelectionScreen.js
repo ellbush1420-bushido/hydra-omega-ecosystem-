@@ -15,7 +15,7 @@ import XPBar from '../components/XPBar';
 export default function CrownSelectionScreen({ navigation }) {
   const { state, dispatch } = usePlayer();
   const { trackFactionSelect, trackClick } = useHydraEyes();
-  const [selectedFaction, setSelectedFaction] = useState(state.faction || factions[0]);
+  const [selectedFaction, setSelectedFaction] = useState(state.faction || null);
 
   const currentFactionId = state.faction?.id;
   const isFirstSelection = !state.faction;
@@ -84,7 +84,10 @@ export default function CrownSelectionScreen({ navigation }) {
               key={faction.id}
               style={[
                 styles.card,
-                { borderColor: isSelected ? faction.accent : faction.color, backgroundColor: faction.bg },
+                {
+                  borderColor: isSelected ? faction.accent : faction.color,
+                  backgroundColor: faction.bg || '#0d0d14',
+                },
                 isSelected && styles.cardSelected,
               ]}
               activeOpacity={0.85}
@@ -139,6 +142,16 @@ export default function CrownSelectionScreen({ navigation }) {
                 Switching crowns updates your active path and unlocks the new codex without re-awarding the initiation XP.
               </Text>
             )}
+          </View>
+        )}
+
+        {!selectedFaction && (
+          <View style={styles.detailCard}>
+            <Text style={styles.detailLabel}>Select a Crown</Text>
+            <Text style={styles.detailTitle}>Choose a faction to preview its path.</Text>
+            <Text style={styles.detailText}>
+              Your first claim grants the initiation codex unlock and starts your operative record.
+            </Text>
           </View>
         )}
 
@@ -290,6 +303,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   detailTitle: {
+    color: '#e5e7eb',
     fontSize: 20,
     fontWeight: '800',
     marginBottom: 8,
