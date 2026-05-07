@@ -33,8 +33,8 @@ export default function FactionSelectScreen({ navigation }) {
 
     if (!savedFaction) {
       Alert.alert(
-        'Supabase sync unavailable',
-        'Your crown was selected locally, but it could not be saved to Supabase right now.',
+        'Cloud sync unavailable',
+        'Your crown was selected locally, but cloud sync is unavailable right now.',
         [{ text: 'OK', onPress: () => navigation.navigate('Profile') }]
       );
       return;
