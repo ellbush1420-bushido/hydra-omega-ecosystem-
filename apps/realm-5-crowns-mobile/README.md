@@ -74,7 +74,6 @@ apps/realm-5-crowns-mobile/
 │       ├── CrownSelectScreen.js   # Choose your crown
 │       ├── HomeScreen.js          # Current realm + trial summary
 │       ├── RealmViewerScreen.js   # Placeholder 3D realm viewer
-│       ├── FactionSelectScreen.js  # Choose your crown
 │       ├── ScenariosHubScreen.js   # Arena browser
 │       ├── ScenarioScreen.js       # Individual scenario play
 │       ├── CodexScreen.js          # Codex unlock + product ladder
