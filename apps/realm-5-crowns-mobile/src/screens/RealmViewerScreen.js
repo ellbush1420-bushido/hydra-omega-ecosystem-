@@ -205,7 +205,12 @@ export default function RealmViewerScreen() {
       mainLight.shadow.camera.bottom = -12;
       scene.add(mainLight);
 
-      const fillLight = new THREE.PointLight(worldState.mode.fill, 22, 18, 2);
+      const fillLight = new THREE.PointLight(
+        worldState.mode.fill,
+        worldState.mode.fillIntensity,
+        18,
+        2
+      );
       fillLight.position.set(0, 2.4, -10);
       scene.add(fillLight);
 

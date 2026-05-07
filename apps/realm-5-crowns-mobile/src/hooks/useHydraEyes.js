@@ -28,6 +28,8 @@ function publish(event) {
   listeners.forEach((listener) => listener());
 }
 
+// Only schema-backed fields are normalized here; all other payload keys are preserved in `extra`
+// so local UI state can stay rich without breaking Supabase inserts.
 function normalizePayload(payload = {}) {
   const {
     player_id,
