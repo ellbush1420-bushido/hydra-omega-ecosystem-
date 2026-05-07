@@ -80,8 +80,8 @@ export function useHydraEyes() {
         xp: outcomeData.xp,
         scale_score: outcomeData.scaleScore,
         amount: outcomeData.mockRevenue,
-        mockJoins: outcomeData.mockJoins,
-        mockSales: outcomeData.mockSales,
+        mock_joins: outcomeData.mockJoins,
+        mock_sales: outcomeData.mockSales,
       }),
     [track]
   );

@@ -11,12 +11,16 @@ function makePlayerId() {
 }
 
 export async function getOrCreatePlayerId() {
-  const existing = await SecureStore.getItemAsync(PLAYER_ID_KEY);
-  if (existing) return existing;
+  try {
+    const existing = await SecureStore.getItemAsync(PLAYER_ID_KEY);
+    if (existing) return existing;
 
-  const playerId = makePlayerId();
-  await SecureStore.setItemAsync(PLAYER_ID_KEY, playerId);
-  return playerId;
+    const playerId = makePlayerId();
+    await SecureStore.setItemAsync(PLAYER_ID_KEY, playerId);
+    return playerId;
+  } catch {
+    throw new Error('Unable to create or read the local player ID.');
+  }
 }
 
 export async function loadPlayerState(playerId) {

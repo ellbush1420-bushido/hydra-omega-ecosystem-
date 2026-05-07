@@ -36,7 +36,7 @@ export default function TrialSelectScreen({ navigation, route }) {
   }
 
   const handleTrial = async (trial) => {
-    trackClick('trial_card', `${realm.key}:${trial.trialId}`);
+    trackClick('trial_card', `trial_${trial.trialId}`);
     await selectTrial(trial);
     navigation.navigate('Scenario', { scenario: trial, scenarioType: realm.key, realm });
   };
