@@ -4,6 +4,19 @@ import { GLView } from 'expo-gl';
 import { Renderer } from 'expo-three';
 import * as THREE from 'three';
 
+const BASE_FLICKER_INTENSITY = 1.15;
+const PRIMARY_FLICKER_SPEED = 7.5;
+const PRIMARY_FLICKER_AMPLITUDE = 0.24;
+const SECONDARY_FLICKER_SPEED = 13.5;
+const SECONDARY_FLICKER_AMPLITUDE = 0.12;
+const LIGHT_DRIFT_SPEED = 0.8;
+const LIGHT_DRIFT_RANGE = 0.18;
+const PORTAL_PULSE_BASE = 1.2;
+const PORTAL_PULSE_SPEED = 3.2;
+const PORTAL_PULSE_AMPLITUDE = 0.18;
+const PORTAL_SCALE_SPEED = 2.1;
+const PORTAL_SCALE_VARIATION = 0.015;
+
 function disposeScene(scene) {
   if (!scene) {
     return;
@@ -136,10 +149,15 @@ export default function RealmCanvas() {
       }
 
       const elapsed = clock.getElapsedTime();
-      flickerLight.intensity = 1.15 + Math.sin(elapsed * 7.5) * 0.24 + Math.cos(elapsed * 13.5) * 0.12;
-      flickerLight.position.x = Math.sin(elapsed * 0.8) * 0.18;
-      portal.material.emissiveIntensity = 1.2 + Math.sin(elapsed * 3.2) * 0.18;
-      portal.scale.setScalar(1 + Math.sin(elapsed * 2.1) * 0.015);
+      flickerLight.intensity =
+        BASE_FLICKER_INTENSITY +
+        Math.sin(elapsed * PRIMARY_FLICKER_SPEED) * PRIMARY_FLICKER_AMPLITUDE +
+        Math.cos(elapsed * SECONDARY_FLICKER_SPEED) * SECONDARY_FLICKER_AMPLITUDE;
+      flickerLight.position.x = Math.sin(elapsed * LIGHT_DRIFT_SPEED) * LIGHT_DRIFT_RANGE;
+      portal.material.emissiveIntensity =
+        PORTAL_PULSE_BASE +
+        Math.sin(elapsed * PORTAL_PULSE_SPEED) * PORTAL_PULSE_AMPLITUDE;
+      portal.scale.setScalar(1 + Math.sin(elapsed * PORTAL_SCALE_SPEED) * PORTAL_SCALE_VARIATION);
 
       renderer.render(scene, camera);
       gl.endFrameEXP?.();
