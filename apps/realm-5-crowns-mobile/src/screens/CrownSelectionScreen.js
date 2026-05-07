@@ -115,7 +115,7 @@ export default function CrownSelectionScreen({ navigation }) {
               <Text style={styles.lore}>{faction.lore}</Text>
               <View style={styles.metaGrid}>
                 <MetaPill label="Trial Focus" value={faction.trialType} accent={faction.accent} />
-                <MetaPill label="Initiation" value={faction.xpBonus} accent={faction.accent} />
+                <MetaPill label="Initiation Bonus" value={faction.xpBonus} accent={faction.accent} />
                 <MetaPill label="Starting Rank" value={faction.startingRank} accent={faction.accent} />
               </View>
             </TouchableOpacity>
@@ -143,7 +143,7 @@ export default function CrownSelectionScreen({ navigation }) {
             </TouchableOpacity>
             {!isFirstSelection && !isCurrentSelection && (
               <Text style={styles.helperText}>
-                Switching crowns updates your active path and unlocks the new codex without re-awarding the initiation XP.
+                Switching crowns updates your active path and unlocks the new codex without awarding the initiation XP again.
               </Text>
             )}
           </View>
