@@ -10,13 +10,14 @@ import {
 import factions from '../data/factions.json';
 import { usePlayer } from '../hooks/usePlayer';
 import { useHydraEyes } from '../hooks/useHydraEyes';
+import { saveFactionSelection } from '../lib/playerState';
 import XPBar from '../components/XPBar';
 
 export default function FactionSelectScreen({ navigation }) {
   const { state, dispatch } = usePlayer();
   const { trackFactionSelect, trackClick } = useHydraEyes();
 
-  const handleSelect = (faction) => {
+  const handleSelect = async (faction) => {
     trackClick('faction_card', faction.id);
     trackFactionSelect(faction.id);
     dispatch({ type: 'SET_FACTION', faction });
@@ -26,6 +27,7 @@ export default function FactionSelectScreen({ navigation }) {
       type: 'LOG_SCENARIO',
       entry: { type: 'faction_select', factionId: faction.id },
     });
+    await saveFactionSelection(faction.id);
     navigation.navigate('Profile');
   };
 
@@ -45,7 +47,9 @@ export default function FactionSelectScreen({ navigation }) {
             key={f.id}
             style={[styles.card, { borderColor: f.color }]}
             activeOpacity={0.8}
-            onPress={() => handleSelect(f)}
+            onPress={async () => {
+              await handleSelect(f);
+            }}
           >
             <View style={styles.cardHeader}>
               <Text style={styles.emoji}>{f.emoji}</Text>

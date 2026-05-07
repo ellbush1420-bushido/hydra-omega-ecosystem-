@@ -48,6 +48,7 @@ cp .env.example .env.local
 2. Run `supabase/schema.sql` in the SQL editor.
 3. Copy your URL and anon key into `.env.local`.
 4. The `hydra_events` table will receive live tracking from the app.
+5. Crown selection persistence uses the `players` table plus the helper RPC functions in `supabase/schema.sql`.
 
 ## Project Structure
 

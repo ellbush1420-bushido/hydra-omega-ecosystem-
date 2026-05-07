@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -6,6 +6,8 @@ import { StatusBar } from 'expo-status-bar';
 import { Text } from 'react-native';
 
 import { PlayerProvider } from './src/hooks/usePlayer';
+import { initSupabase } from './src/hooks/useHydraEyes';
+import { supabase } from './src/lib/supabase';
 
 import FactionSelectScreen from './src/screens/FactionSelectScreen';
 import ScenariosHubScreen from './src/screens/ScenariosHubScreen';
@@ -105,6 +107,10 @@ function MainTabs() {
 }
 
 export default function App() {
+  useEffect(() => {
+    initSupabase(supabase);
+  }, []);
+
   return (
     <PlayerProvider>
       <NavigationContainer theme={NAV_THEME}>

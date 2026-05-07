@@ -1,6 +1,7 @@
 // Global player state context — XP, faction, tiger rank, codex, scenario history
 
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useEffect, useReducer } from 'react';
+import { getFactionFromPlayerState, loadPlayerState } from '../lib/playerState';
 
 const LEVEL_THRESHOLDS = [0, 100, 250, 450, 700, 1000, 1400, 1900, 2500, 3200, 4000];
 
@@ -58,7 +59,11 @@ function computeRecommendation(state) {
 function playerReducer(state, action) {
   switch (action.type) {
     case 'SET_FACTION':
-      return { ...state, faction: action.faction };
+      return {
+        ...state,
+        faction: action.faction,
+        hydraRecommendation: computeRecommendation({ ...state, faction: action.faction }),
+      };
 
     case 'ADD_XP': {
       const newXp = state.xp + action.amount;
@@ -111,6 +116,26 @@ const PlayerContext = createContext(null);
 
 export function PlayerProvider({ children }) {
   const [state, dispatch] = useReducer(playerReducer, initialState);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function hydratePlayerState() {
+      const remoteState = await loadPlayerState();
+      const faction = getFactionFromPlayerState(remoteState);
+
+      if (isMounted && faction) {
+        dispatch({ type: 'SET_FACTION', faction });
+      }
+    }
+
+    hydratePlayerState();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   return (
     <PlayerContext.Provider value={{ state, dispatch }}>
       {children}
