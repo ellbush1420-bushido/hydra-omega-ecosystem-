@@ -171,26 +171,40 @@ export function PlayerProvider({ children }) {
     let active = true;
 
     async function bootstrapPlayer() {
-      const playerId = await getOrCreatePlayerId();
-      if (!active) return;
+      try {
+        const playerId = await getOrCreatePlayerId();
+        if (!active) return;
 
-      dispatch({ type: 'SET_PLAYER_ID', playerId });
+        dispatch({ type: 'SET_PLAYER_ID', playerId });
 
-      const result = await loadPlayerState(playerId);
-      if (!active) return;
+        const result = await loadPlayerState(playerId);
+        if (!active) return;
 
-      dispatch({
-        type: 'HYDRATE_REMOTE_STATE',
-        payload: {
-          playerId,
-          ...mapRemoteStateToSelection(result.data),
-        },
-      });
-      dispatch({
-        type: 'SET_SYNC_STATUS',
-        status: result.status,
-        message: result.message,
-      });
+        dispatch({
+          type: 'HYDRATE_REMOTE_STATE',
+          payload: {
+            playerId,
+            ...mapRemoteStateToSelection(result.data),
+          },
+        });
+        dispatch({
+          type: 'SET_SYNC_STATUS',
+          status: result.status,
+          message: result.message,
+        });
+      } catch (error) {
+        if (!active) return;
+
+        dispatch({
+          type: 'HYDRATE_REMOTE_STATE',
+          payload: {},
+        });
+        dispatch({
+          type: 'SET_SYNC_STATUS',
+          status: 'error',
+          message: error.message || 'Unable to initialize player link.',
+        });
+      }
     }
 
     bootstrapPlayer();

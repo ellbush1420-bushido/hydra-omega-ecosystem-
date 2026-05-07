@@ -17,6 +17,10 @@ export default function ProfileScreen({ navigation }) {
   const { state } = usePlayer();
   const { eventLog, trackClick } = useHydraEyes();
   const { faction, level, xp, codexUnlocks, scenarioHistory, mockStats, hydraRecommendation } = state;
+  const handleNavigateToRealms = () => {
+    trackClick('nav_scenarios', 'profile');
+    navigation.navigate('Scenarios', { screen: 'RealmSelect' });
+  };
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -91,7 +95,7 @@ export default function ProfileScreen({ navigation }) {
         <View style={styles.navGrid}>
           <TouchableOpacity
             style={styles.navCard}
-            onPress={() => { trackClick('nav_scenarios', 'profile'); navigation.navigate('Scenarios', { screen: 'RealmSelect' }); }}
+            onPress={handleNavigateToRealms}
           >
             <Text style={styles.navCardEmoji}>⚔️</Text>
             <Text style={styles.navCardLabel}>Realm Gates</Text>

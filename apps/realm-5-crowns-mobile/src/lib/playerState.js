@@ -66,7 +66,6 @@ export async function savePlayerState({ playerId, crownId, realmId, trialId }) {
     crown_id: crownId ?? null,
     realm_id: realmId ?? null,
     trial_id: trialId ?? null,
-    updated_at: new Date().toISOString(),
   };
 
   const { error } = await supabase.from('player_state').upsert(payload, {
