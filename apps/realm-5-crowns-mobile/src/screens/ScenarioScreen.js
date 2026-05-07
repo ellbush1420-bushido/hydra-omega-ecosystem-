@@ -36,7 +36,7 @@ export default function ScenarioScreen({ route, navigation }) {
 
   React.useEffect(() => {
     trackScenarioStart(scenario.id, realm.id);
-  }, []);
+  }, [scenario.id, realm.id, trackScenarioStart]);
 
   const handleChoice = (choice) => {
     if (chosen) return;

@@ -198,10 +198,12 @@ export async function fetchCodexCatalog(localUnlocks = []) {
         }))
       : codexEntries;
 
-  const unlocks = new Set([
-    ...normalizedLocalUnlocks,
-    ...((unlockError ? [] : unlockRows) || []).map((entry) => normalizeCodexKey(entry.codex_key)),
-  ]);
+  const remoteUnlocks =
+    unlockError || !unlockRows
+      ? []
+      : unlockRows.map((entry) => normalizeCodexKey(entry.codex_key));
+
+  const unlocks = new Set([...normalizedLocalUnlocks, ...remoteUnlocks]);
 
   return sourceEntries.map((entry) => ({
     ...entry,

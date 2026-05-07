@@ -35,7 +35,7 @@ export default function ScenariosHubScreen({ navigation }) {
         trackCodexUnlock(realm.codexKey);
         unlockCodexEntry(realm.codexKey);
       });
-  }, [state.realmUnlocks, state.codexUnlocks]);
+  }, [state.realmUnlocks, state.codexUnlocks, dispatch, trackCodexUnlock]);
 
   const handleScenario = (realm, scenario) => {
     trackClick('trial_card', scenario.id);

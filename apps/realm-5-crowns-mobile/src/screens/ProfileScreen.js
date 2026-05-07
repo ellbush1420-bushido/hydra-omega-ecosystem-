@@ -25,7 +25,7 @@ export default function ProfileScreen({ navigation }) {
     dispatch({ type: 'UNLOCK_CODEX', codexId: 'codex.shadow_crown' });
     trackCodexUnlock('codex.shadow_crown');
     unlockCodexEntry('codex.shadow_crown');
-  }, [level, codexUnlocks]);
+  }, [level, codexUnlocks, dispatch, trackCodexUnlock]);
 
   return (
     <SafeAreaView style={styles.safe}>
