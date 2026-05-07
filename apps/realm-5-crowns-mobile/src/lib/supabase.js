@@ -36,6 +36,26 @@ function toTitle(value) {
     .replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
+function hasValue(value) {
+  return value !== null && value !== undefined && value !== '';
+}
+
+export function buildEncounterSummary(playerState) {
+  if (!playerState?.last_encounter_result) return 'No encounter recorded';
+
+  const parts = [toTitle(playerState.last_encounter_result)];
+
+  if (hasValue(playerState.last_encounter_realm)) {
+    parts.push(`Realm ${playerState.last_encounter_realm}`);
+  }
+
+  if (hasValue(playerState.last_encounter_trial)) {
+    parts.push(`Trial ${playerState.last_encounter_trial}`);
+  }
+
+  return parts.join(' · ');
+}
+
 function getRealmLabel(state) {
   if (state.tigerRank?.startsWith('white_tiger')) return 'Obsidian Gate';
   if (state.tigerRank?.startsWith('black_tiger')) return 'Shadow Arena';
@@ -111,6 +131,10 @@ export async function fetchPlayerState() {
   logPlayerState('Supabase player_state fetch', { deviceId, hasData: Boolean(data) });
 
   return { deviceId, data };
+}
+
+export async function loadPlayerState() {
+  return fetchPlayerState();
 }
 
 export async function savePlayerState(state) {

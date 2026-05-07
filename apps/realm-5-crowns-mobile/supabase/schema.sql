@@ -5,18 +5,32 @@
 -- 1. PLAYER STATE
 -- ─────────────────────────────────────────────────────────────────────────────
 create table if not exists public.player_state (
-  id            uuid primary key default gen_random_uuid(),
-  device_id     text not null unique,
-  crown         text,
-  realm         text,
-  trial         text,
-  faction_id    text,
-  tiger_rank    text,
-  level         integer not null default 1,
-  xp            integer not null default 0,
-  created_at    timestamptz not null default now(),
-  updated_at    timestamptz not null default now()
+  id                       uuid primary key default gen_random_uuid(),
+  device_id                text not null unique,
+  crown                    text,
+  realm                    text,
+  trial                    text,
+  faction_id               text,
+  tiger_rank               text,
+  level                    integer not null default 1,
+  xp                       integer not null default 0,
+  crown_rank               integer,
+  crown_xp                 integer not null default 0,
+  last_encounter_result    text,
+  last_encounter_realm     integer,
+  last_encounter_trial     integer,
+  last_encounter_timestamp timestamptz,
+  created_at               timestamptz not null default now(),
+  updated_at               timestamptz not null default now()
 );
+
+alter table public.player_state
+  add column if not exists crown_rank integer,
+  add column if not exists crown_xp integer not null default 0,
+  add column if not exists last_encounter_result text,
+  add column if not exists last_encounter_realm integer,
+  add column if not exists last_encounter_trial integer,
+  add column if not exists last_encounter_timestamp timestamptz;
 
 -- ─────────────────────────────────────────────────────────────────────────────
 -- 2. PLAYERS

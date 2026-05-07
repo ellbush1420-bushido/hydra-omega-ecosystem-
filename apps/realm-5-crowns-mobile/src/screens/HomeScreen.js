@@ -12,9 +12,10 @@ import { useFocusEffect } from '@react-navigation/native';
 
 import { usePlayer } from '../hooks/usePlayer';
 import {
+  buildEncounterSummary,
   buildPlayerStatePayload,
-  fetchPlayerState,
   isSupabaseConfigured,
+  loadPlayerState,
   savePlayerState,
 } from '../lib/supabase';
 
@@ -36,6 +37,20 @@ export default function HomeScreen({ navigation }) {
   const [remoteState, setRemoteState] = useState(null);
 
   const localSnapshot = useMemo(() => buildPlayerStatePayload(state), [state]);
+  const encounterSummary = useMemo(() => buildEncounterSummary(remoteState), [remoteState]);
+  const encounterAccent =
+    remoteState?.last_encounter_result === 'victory'
+      ? '#34d399'
+      : remoteState?.last_encounter_result === 'defeat'
+        ? '#f87171'
+        : '#9ca3af';
+  const crownRankValue =
+    remoteState?.crown_rank != null
+      ? `Rank ${remoteState.crown_rank}`
+      : remoteState?.level != null
+        ? `Level ${remoteState.level}`
+        : '—';
+  const crownXpValue = remoteState?.crown_xp ?? remoteState?.xp ?? '—';
 
   const loadRemoteState = useCallback(async () => {
     if (!isSupabaseConfigured) {
@@ -48,7 +63,7 @@ export default function HomeScreen({ navigation }) {
     setError('');
 
     try {
-      const { deviceId: syncedDeviceId, data } = await fetchPlayerState();
+      const { deviceId: syncedDeviceId, data } = await loadPlayerState();
       setDeviceId(syncedDeviceId);
       setRemoteState(data);
     } catch (err) {
@@ -102,6 +117,7 @@ export default function HomeScreen({ navigation }) {
           <Text style={styles.heroMeta}>
             Level {state.level} · {state.tigerRank ? state.tigerRank.replace(/_/g, ' ') : 'initiate'}
           </Text>
+          <Text style={[styles.heroBridge, { color: encounterAccent }]}>{encounterSummary}</Text>
         </View>
 
         <View style={styles.section}>
@@ -122,6 +138,17 @@ export default function HomeScreen({ navigation }) {
                 <DataRow label="Crown" value={remoteState?.crown} accent="#f59e0b" />
                 <DataRow label="Realm" value={remoteState?.realm} accent="#7c3aed" />
                 <DataRow label="Trial" value={remoteState?.trial} accent="#38bdf8" />
+                <DataRow label="Crown Rank" value={crownRankValue} accent="#f59e0b" />
+                <DataRow label="Crown XP" value={String(crownXpValue)} accent="#22c55e" />
+                <DataRow label="Last Encounter" value={encounterSummary} accent={encounterAccent} />
+                <DataRow
+                  label="Encounter Time"
+                  value={
+                    remoteState?.last_encounter_timestamp
+                      ? new Date(remoteState.last_encounter_timestamp).toLocaleString()
+                      : 'No encounter yet'
+                  }
+                />
                 <DataRow
                   label="Updated"
                   value={
@@ -212,6 +239,7 @@ const styles = StyleSheet.create({
   },
   heroValue: { color: '#e5e7eb', fontSize: 24, fontWeight: '800', marginTop: 10 },
   heroMeta: { color: '#a78bfa', fontSize: 12, marginTop: 6 },
+  heroBridge: { fontSize: 12, fontWeight: '700', marginTop: 10 },
   section: { marginBottom: 16 },
   sectionLabel: {
     color: '#6b7280',
