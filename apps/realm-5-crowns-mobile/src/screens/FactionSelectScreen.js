@@ -35,7 +35,8 @@ export default function FactionSelectScreen({ navigation }) {
       Alert.alert(
         'Cloud sync unavailable',
         'Your crown was selected locally, but cloud sync is unavailable right now.',
-        [{ text: 'OK', onPress: () => navigation.navigate('Profile') }]
+        [{ text: 'OK', onPress: () => navigation.navigate('Profile') }],
+        { cancelable: false }
       );
       return;
     }

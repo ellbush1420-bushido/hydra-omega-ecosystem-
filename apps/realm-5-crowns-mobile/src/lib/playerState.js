@@ -4,6 +4,7 @@ import { isSupabaseConfigured, supabase } from './supabase';
 
 const PLAYER_ID_KEY = 'realm5crowns.player_id';
 const DEFAULT_DISPLAY_NAME = 'Operative';
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 async function getPlayerId() {
   return SecureStore.getItemAsync(PLAYER_ID_KEY);
@@ -36,7 +37,7 @@ export async function saveFactionSelection(factionId) {
 
   const playerState = normalizeRpcResponse(data);
 
-  if (playerState?.id) {
+  if (playerState?.id && UUID_PATTERN.test(playerState.id)) {
     await setPlayerId(playerState.id);
   }
 

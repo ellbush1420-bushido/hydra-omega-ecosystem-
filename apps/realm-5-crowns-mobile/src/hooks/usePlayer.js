@@ -134,7 +134,7 @@ export function PlayerProvider({ children }) {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [dispatch]);
 
   return (
     <PlayerContext.Provider value={{ state, dispatch }}>
