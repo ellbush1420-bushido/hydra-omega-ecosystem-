@@ -27,7 +27,7 @@ export default function ProfileScreen({ navigation }) {
         <Text style={styles.title}>Operative Profile</Text>
 
         {faction ? (
-          <View style={[styles.factionCard, { borderColor: faction.color }]}> 
+          <View style={[styles.factionCard, { borderColor: faction.color }]}>
             <Text style={styles.factionEmoji}>{faction.emoji}</Text>
             <View>
               <Text style={[styles.factionName, { color: faction.accent }]}>{faction.shortName}</Text>

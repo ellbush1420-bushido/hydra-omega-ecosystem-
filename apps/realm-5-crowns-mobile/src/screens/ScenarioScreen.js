@@ -13,10 +13,8 @@ import XPBar from '../components/XPBar';
 import { useHydraEyes } from '../hooks/useHydraEyes';
 import { getNextRealmId, usePlayer } from '../hooks/usePlayer';
 import {
-  LOCAL_CODEX_ENTRIES,
   damageProfileFor,
   difficultyFor,
-  getRealmById,
   getStatLabel,
   getTrialById,
   getTrialStatOptions,
@@ -180,7 +178,7 @@ export default function ScenarioScreen({ route, navigation }) {
       const hasDominionCharge = (state.shadowDominionCharges[realm.id] || 0) > 0;
       const useDeepFade = statKey === 'veil' && state.level >= 5 && !usedDeepFade;
       const roll = useDeepFade ? Math.max(firstRoll, secondRoll) : firstRoll;
-      let total = statValue + roll;
+      const total = statValue + roll;
       let success = statKey === 'veil' && hasDominionCharge;
       let resolutionNote = '';
 

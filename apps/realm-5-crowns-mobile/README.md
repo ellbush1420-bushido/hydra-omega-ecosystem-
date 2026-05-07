@@ -7,18 +7,15 @@ A playable React Native / Expo prototype for **The Realm of 5 Crowns**, integrat
 | Feature | Status |
 |---|---|
 | Five Crown faction selection | ✅ |
-| Shadow Arena scenarios | ✅ |
-| Kingdom Raid scenarios | ✅ |
-| Hydra Labyrinth trials | ✅ |
+| Realm Gate progression tree | ✅ |
+| Shadow Crown Rank 1–10 evolution | ✅ |
+| Trial difficulty scaling by realm + type | ✅ |
+| Encounter state flow (intro → choice → resolve) | ✅ |
+| Lore Codex unlock screen + detail view | ✅ |
 | Hydra Eyes UI (event tracking) | ✅ |
-| XP / level progression | ✅ |
-| Black Tiger + White Tiger tracks | ✅ |
-| Codex unlock screen | ✅ |
-| Mock joins, sales, revenue, scale score | ✅ |
-| Hydra recommendation logic | ✅ |
-| Supabase player_state sync | ✅ |
+| Optional Supabase player_state sync | ✅ |
 | 3D Realm Viewer (Expo GL + Three.js) | ✅ |
-| Supabase starter schema | ✅ |
+| Supabase starter schema for realm/codex sync | ✅ |
 
 ## Quick Start
 
@@ -44,44 +41,80 @@ cp .env.example .env.local
 | `EXPO_PUBLIC_SUPABASE_URL` | Your Supabase project URL |
 | `EXPO_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon/public key |
 
+## Realm Gate Systems
+
+### Realm progression
+
+- Realm 1: Obsidian Gate
+- Realm 2: Golden Arena
+- Realm 3: Silver Labyrinth
+- Realm 4: Crimson Wilds
+- Realm 5: Azure Spire
+
+Winning any trial in Realm **N** unlocks Realm **N+1**.
+
+### Shadow Crown ranks
+
+The app uses Shadow Crown XP thresholds for Rank 1–10 and derives cumulative Crown stats:
+
+- **Veil**
+- **Edge**
+- **Pulse**
+- **Flux**
+
+Milestone perks unlock at Rank 5 (`Deep Fade`), Rank 7 (`Echo Step`), Rank 9 (`Shadow Dominion`), and Rank 10 (aura + intro line).
+
+### Encounter flow
+
+Each encounter follows the same state machine:
+
+1. Intro / gate pan
+2. Player choice
+3. Roll resolution against trial DC
+4. HP update
+5. Victory / defeat end state
+
 ## Supabase Setup
 
 1. Create a project at [supabase.com](https://supabase.com).
 2. Run `supabase/schema.sql` in the SQL editor.
 3. Copy your URL and anon key into `.env.local`.
-4. The `hydra_events` table will receive live tracking from the app.
-5. The `player_state` table powers the Home screen sync card.
+4. `player_state` stores current Crown / realm / trial sync.
+5. `realm_unlocks` stores unlocked realms.
+6. `codex_entries` and `codex_unlocks` power the lore codex screens.
+7. `hydra_events` receives Hydra Eyes event tracking.
 
 ## Project Structure
 
-```
+```text
 apps/realm-5-crowns-mobile/
-├── App.js                  # Navigation entry point
-├── app.json                # Expo config
-├── eas.json                # EAS Build config
+├── App.js
+├── app.json
 ├── src/
-│   ├── data/
-│   │   ├── factions.json   # Five Crown faction definitions
-│   │   └── scenarios.json  # Arena / raid / labyrinth scenarios
-│   ├── hooks/
-│   │   ├── useHydraEyes.js # Event tracking hook
-│   │   └── usePlayer.js    # Player state context (XP, faction, tiger rank)
-│   ├── lib/
-│   │   └── supabase.js     # Shared Supabase client + player_state helpers
 │   ├── components/
-│   │   ├── XPBar.js        # Level progress bar
-│   │   ├── TigerRankBadge.js # Tiger promotion track
-│   │   └── HydraEyesPanel.js # Hydra Eyes stats panel
+│   │   ├── XPBar.js
+│   │   ├── TigerRankBadge.js
+│   │   └── HydraEyesPanel.js
+│   ├── data/
+│   │   ├── factions.json
+│   │   ├── scenarios.json
+│   │   └── realmGate.js
+│   ├── hooks/
+│   │   ├── useHydraEyes.js
+│   │   └── usePlayer.js
+│   ├── lib/
+│   │   └── supabase.js
 │   └── screens/
-│       ├── HomeScreen.js          # Supabase sync dashboard
-│       ├── FactionSelectScreen.js  # Choose your crown
-│       ├── ScenariosHubScreen.js   # Arena browser
-│       ├── ScenarioScreen.js       # Individual scenario play
-│       ├── CodexScreen.js          # Codex unlock + product ladder
-│       ├── ProfileScreen.js        # Player profile + Hydra Eyes
-│       └── RealmViewerScreen.js    # Expo GL / Three.js corridor viewer
+│       ├── HomeScreen.js
+│       ├── FactionSelectScreen.js
+│       ├── ScenariosHubScreen.js
+│       ├── ScenarioScreen.js
+│       ├── CodexScreen.js
+│       ├── CodexDetailScreen.js
+│       ├── ProfileScreen.js
+│       └── RealmViewerScreen.js
 └── supabase/
-    └── schema.sql          # Starter schema for live tracking + player_state sync
+    └── schema.sql
 ```
 
 ## Hydra Eyes Tracking
@@ -91,28 +124,13 @@ The `useHydraEyes` hook emits these event types to `hydra_events`:
 | Event | Trigger |
 |---|---|
 | `faction_select` | Player chooses a Crown |
-| `scenario_start` | Player opens a scenario |
-| `scenario_choice` | Player picks an arena option |
-| `codex_unlock` | Codex entry unlocked |
-| `join` | Mock join recorded |
-| `sale` | Mock product sale |
-| `xp_gain` | XP awarded |
-| `tiger_promotion` | Black/White Tiger rank up |
+| `scenario_start` | Player opens a realm gate encounter |
+| `scenario_choice` | Player chooses a stat response during an encounter |
+| `codex_unlock` | Codex entry unlocks |
+| `xp_gain` | Shadow Crown XP awarded |
 | `click` | Any tracked button press |
-
-## EAS Build (Android / iOS Preview)
-
-```bash
-npm install -g eas-cli
-eas login
-eas build --profile preview --platform android
-eas build --profile preview --platform ios
-```
-
-Update `app.json` with your EAS `projectId` before running builds.
 
 ## Canon / Safety
 
 All content is **fictional, cinematic, game-like, public-safe, and non-operational**.
-Shadow Arena and Kingdom Raids are symbolic game systems — not real-world tactical instruction.
 The Realm of 5 Crowns is a lore/engagement module of the Omega Hydra ecosystem.
