@@ -115,11 +115,14 @@ export default function RealmViewerScreen() {
     scene.add(corridor);
     setStatus('Realm projection stable');
 
+    const startTime = Date.now();
+
     const render = () => {
+      const elapsed = Date.now() - startTime;
       gate.rotation.x += 0.005;
       gate.rotation.y += 0.012;
       gateHalo.rotation.z -= 0.003;
-      camera.position.x = Math.sin(Date.now() * 0.00035) * 0.45;
+      camera.position.x = Math.sin(elapsed * 0.00035) * 0.45;
       camera.lookAt(0, 2, -18);
 
       renderer.render(scene, camera);

@@ -23,6 +23,12 @@ export const supabase = isSupabaseConfigured
     })
   : null;
 
+function logPlayerState(event, payload) {
+  if (__DEV__) {
+    console.info(event, payload);
+  }
+}
+
 function toTitle(value) {
   if (!value) return 'Awakening';
   return value
@@ -102,7 +108,7 @@ export async function fetchPlayerState() {
 
   if (error) throw error;
 
-  console.log('Supabase player_state fetch', { deviceId, data });
+  logPlayerState('Supabase player_state fetch', { deviceId, hasData: Boolean(data) });
 
   return { deviceId, data };
 }
@@ -132,7 +138,7 @@ export async function savePlayerState(state) {
 
   if (error) throw error;
 
-  console.log('Supabase player_state write', { deviceId, data });
+  logPlayerState('Supabase player_state write', { deviceId, hasData: Boolean(data) });
 
   return { deviceId, data };
 }
