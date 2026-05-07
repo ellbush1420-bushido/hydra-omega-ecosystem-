@@ -5,7 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Text } from 'react-native';
 
 import { initSupabase } from './src/hooks/useHydraEyes';
-import { PlayerProvider } from './src/hooks/usePlayer';
+import { PlayerProvider, usePlayer } from './src/hooks/usePlayer';
 import { supabase } from './src/lib/supabase';
 import CrownSelectScreen from './src/screens/CrownSelectScreen';
 import HomeScreen from './src/screens/HomeScreen';
@@ -31,6 +31,9 @@ const NAV_THEME = {
 };
 
 function MainTabs() {
+  const { state } = usePlayer();
+  const homeHeaderTitle = state.faction?.name || 'Shadow Crown';
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -58,7 +61,7 @@ function MainTabs() {
         options={{
           title: 'Home',
           tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>🏰</Text>,
-          headerTitle: 'Shadow Crown',
+          headerTitle: homeHeaderTitle,
         }}
       />
       <Tab.Screen

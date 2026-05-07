@@ -6,7 +6,8 @@ import { usePlayer } from '../hooks/usePlayer';
 
 export default function HomeScreen({ route }) {
   const { state } = usePlayer();
-  const selectedCrown = state.faction || route.params?.crown || crowns[0];
+  const defaultCrown = crowns.length > 0 ? crowns[0] : null;
+  const selectedCrown = state.faction || route.params?.crown || defaultCrown;
 
   return (
     <View style={styles.container}>
