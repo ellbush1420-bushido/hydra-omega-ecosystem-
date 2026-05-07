@@ -7,7 +7,7 @@ import { Text } from 'react-native';
 
 import { PlayerProvider } from './src/hooks/usePlayer';
 
-import FactionSelectScreen from './src/screens/FactionSelectScreen';
+import CrownSelectionScreen from './src/screens/CrownSelectionScreen';
 import ScenariosHubScreen from './src/screens/ScenariosHubScreen';
 import ScenarioScreen from './src/screens/ScenarioScreen';
 import CodexScreen from './src/screens/CodexScreen';
@@ -66,11 +66,11 @@ function MainTabs() {
     >
       <Tab.Screen
         name="FactionSelect"
-        component={FactionSelectScreen}
+        component={CrownSelectionScreen}
         options={{
           title: 'Crown',
           tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>👑</Text>,
-          headerTitle: 'Choose Your Crown',
+          headerTitle: 'Crown Selection',
         }}
       />
       <Tab.Screen

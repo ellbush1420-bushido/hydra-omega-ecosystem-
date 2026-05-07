@@ -68,7 +68,8 @@ apps/realm-5-crowns-mobile/
 │   │   ├── TigerRankBadge.js # Tiger promotion track
 │   │   └── HydraEyesPanel.js # Hydra Eyes stats panel
 │   └── screens/
-│       ├── FactionSelectScreen.js  # Choose your crown
+│       ├── CrownSelectionScreen.js # Choose your crown
+│       ├── FactionSelectScreen.js  # Compatibility re-export
 │       ├── ScenariosHubScreen.js   # Arena browser
 │       ├── ScenarioScreen.js       # Individual scenario play
 │       ├── CodexScreen.js          # Codex unlock + product ladder
