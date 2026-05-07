@@ -6,6 +6,7 @@ import { Text } from 'react-native';
 
 import { initSupabase } from './src/hooks/useHydraEyes';
 import { PlayerProvider, usePlayer } from './src/hooks/usePlayer';
+import { DEFAULT_CROWN } from './src/data/crowns';
 import { supabase } from './src/lib/supabase';
 import CrownSelectScreen from './src/screens/CrownSelectScreen';
 import HomeScreen from './src/screens/HomeScreen';
@@ -32,7 +33,7 @@ const NAV_THEME = {
 
 function MainTabs() {
   const { state } = usePlayer();
-  const homeHeaderTitle = state.faction?.name || 'Shadow Crown';
+  const homeHeaderTitle = state.faction?.name || DEFAULT_CROWN.name;
 
   return (
     <Tab.Navigator

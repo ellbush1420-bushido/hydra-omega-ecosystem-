@@ -1,19 +1,18 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { crowns } from '../data/crowns';
+import { DEFAULT_CROWN } from '../data/crowns';
 import { usePlayer } from '../hooks/usePlayer';
 
-export default function HomeScreen({ route }) {
+export default function HomeScreen() {
   const { state } = usePlayer();
-  const defaultCrown = crowns.length > 0 ? crowns[0] : null;
-  const selectedCrown = state.faction || route.params?.crown || defaultCrown;
+  const selectedCrown = state.faction || DEFAULT_CROWN;
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{selectedCrown?.name || 'Shadow Crown'}</Text>
-      <Text style={styles.subtitle}>Realm: Obsidian Gate</Text>
-      <Text style={styles.subtitle}>Trial: Steel</Text>
+      <Text style={styles.title}>{selectedCrown.name}</Text>
+      <Text style={styles.subtitle}>Realm: {selectedCrown.realm}</Text>
+      <Text style={styles.subtitle}>Trial: {selectedCrown.trial}</Text>
       <Text style={styles.description}>{selectedCrown?.description}</Text>
     </View>
   );

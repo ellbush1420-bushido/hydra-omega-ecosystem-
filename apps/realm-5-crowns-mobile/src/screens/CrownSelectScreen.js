@@ -18,7 +18,7 @@ export default function CrownSelectScreen({ navigation }) {
       type: 'LOG_SCENARIO',
       entry: { type: 'crown_select', crownId: crown.id, crownName: crown.name },
     });
-    navigation.navigate('Home', { crown });
+    navigation.navigate('Home');
   };
 
   return (
