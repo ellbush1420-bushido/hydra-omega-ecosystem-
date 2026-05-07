@@ -15,6 +15,7 @@ import { usePlayer } from '../hooks/usePlayer';
 import { useHydraEyes } from '../hooks/useHydraEyes';
 import {
   buildHydraEyesWorldState,
+  formatHydraEyesLabel,
   getHydraEyesMode,
   listHydraEyesModes,
 } from '../lib/hydraEyesWorld';
@@ -134,6 +135,15 @@ export default function RealmViewerScreen() {
   const worldState = useMemo(
     () => buildHydraEyesWorldState(state, eventLog, activeMode),
     [activeMode, eventLog, state]
+  );
+
+  const handleModeSelect = useCallback(
+    (modeId) => {
+      if (modeId === activeMode) return;
+      cleanupRef.current();
+      setActiveMode(modeId);
+    },
+    [activeMode]
   );
 
   useEffect(() => {
@@ -334,7 +344,7 @@ export default function RealmViewerScreen() {
               <TouchableOpacity
                 key={mode.id}
                 style={[styles.modeChip, active && styles.modeChipActive]}
-                onPress={() => setActiveMode(mode.id)}
+                onPress={() => handleModeSelect(mode.id)}
                 activeOpacity={0.85}
               >
                 <Text style={[styles.modeChipLabel, active && styles.modeChipLabelActive]}>
@@ -396,7 +406,7 @@ export default function RealmViewerScreen() {
           ) : (
             eventLog.slice(0, 5).map((event) => (
               <View key={event.id} style={styles.eventRow}>
-                <Text style={styles.eventType}>{event.event_type.replace(/_/g, ' ')}</Text>
+                <Text style={styles.eventType}>{formatHydraEyesLabel(event.event_type)}</Text>
                 <Text style={styles.eventMeta}>{new Date(event.ts).toLocaleTimeString()}</Text>
               </View>
             ))

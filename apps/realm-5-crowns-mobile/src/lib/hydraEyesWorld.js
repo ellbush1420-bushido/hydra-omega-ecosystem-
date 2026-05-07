@@ -61,14 +61,14 @@ const MODE_LIBRARY = [
   },
 ];
 
-function titleCase(value) {
+export function formatHydraEyesLabel(value) {
   if (!value) return 'Unbound';
   return value.replace(/_/g, ' ').replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
 function dominantEventLabel(eventCounts) {
   const [eventType] = Object.entries(eventCounts).sort((a, b) => b[1] - a[1])[0] || [];
-  return eventType ? titleCase(eventType) : 'No signal yet';
+  return eventType ? formatHydraEyesLabel(eventType) : 'No signal yet';
 }
 
 export function getHydraEyesMode(modeId) {
@@ -118,7 +118,7 @@ export function buildHydraEyesWorldState(playerState, eventLog, modeId) {
 
   const focalPoint =
     playerState.faction?.shortName ||
-    (playerState.tigerRank ? titleCase(playerState.tigerRank) : 'Unclaimed Threshold');
+    (playerState.tigerRank ? formatHydraEyesLabel(playerState.tigerRank) : 'Unclaimed Threshold');
 
   const modeDetails = {
     tactical: [
@@ -150,7 +150,7 @@ export function buildHydraEyesWorldState(playerState, eventLog, modeId) {
     opportunityLevel,
     anomalyCount,
     completedTrials,
-    lastTrial: titleCase(lastTrial),
+    lastTrial: formatHydraEyesLabel(lastTrial),
     dominantSignal: dominantEventLabel(eventCounts),
     totalSignals: eventLog.length,
     detailCards: modeDetails[mode.id] || [],
