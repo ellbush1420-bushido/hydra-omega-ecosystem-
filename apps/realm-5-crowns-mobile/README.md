@@ -14,6 +14,7 @@ A playable React Native / Expo prototype for **The Realm of 5 Crowns**, integrat
 | XP / level progression | ✅ |
 | Black Tiger + White Tiger tracks | ✅ |
 | Codex unlock screen | ✅ |
+| 3D Obsidian Gate realm viewer | ✅ |
 | Mock joins, sales, revenue, scale score | ✅ |
 | Hydra recommendation logic | ✅ |
 | Supabase starter schema | ✅ |
@@ -66,12 +67,14 @@ apps/realm-5-crowns-mobile/
 │   ├── components/
 │   │   ├── XPBar.js        # Level progress bar
 │   │   ├── TigerRankBadge.js # Tiger promotion track
+│   │   ├── RealmCanvas.js  # Expo GL + Three.js realm renderer
 │   │   └── HydraEyesPanel.js # Hydra Eyes stats panel
 │   └── screens/
 │       ├── FactionSelectScreen.js  # Choose your crown
 │       ├── ScenariosHubScreen.js   # Arena browser
 │       ├── ScenarioScreen.js       # Individual scenario play
 │       ├── CodexScreen.js          # Codex unlock + product ladder
+│       ├── RealmViewerScreen.js    # Obsidian Gate 3D viewer
 │       └── ProfileScreen.js        # Player profile + Hydra Eyes
 └── supabase/
     └── schema.sql          # Starter schema for live tracking

@@ -12,6 +12,7 @@ import ScenariosHubScreen from './src/screens/ScenariosHubScreen';
 import ScenarioScreen from './src/screens/ScenarioScreen';
 import CodexScreen from './src/screens/CodexScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
+import RealmViewerScreen from './src/screens/RealmViewerScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -89,6 +90,15 @@ function MainTabs() {
           title: 'Codex',
           tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>📜</Text>,
           headerTitle: 'Codex Vault',
+        }}
+      />
+      <Tab.Screen
+        name="RealmViewer"
+        component={RealmViewerScreen}
+        options={{
+          title: 'Realm',
+          tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>🜁</Text>,
+          headerTitle: '3D Realm Viewer',
         }}
       />
       <Tab.Screen
