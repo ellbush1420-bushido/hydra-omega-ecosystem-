@@ -15,7 +15,7 @@ export default function XPBar() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.levelText}>Shadow Crown Rank {level}</Text>
+        <Text style={styles.rankText}>Shadow Crown Rank {level}</Text>
         <Text style={styles.xpText}>{xp} XP</Text>
         {xpToNext > 0 && <Text style={styles.toNextText}>{xpToNext} to next rank</Text>}
       </View>
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     gap: 8,
     marginBottom: 4,
   },
-  levelText: {
+  rankText: {
     color: '#a78bfa',
     fontSize: 12,
     fontWeight: '700',

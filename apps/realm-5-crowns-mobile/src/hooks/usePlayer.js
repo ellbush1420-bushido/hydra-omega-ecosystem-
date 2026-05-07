@@ -6,10 +6,7 @@ import {
   getShadowCrownState,
   xpToNextShadowRank,
 } from '../lib/shadowCrown';
-
-function normalizeCodexId(codexId) {
-  return codexId?.toLowerCase().replace(/[.\s]+/g, '_') || '';
-}
+import { normalizeCodexKey } from '../lib/codex';
 
 const initialState = {
   xp: 0,
@@ -69,7 +66,7 @@ function playerReducer(state, action) {
     }
 
     case 'UNLOCK_CODEX': {
-      const codexId = normalizeCodexId(action.codexId);
+      const codexId = normalizeCodexKey(action.codexId);
       if (!codexId || state.codexUnlocks.includes(codexId)) return state;
       return { ...state, codexUnlocks: [...state.codexUnlocks, codexId] };
     }

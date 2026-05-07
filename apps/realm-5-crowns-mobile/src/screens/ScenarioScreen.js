@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { usePlayer } from '../hooks/usePlayer';
 import { useHydraEyes } from '../hooks/useHydraEyes';
+import { formatStatLabel } from '../lib/codex';
 import { getShadowCrownState } from '../lib/shadowCrown';
 import { describeTrial } from '../lib/trials';
 import { unlockCodexEntry } from '../lib/supabase';
@@ -133,7 +134,7 @@ export default function ScenarioScreen({ route, navigation }) {
             <Text style={styles.summaryPill}>{trialDetails.damageProfile}</Text>
           </View>
           <Text style={styles.focusText}>
-            Best stats: {trialDetails.statFocus.map((stat) => stat[0].toUpperCase() + stat.slice(1)).join(' · ')}
+            Best stats: {trialDetails.statFocus.map((stat) => formatStatLabel(stat)).join(' · ')}
           </Text>
         </View>
 

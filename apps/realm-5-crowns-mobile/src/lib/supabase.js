@@ -3,6 +3,7 @@ import * as SecureStore from 'expo-secure-store';
 import { Platform } from 'react-native';
 import { createClient } from '@supabase/supabase-js';
 import codexEntries from '../data/codexEntries';
+import { normalizeCodexKey } from './codex';
 
 const DEVICE_ID_KEY = 'realm5crowns.deviceId';
 let memoryDeviceId = '';
@@ -49,11 +50,6 @@ function getTrialLabel(state) {
   if (mostRecentScenario?.scenarioId) return toTitle(mostRecentScenario.scenarioId);
   if (state.faction) return 'Crown Selection';
   return 'Awakening';
-}
-
-function normalizeCodexKey(codexKey) {
-  if (!codexKey) return '';
-  return codexKey.toLowerCase().replace(/[.\s]+/g, '_');
 }
 
 async function readStoredDeviceId() {

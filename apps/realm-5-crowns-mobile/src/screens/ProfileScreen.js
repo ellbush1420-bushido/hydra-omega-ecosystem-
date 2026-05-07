@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { usePlayer } from '../hooks/usePlayer';
 import { useHydraEyes } from '../hooks/useHydraEyes';
+import { normalizeCodexKey } from '../lib/codex';
 import { unlockCodexEntry } from '../lib/supabase';
 import XPBar from '../components/XPBar';
 import TigerRankBadge from '../components/TigerRankBadge';
@@ -20,7 +21,7 @@ export default function ProfileScreen({ navigation }) {
   const { eventLog, trackClick, trackCodexUnlock } = useHydraEyes();
   const { faction, level, xp, codexUnlocks, scenarioHistory, hydraRecommendation, realmUnlocks } = state;
   const shadowCrownCodexKey = 'codex.shadow_crown';
-  const normalizedShadowCrownCodexKey = shadowCrownCodexKey.replace(/[.\s]+/g, '_');
+  const normalizedShadowCrownCodexKey = normalizeCodexKey(shadowCrownCodexKey);
 
   React.useEffect(() => {
     if (level < 5 || codexUnlocks.includes(normalizedShadowCrownCodexKey)) return;

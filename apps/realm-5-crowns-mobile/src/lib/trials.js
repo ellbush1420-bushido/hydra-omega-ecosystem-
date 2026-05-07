@@ -27,6 +27,7 @@ export const TRIAL_TYPES = {
 };
 
 export function getRealmModifier(realmTier) {
+  // Realm tiers 1-2 stay flat, 3-4 add the mid-game spike, and 5 is the final ascent jump.
   if (realmTier >= 5) return { dc: 4, damage: 2 };
   if (realmTier >= 3) return { dc: 2, damage: 1 };
   return { dc: 0, damage: 0 };
