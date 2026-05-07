@@ -6,7 +6,7 @@ import * as THREE from 'three';
 import { usePlayer } from '../hooks/usePlayer';
 
 const HUD_SCORE_CAP = 100;
-const CAMERA_SWAY_SPEED = 0.00035 * 1000;
+const CAMERA_SWAY_PER_MILLISECOND = 0.00035;
 const HUD_WEIGHTS = {
   threatBase: 28,
   threatPerLevel: 6,
@@ -231,10 +231,11 @@ export default function RealmViewerScreen() {
 
     const render = () => {
       const elapsed = clock.getElapsedTime();
+      const elapsedMilliseconds = elapsed * 1000;
       gate.rotation.x += 0.005;
       gate.rotation.y += 0.012;
       gateHalo.rotation.z -= 0.003;
-      camera.position.x = Math.sin(elapsed * CAMERA_SWAY_SPEED) * 0.45;
+      camera.position.x = Math.sin(elapsedMilliseconds * CAMERA_SWAY_PER_MILLISECOND) * 0.45;
       camera.lookAt(0, 2, -18);
       gateHalo.material.opacity = 0.18 + (Math.sin(elapsed * 1.6) + 1) * 0.06;
       threatZones.forEach((zone, index) => {
@@ -349,7 +350,7 @@ function getThreatScore(state) {
   const score =
     HUD_WEIGHTS.threatBase +
     state.level * HUD_WEIGHTS.threatPerLevel +
-    state.scenarioHistory.length * HUD_WEIGHTS.threatPerScenario +
+    (state.scenarioHistory?.length ?? 0) * HUD_WEIGHTS.threatPerScenario +
     (state.tigerRank?.startsWith('white_tiger') ? HUD_WEIGHTS.threatWhiteTigerBonus : 0);
 
   return Math.min(HUD_SCORE_CAP, score);
@@ -359,7 +360,7 @@ function getOpportunityCount(state) {
   let count = 0;
 
   if (state.faction) count += 1;
-  if (state.codexUnlocks.length > 0) count += 1;
+  if ((state.codexUnlocks?.length ?? 0) > 0) count += 1;
   if (state.level >= 4) count += 1;
   if (state.tigerRank) count += 1;
 
@@ -374,7 +375,7 @@ function getShadowAdvantage(state) {
       : 0;
   const score =
     HUD_WEIGHTS.shadowBase +
-    state.codexUnlocks.length * HUD_WEIGHTS.shadowPerCodex +
+    (state.codexUnlocks?.length ?? 0) * HUD_WEIGHTS.shadowPerCodex +
     state.level * HUD_WEIGHTS.shadowPerLevel +
     tigerBonus;
 
