@@ -7,6 +7,8 @@ A playable React Native / Expo prototype for **The Realm of 5 Crowns**, integrat
 | Feature | Status |
 |---|---|
 | Five Crown faction selection | ✅ |
+| Realm selection + viewer | ✅ |
+| Trial selection | ✅ |
 | Shadow Arena scenarios | ✅ |
 | Kingdom Raid scenarios | ✅ |
 | Hydra Labyrinth trials | ✅ |
@@ -17,6 +19,7 @@ A playable React Native / Expo prototype for **The Realm of 5 Crowns**, integrat
 | Mock joins, sales, revenue, scale score | ✅ |
 | Hydra recommendation logic | ✅ |
 | Supabase starter schema | ✅ |
+| Player state selection sync | ✅ |
 
 ## Quick Start
 
@@ -48,6 +51,7 @@ cp .env.example .env.local
 2. Run `supabase/schema.sql` in the SQL editor.
 3. Copy your URL and anon key into `.env.local`.
 4. The `hydra_events` table will receive live tracking from the app.
+5. Optional `player_state` writes store realm and trial selections when credentials are present.
 
 ## Project Structure
 
@@ -59,18 +63,26 @@ apps/realm-5-crowns-mobile/
 ├── src/
 │   ├── data/
 │   │   ├── factions.json   # Five Crown faction definitions
-│   │   └── scenarios.json  # Arena / raid / labyrinth scenarios
+│   │   ├── realms.js       # Realm metadata
+│   │   ├── scenarios.json  # Arena / raid / labyrinth scenarios
+│   │   └── trials.js       # Trial metadata
 │   ├── hooks/
 │   │   ├── useHydraEyes.js # Event tracking hook
 │   │   └── usePlayer.js    # Player state context (XP, faction, tiger rank)
+│   ├── lib/
+│   │   └── supabase.js     # Optional Supabase client for player state sync
 │   ├── components/
+│   │   ├── RealmCanvas.js  # Expo GL realm scene
 │   │   ├── XPBar.js        # Level progress bar
 │   │   ├── TigerRankBadge.js # Tiger promotion track
 │   │   └── HydraEyesPanel.js # Hydra Eyes stats panel
 │   └── screens/
 │       ├── FactionSelectScreen.js  # Choose your crown
+│       ├── RealmSelectScreen.js    # Choose a realm
+│       ├── RealmViewerScreen.js    # 3D realm preview
 │       ├── ScenariosHubScreen.js   # Arena browser
 │       ├── ScenarioScreen.js       # Individual scenario play
+│       ├── TrialSelectScreen.js    # Choose a trial
 │       ├── CodexScreen.js          # Codex unlock + product ladder
 │       └── ProfileScreen.js        # Player profile + Hydra Eyes
 └── supabase/

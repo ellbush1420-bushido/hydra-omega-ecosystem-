@@ -5,13 +5,18 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StatusBar } from 'expo-status-bar';
 import { Text } from 'react-native';
 
+import { initSupabase } from './src/hooks/useHydraEyes';
 import { PlayerProvider } from './src/hooks/usePlayer';
+import { supabase } from './src/lib/supabase';
 
 import FactionSelectScreen from './src/screens/FactionSelectScreen';
 import ScenariosHubScreen from './src/screens/ScenariosHubScreen';
 import ScenarioScreen from './src/screens/ScenarioScreen';
 import CodexScreen from './src/screens/CodexScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
+import RealmSelectScreen from './src/screens/RealmSelectScreen';
+import RealmViewerScreen from './src/screens/RealmViewerScreen';
+import TrialSelectScreen from './src/screens/TrialSelectScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -51,6 +56,23 @@ function ScenariosStack() {
   );
 }
 
+function RealmsStack() {
+  return (
+    <Stack.Navigator screenOptions={SCREEN_OPTIONS}>
+      <Stack.Screen
+        name="RealmSelect"
+        component={RealmSelectScreen}
+        options={{ title: 'Choose Your Realm' }}
+      />
+      <Stack.Screen
+        name="RealmViewer"
+        component={RealmViewerScreen}
+        options={({ route }) => ({ title: route.params?.realm?.name || 'Realm Viewer' })}
+      />
+    </Stack.Navigator>
+  );
+}
+
 function MainTabs() {
   return (
     <Tab.Navigator
@@ -83,6 +105,24 @@ function MainTabs() {
         }}
       />
       <Tab.Screen
+        name="Realms"
+        component={RealmsStack}
+        options={{
+          title: 'Realms',
+          tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>🜂</Text>,
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="Trials"
+        component={TrialSelectScreen}
+        options={{
+          title: 'Trials',
+          tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>🗝</Text>,
+          headerTitle: 'Choose Your Trial',
+        }}
+      />
+      <Tab.Screen
         name="Codex"
         component={CodexScreen}
         options={{
@@ -105,6 +145,10 @@ function MainTabs() {
 }
 
 export default function App() {
+  React.useEffect(() => {
+    initSupabase(supabase);
+  }, []);
+
   return (
     <PlayerProvider>
       <NavigationContainer theme={NAV_THEME}>
