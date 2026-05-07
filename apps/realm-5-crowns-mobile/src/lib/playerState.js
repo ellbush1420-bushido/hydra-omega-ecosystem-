@@ -42,7 +42,7 @@ export async function saveFactionSelection(factionId) {
   });
 
   if (error) {
-    console.log('Error saving faction selection:', error);
+    console.error('Error saving faction selection:', error);
     return null;
   }
 
@@ -58,7 +58,7 @@ export async function loadPlayerState() {
   });
 
   if (error) {
-    console.log('Error loading player state:', error);
+    console.error('Error loading player state:', error);
     return null;
   }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Alert,
   View,
   Text,
   TouchableOpacity,
@@ -27,7 +28,16 @@ export default function FactionSelectScreen({ navigation }) {
       type: 'LOG_SCENARIO',
       entry: { type: 'faction_select', factionId: faction.id },
     });
-    await saveFactionSelection(faction.id);
+
+    const savedFaction = await saveFactionSelection(faction.id);
+
+    if (!savedFaction) {
+      Alert.alert(
+        'Supabase sync unavailable',
+        'Your crown was selected locally, but it could not be saved to Supabase right now.'
+      );
+    }
+
     navigation.navigate('Profile');
   };
 
