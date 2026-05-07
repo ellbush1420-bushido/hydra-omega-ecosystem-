@@ -2,6 +2,7 @@ import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
 import { Platform } from 'react-native';
 import { createClient } from '@supabase/supabase-js';
+import scenarios from '../data/scenarios.json';
 
 const DEVICE_ID_KEY = 'realm5crowns.deviceId';
 let memoryDeviceId = '';
@@ -10,6 +11,13 @@ const supabaseUrl =
   process.env.EXPO_PUBLIC_SUPABASE_URL || Constants.expoConfig?.extra?.supabaseUrl || '';
 const supabaseAnonKey =
   process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY || Constants.expoConfig?.extra?.supabaseAnonKey || '';
+
+const SCENARIO_LOOKUP = Object.values(scenarios).reduce((lookup, entries) => {
+  entries.forEach((entry) => {
+    lookup[entry.id] = entry;
+  });
+  return lookup;
+}, {});
 
 export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey);
 
@@ -45,7 +53,9 @@ function getRealmLabel(state) {
 
 function getTrialLabel(state) {
   const mostRecentScenario = state.scenarioHistory.filter((entry) => entry.scenarioId)[0];
-  if (mostRecentScenario) return toTitle(mostRecentScenario.scenarioId);
+  if (mostRecentScenario) {
+    return SCENARIO_LOOKUP[mostRecentScenario.scenarioId]?.title || toTitle(mostRecentScenario.scenarioId);
+  }
   if (state.faction) return 'Crown Selection';
   return 'Awakening';
 }
