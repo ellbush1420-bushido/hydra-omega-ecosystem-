@@ -139,7 +139,7 @@ export default function HomeScreen({ navigation }) {
                 <DataRow label="Realm" value={remoteState?.realm} accent="#7c3aed" />
                 <DataRow label="Trial" value={remoteState?.trial} accent="#38bdf8" />
                 <DataRow label="Crown Rank" value={crownRankValue} accent="#f59e0b" />
-                <DataRow label="Crown XP" value={String(crownXpValue)} accent="#22c55e" />
+                <DataRow label="Crown XP" value={crownXpValue} accent="#22c55e" />
                 <DataRow label="Last Encounter" value={encounterSummary} accent={encounterAccent} />
                 <DataRow
                   label="Encounter Time"

@@ -21,7 +21,7 @@ create table if not exists public.player_state (
 -- Bridge columns are added separately so the same starter schema can patch existing projects too.
 alter table public.player_state
   add column if not exists crown_rank integer,
-  add column if not exists crown_xp integer not null default 0,
+  add column if not exists crown_xp integer,
   add column if not exists last_encounter_result text,
   add column if not exists last_encounter_realm integer,
   add column if not exists last_encounter_trial integer,
