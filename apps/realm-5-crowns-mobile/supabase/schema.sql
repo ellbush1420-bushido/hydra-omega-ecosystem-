@@ -24,6 +24,7 @@ create table if not exists public.player_state (
   updated_at               timestamptz not null default now()
 );
 
+-- Backfill bridge columns when this starter schema is re-run against an existing project.
 alter table public.player_state
   add column if not exists crown_rank integer,
   add column if not exists crown_xp integer not null default 0,

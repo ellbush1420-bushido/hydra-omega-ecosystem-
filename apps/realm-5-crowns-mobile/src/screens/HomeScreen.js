@@ -14,8 +14,8 @@ import { usePlayer } from '../hooks/usePlayer';
 import {
   buildEncounterSummary,
   buildPlayerStatePayload,
+  fetchPlayerState,
   isSupabaseConfigured,
-  loadPlayerState,
   savePlayerState,
 } from '../lib/supabase';
 
@@ -63,7 +63,7 @@ export default function HomeScreen({ navigation }) {
     setError('');
 
     try {
-      const { deviceId: syncedDeviceId, data } = await loadPlayerState();
+      const { deviceId: syncedDeviceId, data } = await fetchPlayerState();
       setDeviceId(syncedDeviceId);
       setRemoteState(data);
     } catch (err) {
