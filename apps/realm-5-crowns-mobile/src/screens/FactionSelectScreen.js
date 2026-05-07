@@ -47,9 +47,7 @@ export default function FactionSelectScreen({ navigation }) {
             key={f.id}
             style={[styles.card, { borderColor: f.color }]}
             activeOpacity={0.8}
-            onPress={async () => {
-              await handleSelect(f);
-            }}
+            onPress={() => handleSelect(f)}
           >
             <View style={styles.cardHeader}>
               <Text style={styles.emoji}>{f.emoji}</Text>

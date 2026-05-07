@@ -42,7 +42,7 @@ export async function saveFactionSelection(factionId) {
   });
 
   if (error) {
-    console.log('Error saving crown selection:', error);
+    console.log('Error saving faction selection:', error);
     return null;
   }
 
