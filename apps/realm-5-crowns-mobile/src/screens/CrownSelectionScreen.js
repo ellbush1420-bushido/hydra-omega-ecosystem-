@@ -15,11 +15,17 @@ import XPBar from '../components/XPBar';
 export default function CrownSelectionScreen({ navigation }) {
   const { state, dispatch } = usePlayer();
   const { trackFactionSelect, trackClick } = useHydraEyes();
-  const [selectedFaction, setSelectedFaction] = useState(state.faction || null);
+  const [selectedFaction, setSelectedFaction] = useState(null);
 
   const currentFactionId = state.faction?.id;
   const isFirstSelection = !state.faction;
   const isCurrentSelection = selectedFaction?.id === currentFactionId;
+
+  const confirmLabel = (() => {
+    if (isCurrentSelection) return 'Continue with Current Crown';
+    if (isFirstSelection) return 'Claim This Crown';
+    return 'Switch Crown';
+  })();
 
   const handlePreview = (faction) => {
     setSelectedFaction(faction);
@@ -133,9 +139,7 @@ export default function CrownSelectionScreen({ navigation }) {
               activeOpacity={0.85}
               onPress={handleConfirm}
             >
-              <Text style={styles.confirmBtnText}>
-                {isCurrentSelection ? 'Continue with Current Crown' : isFirstSelection ? 'Claim This Crown' : 'Switch Crown'}
-              </Text>
+              <Text style={styles.confirmBtnText}>{confirmLabel}</Text>
             </TouchableOpacity>
             {!isFirstSelection && !isCurrentSelection && (
               <Text style={styles.helperText}>
