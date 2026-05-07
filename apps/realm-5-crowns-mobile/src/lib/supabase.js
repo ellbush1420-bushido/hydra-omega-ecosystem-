@@ -133,7 +133,6 @@ export async function fetchPlayerState() {
   return { deviceId, data };
 }
 
-
 export async function savePlayerState(state) {
   if (!supabase) throw new Error('Supabase is not configured.');
 
