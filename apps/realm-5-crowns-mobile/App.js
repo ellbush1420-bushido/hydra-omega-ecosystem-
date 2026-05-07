@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -6,12 +6,16 @@ import { StatusBar } from 'expo-status-bar';
 import { Text } from 'react-native';
 
 import { PlayerProvider } from './src/hooks/usePlayer';
+import { initSupabase } from './src/hooks/useHydraEyes';
+import { isSupabaseConfigured, supabase } from './src/lib/supabase';
 
+import HomeScreen from './src/screens/HomeScreen';
 import FactionSelectScreen from './src/screens/FactionSelectScreen';
 import ScenariosHubScreen from './src/screens/ScenariosHubScreen';
 import ScenarioScreen from './src/screens/ScenarioScreen';
 import CodexScreen from './src/screens/CodexScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
+import RealmViewerScreen from './src/screens/RealmViewerScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -51,6 +55,23 @@ function ScenariosStack() {
   );
 }
 
+function HomeStack() {
+  return (
+    <Stack.Navigator screenOptions={SCREEN_OPTIONS}>
+      <Stack.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{ title: '🜁 Realm Home' }}
+      />
+      <Stack.Screen
+        name="RealmViewer"
+        component={RealmViewerScreen}
+        options={{ title: '🜁 3D Realm Viewer' }}
+      />
+    </Stack.Navigator>
+  );
+}
+
 function MainTabs() {
   return (
     <Tab.Navigator
@@ -64,6 +85,15 @@ function MainTabs() {
         headerTitleStyle: { fontWeight: '700', fontSize: 15 },
       }}
     >
+      <Tab.Screen
+        name="Home"
+        component={HomeStack}
+        options={{
+          title: 'Home',
+          tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>🜁</Text>,
+          headerShown: false,
+        }}
+      />
       <Tab.Screen
         name="FactionSelect"
         component={FactionSelectScreen}
@@ -105,6 +135,12 @@ function MainTabs() {
 }
 
 export default function App() {
+  useEffect(() => {
+    if (isSupabaseConfigured) {
+      initSupabase(supabase);
+    }
+  }, []);
+
   return (
     <PlayerProvider>
       <NavigationContainer theme={NAV_THEME}>

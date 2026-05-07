@@ -16,6 +16,8 @@ A playable React Native / Expo prototype for **The Realm of 5 Crowns**, integrat
 | Codex unlock screen | ✅ |
 | Mock joins, sales, revenue, scale score | ✅ |
 | Hydra recommendation logic | ✅ |
+| Supabase player_state sync | ✅ |
+| 3D Realm Viewer (Expo GL + Three.js) | ✅ |
 | Supabase starter schema | ✅ |
 
 ## Quick Start
@@ -48,6 +50,7 @@ cp .env.example .env.local
 2. Run `supabase/schema.sql` in the SQL editor.
 3. Copy your URL and anon key into `.env.local`.
 4. The `hydra_events` table will receive live tracking from the app.
+5. The `player_state` table powers the Home screen sync card.
 
 ## Project Structure
 
@@ -63,18 +66,22 @@ apps/realm-5-crowns-mobile/
 │   ├── hooks/
 │   │   ├── useHydraEyes.js # Event tracking hook
 │   │   └── usePlayer.js    # Player state context (XP, faction, tiger rank)
+│   ├── lib/
+│   │   └── supabase.js     # Shared Supabase client + player_state helpers
 │   ├── components/
 │   │   ├── XPBar.js        # Level progress bar
 │   │   ├── TigerRankBadge.js # Tiger promotion track
 │   │   └── HydraEyesPanel.js # Hydra Eyes stats panel
 │   └── screens/
+│       ├── HomeScreen.js          # Supabase sync dashboard
 │       ├── FactionSelectScreen.js  # Choose your crown
 │       ├── ScenariosHubScreen.js   # Arena browser
 │       ├── ScenarioScreen.js       # Individual scenario play
 │       ├── CodexScreen.js          # Codex unlock + product ladder
-│       └── ProfileScreen.js        # Player profile + Hydra Eyes
+│       ├── ProfileScreen.js        # Player profile + Hydra Eyes
+│       └── RealmViewerScreen.js    # Expo GL / Three.js corridor viewer
 └── supabase/
-    └── schema.sql          # Starter schema for live tracking
+    └── schema.sql          # Starter schema for live tracking + player_state sync
 ```
 
 ## Hydra Eyes Tracking
