@@ -6,6 +6,7 @@ A playable React Native / Expo prototype for **The Realm of 5 Crowns**, integrat
 
 | Feature | Status |
 |---|---|
+| Three-tab companion core (Home / Codex / Realm) | ✅ |
 | Five Crown faction selection | ✅ |
 | Shadow Arena scenarios | ✅ |
 | Kingdom Raid scenarios | ✅ |
@@ -59,20 +60,27 @@ apps/realm-5-crowns-mobile/
 ├── src/
 │   ├── data/
 │   │   ├── factions.json   # Five Crown faction definitions
+│   │   ├── realmStatus.js  # Obsidian Gate companion copy
 │   │   └── scenarios.json  # Arena / raid / labyrinth scenarios
 │   ├── hooks/
 │   │   ├── useHydraEyes.js # Event tracking hook
 │   │   └── usePlayer.js    # Player state context (XP, faction, tiger rank)
+│   ├── lib/
+│   │   └── supabase.js     # Optional Supabase bootstrap from EXPO_PUBLIC env vars
 │   ├── components/
 │   │   ├── XPBar.js        # Level progress bar
 │   │   ├── TigerRankBadge.js # Tiger promotion track
 │   │   └── HydraEyesPanel.js # Hydra Eyes stats panel
+│   ├── theme/
+│   │   └── colors.js       # Shared companion palette
 │   └── screens/
+│       ├── HomeScreen.js          # Home tab / launch status
 │       ├── FactionSelectScreen.js  # Choose your crown
 │       ├── ScenariosHubScreen.js   # Arena browser
 │       ├── ScenarioScreen.js       # Individual scenario play
 │       ├── CodexScreen.js          # Codex unlock + product ladder
-│       └── ProfileScreen.js        # Player profile + Hydra Eyes
+│       ├── ProfileScreen.js        # Player profile + Hydra Eyes
+│       └── RealmViewerScreen.js    # Realm placeholder tab
 └── supabase/
     └── schema.sql          # Starter schema for live tracking
 ```

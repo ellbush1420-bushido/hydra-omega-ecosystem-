@@ -44,6 +44,15 @@ export default function CodexScreen({ navigation }) {
     trackCodexUnlock(codex.id);
   };
 
+  const handleBack = () => {
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+      return;
+    }
+
+    navigation.getParent()?.navigate('Home');
+  };
+
   const unlocked = CODEX_CATALOG.filter((c) => isUnlocked(c.id));
   const locked = CODEX_CATALOG.filter((c) => !isUnlocked(c.id));
 
@@ -106,7 +115,7 @@ export default function CodexScreen({ navigation }) {
           ))}
         </View>
 
-        <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>
+        <TouchableOpacity style={styles.backBtn} onPress={handleBack}>
           <Text style={styles.backBtnText}>← Back</Text>
         </TouchableOpacity>
       </ScrollView>

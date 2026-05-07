@@ -74,14 +74,17 @@ export default function ProfileScreen({ navigation }) {
         <View style={styles.navGrid}>
           <TouchableOpacity
             style={styles.navCard}
-            onPress={() => { trackClick('nav_scenarios', 'profile'); navigation.navigate('Scenarios'); }}
+            onPress={() => { trackClick('nav_scenarios', 'profile'); navigation.navigate('ScenariosHub'); }}
           >
             <Text style={styles.navCardEmoji}>⚔️</Text>
             <Text style={styles.navCardLabel}>Trial Arenas</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.navCard}
-            onPress={() => { trackClick('nav_codex', 'profile'); navigation.navigate('Codex'); }}
+            onPress={() => {
+              trackClick('nav_codex', 'profile');
+              navigation.getParent()?.navigate('Codex');
+            }}
           >
             <Text style={styles.navCardEmoji}>📜</Text>
             <Text style={styles.navCardLabel}>Codex Vault</Text>
