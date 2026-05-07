@@ -15,7 +15,7 @@
     "@supabase/supabase-js": "^2.43.4",
     "expo": "~51.0.0",
     "expo-constants": "~16.0.2",
-    "expo-gl": "^55.0.13",
+    "expo-gl": "~14.0.2",
     "expo-secure-store": "~13.0.2",
     "expo-status-bar": "~1.12.1",
     "expo-three": "^8.0.0",
