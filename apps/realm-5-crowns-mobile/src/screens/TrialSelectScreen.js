@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, FlatList, StyleSheet, SafeAreaView } from 'react-native';
 
 import { trials } from '../data/trials';
+import { usePlayer } from '../hooks/usePlayer';
 import { supabase } from '../lib/supabase';
 
 async function saveTrialSelection(playerId, trialId) {
@@ -19,6 +20,8 @@ async function saveTrialSelection(playerId, trialId) {
 }
 
 export default function TrialSelectScreen({ navigation }) {
+  const { state } = usePlayer();
+
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.container}>
@@ -31,7 +34,7 @@ export default function TrialSelectScreen({ navigation }) {
             <TouchableOpacity
               style={styles.card}
               onPress={async () => {
-                await saveTrialSelection('elliott', item.id);
+                await saveTrialSelection(state.playerId, item.id);
                 navigation.navigate('Scenarios');
               }}
             >

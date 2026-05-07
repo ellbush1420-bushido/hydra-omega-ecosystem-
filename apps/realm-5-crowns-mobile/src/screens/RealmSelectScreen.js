@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, FlatList, StyleSheet, SafeAreaView } from 'react-native';
 
 import { realms } from '../data/realms';
+import { usePlayer } from '../hooks/usePlayer';
 import { supabase } from '../lib/supabase';
 
 async function saveRealmSelection(playerId, realmId) {
@@ -19,6 +20,8 @@ async function saveRealmSelection(playerId, realmId) {
 }
 
 export default function RealmSelectScreen({ navigation }) {
+  const { state } = usePlayer();
+
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.container}>
@@ -31,7 +34,7 @@ export default function RealmSelectScreen({ navigation }) {
             <TouchableOpacity
               style={[styles.card, { borderLeftColor: item.color }]}
               onPress={async () => {
-                await saveRealmSelection('elliott', item.id);
+                await saveRealmSelection(state.playerId, item.id);
                 navigation.navigate('RealmViewer', { realm: item });
               }}
             >

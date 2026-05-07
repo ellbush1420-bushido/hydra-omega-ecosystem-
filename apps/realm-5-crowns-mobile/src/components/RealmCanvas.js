@@ -60,7 +60,7 @@ export default function RealmCanvas() {
     rightWall.position.x = 3;
     scene.add(rightWall);
 
-    scene.fog = new THREE.FogExp2(new THREE.Color(0x050505), 0.15);
+    scene.fog = new THREE.FogExp2(0x050505, 0.15);
 
     const clock = new THREE.Clock();
 

@@ -20,6 +20,7 @@ function xpToNextLevel(xp) {
 }
 
 const initialState = {
+  playerId: 'guest_player',
   xp: 0,
   level: 1,
   xpToNext: 100,
