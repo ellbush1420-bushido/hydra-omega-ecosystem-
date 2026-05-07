@@ -5,43 +5,31 @@ import { Renderer } from 'expo-three';
 import * as THREE from 'three';
 import { usePlayer } from '../hooks/usePlayer';
 
+const HUD_SCORE_CAP = 100;
+const CAMERA_SWAY_SPEED = 0.00035 * 1000;
+const HUD_WEIGHTS = {
+  threatBase: 28,
+  threatPerLevel: 6,
+  threatPerScenario: 7,
+  threatWhiteTigerBonus: 20,
+  maxOpportunities: 3,
+  shadowBase: 18,
+  shadowPerCodex: 12,
+  shadowPerLevel: 4,
+  shadowTigerBonus: 14,
+  shadowWhiteTigerBonus: 26,
+};
+
 export default function RealmViewerScreen() {
   const { state } = usePlayer();
   const frameRef = useRef(null);
   const cleanupRef = useRef(() => {});
   const [status, setStatus] = useState('Opening the Obsidian Gate…');
   const hud = useMemo(() => {
-    const realmName = state.tigerRank?.startsWith('white_tiger')
-      ? 'Obsidian Gate'
-      : state.tigerRank?.startsWith('black_tiger')
-        ? 'Shadow Arena'
-        : state.faction?.shortName
-          ? `${state.faction.shortName} Crown`
-          : 'Unclaimed Threshold';
-    const threatScore = Math.min(
-      100,
-      28 +
-        state.level * 6 +
-        state.scenarioHistory.length * 7 +
-        (state.tigerRank?.startsWith('white_tiger') ? 20 : 0)
-    );
-    const opportunityCount = Math.max(
-      0,
-      Math.min(
-        3,
-        (state.faction ? 1 : 0) +
-          Math.min(1, state.codexUnlocks.length) +
-          Math.min(1, Math.floor(state.level / 4)) +
-          (state.tigerRank ? 1 : 0)
-      )
-    );
-    const shadowAdvantage = Math.min(
-      100,
-      18 +
-        state.codexUnlocks.length * 12 +
-        state.level * 4 +
-        (state.tigerRank?.startsWith('white_tiger') ? 26 : state.tigerRank ? 14 : 0)
-    );
+    const realmName = getRealmName(state);
+    const threatScore = getThreatScore(state);
+    const opportunityCount = getOpportunityCount(state);
+    const shadowAdvantage = getShadowAdvantage(state);
 
     return {
       realmName,
@@ -246,7 +234,7 @@ export default function RealmViewerScreen() {
       gate.rotation.x += 0.005;
       gate.rotation.y += 0.012;
       gateHalo.rotation.z -= 0.003;
-      camera.position.x = Math.sin(elapsed * 0.35) * 0.45;
+      camera.position.x = Math.sin(elapsed * CAMERA_SWAY_SPEED) * 0.45;
       camera.lookAt(0, 2, -18);
       gateHalo.material.opacity = 0.18 + (Math.sin(elapsed * 1.6) + 1) * 0.06;
       threatZones.forEach((zone, index) => {
@@ -348,6 +336,49 @@ function HudStat({ label, value, accent }) {
       <Text style={[styles.hudValue, { color: accent }]}>{value}</Text>
     </View>
   );
+}
+
+function getRealmName(state) {
+  if (state.tigerRank?.startsWith('white_tiger')) return 'Obsidian Gate';
+  if (state.tigerRank?.startsWith('black_tiger')) return 'Shadow Arena';
+  if (state.faction?.shortName) return `${state.faction.shortName} Crown`;
+  return 'Unclaimed Threshold';
+}
+
+function getThreatScore(state) {
+  const score =
+    HUD_WEIGHTS.threatBase +
+    state.level * HUD_WEIGHTS.threatPerLevel +
+    state.scenarioHistory.length * HUD_WEIGHTS.threatPerScenario +
+    (state.tigerRank?.startsWith('white_tiger') ? HUD_WEIGHTS.threatWhiteTigerBonus : 0);
+
+  return Math.min(HUD_SCORE_CAP, score);
+}
+
+function getOpportunityCount(state) {
+  let count = 0;
+
+  if (state.faction) count += 1;
+  if (state.codexUnlocks.length > 0) count += 1;
+  if (state.level >= 4) count += 1;
+  if (state.tigerRank) count += 1;
+
+  return Math.min(HUD_WEIGHTS.maxOpportunities, count);
+}
+
+function getShadowAdvantage(state) {
+  const tigerBonus = state.tigerRank?.startsWith('white_tiger')
+    ? HUD_WEIGHTS.shadowWhiteTigerBonus
+    : state.tigerRank
+      ? HUD_WEIGHTS.shadowTigerBonus
+      : 0;
+  const score =
+    HUD_WEIGHTS.shadowBase +
+    state.codexUnlocks.length * HUD_WEIGHTS.shadowPerCodex +
+    state.level * HUD_WEIGHTS.shadowPerLevel +
+    tigerBonus;
+
+  return Math.min(HUD_SCORE_CAP, score);
 }
 
 const styles = StyleSheet.create({
