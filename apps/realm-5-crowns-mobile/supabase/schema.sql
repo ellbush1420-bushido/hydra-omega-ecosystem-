@@ -27,6 +27,34 @@ alter table public.player_state
   add column if not exists last_encounter_trial integer,
   add column if not exists last_encounter_timestamp timestamptz;
 
+do $$
+begin
+  if not exists (select 1 from pg_constraint where conname = 'player_state_crown_rank_nonnegative') then
+    alter table public.player_state
+      add constraint player_state_crown_rank_nonnegative
+      check (crown_rank is null or crown_rank >= 0);
+  end if;
+
+  if not exists (select 1 from pg_constraint where conname = 'player_state_crown_xp_nonnegative') then
+    alter table public.player_state
+      add constraint player_state_crown_xp_nonnegative
+      check (crown_xp is null or crown_xp >= 0);
+  end if;
+
+  if not exists (select 1 from pg_constraint where conname = 'player_state_last_encounter_realm_positive') then
+    alter table public.player_state
+      add constraint player_state_last_encounter_realm_positive
+      check (last_encounter_realm is null or last_encounter_realm > 0);
+  end if;
+
+  if not exists (select 1 from pg_constraint where conname = 'player_state_last_encounter_trial_positive') then
+    alter table public.player_state
+      add constraint player_state_last_encounter_trial_positive
+      check (last_encounter_trial is null or last_encounter_trial > 0);
+  end if;
+end
+$$;
+
 -- ─────────────────────────────────────────────────────────────────────────────
 -- 2. PLAYERS
 -- ─────────────────────────────────────────────────────────────────────────────

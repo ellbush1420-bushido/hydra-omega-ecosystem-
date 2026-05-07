@@ -36,20 +36,16 @@ function toTitle(value) {
     .replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
-function hasValue(value) {
-  return value !== null && value !== undefined && value !== '';
-}
-
 export function buildEncounterSummary(playerState) {
   if (!playerState?.last_encounter_result) return 'No encounter recorded';
 
   const parts = [toTitle(playerState.last_encounter_result)];
 
-  if (hasValue(playerState.last_encounter_realm)) {
+  if (Number.isInteger(playerState.last_encounter_realm) && playerState.last_encounter_realm > 0) {
     parts.push(`Realm ${playerState.last_encounter_realm}`);
   }
 
-  if (hasValue(playerState.last_encounter_trial)) {
+  if (Number.isInteger(playerState.last_encounter_trial) && playerState.last_encounter_trial > 0) {
     parts.push(`Trial ${playerState.last_encounter_trial}`);
   }
 

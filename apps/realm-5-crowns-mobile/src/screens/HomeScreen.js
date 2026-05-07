@@ -44,13 +44,11 @@ export default function HomeScreen({ navigation }) {
       : remoteState?.last_encounter_result === 'defeat'
         ? '#f87171'
         : '#9ca3af';
+  const remoteLevelValue = remoteState?.level != null ? `Level ${remoteState.level}` : '—';
+  const remoteXpValue = remoteState?.xp ?? '—';
   const crownRankValue =
-    remoteState?.crown_rank != null
-      ? `Rank ${remoteState.crown_rank}`
-      : remoteState?.level != null
-        ? `Level ${remoteState.level}`
-        : '—';
-  const crownXpValue = remoteState?.crown_xp ?? remoteState?.xp ?? '—';
+    remoteState?.crown_rank != null ? `Rank ${remoteState.crown_rank}` : 'Not synced';
+  const crownXpValue = remoteState?.crown_xp ?? 'Not synced';
 
   const loadRemoteState = useCallback(async () => {
     if (!isSupabaseConfigured) {
@@ -138,6 +136,8 @@ export default function HomeScreen({ navigation }) {
                 <DataRow label="Crown" value={remoteState?.crown} accent="#f59e0b" />
                 <DataRow label="Realm" value={remoteState?.realm} accent="#7c3aed" />
                 <DataRow label="Trial" value={remoteState?.trial} accent="#38bdf8" />
+                <DataRow label="Player Level" value={remoteLevelValue} accent="#a78bfa" />
+                <DataRow label="Player XP" value={remoteXpValue} accent="#22c55e" />
                 <DataRow label="Crown Rank" value={crownRankValue} accent="#f59e0b" />
                 <DataRow label="Crown XP" value={crownXpValue} accent="#22c55e" />
                 <DataRow label="Last Encounter" value={encounterSummary} accent={encounterAccent} />
