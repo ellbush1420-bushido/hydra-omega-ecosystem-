@@ -34,12 +34,14 @@ function getDerivedShadowState(xp) {
 
 const initialDerived = getDerivedShadowState(0);
 
+const initialRankCodex = getShadowCrownMilestone(initialDerived.level).unlockCodexKey;
+
 const initialState = {
   xp: 0,
   level: initialDerived.level,
   xpToNext: initialDerived.xpToNext,
   faction: null,
-  codexUnlocks: ['codex.shadow_crown'],
+  codexUnlocks: initialRankCodex ? [initialRankCodex] : [],
   scenarioHistory: [],
   mockStats: {
     joins: 0,

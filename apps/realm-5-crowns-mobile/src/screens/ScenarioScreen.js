@@ -59,17 +59,16 @@ export default function ScenarioScreen({ route, navigation }) {
   const [phase, setPhase] = useState('INTRO');
   const [status, setStatus] = useState('Camera pans across the gate…');
   const playerMaxHp = getEncounterPlayerMaxHp(state.level);
-  const [playerHp, setPlayerHp] = useState(playerMaxHp);
-  const [wardenHp, setWardenHp] = useState(getEncounterWardenMaxHp(realm.realmNumber, trial.type));
-  const [combatLog, setCombatLog] = useState([]);
-  const [usedDeepFade, setUsedDeepFade] = useState(false);
-  const [usedEchoStep, setUsedEchoStep] = useState(false);
-  const [lastAction, setLastAction] = useState('Awaiting your choice.');
-
   const maxWardenHp = useMemo(
     () => getEncounterWardenMaxHp(realm.realmNumber, trial.type),
     [realm.realmNumber, trial.type]
   );
+  const [playerHp, setPlayerHp] = useState(playerMaxHp);
+  const [wardenHp, setWardenHp] = useState(maxWardenHp);
+  const [combatLog, setCombatLog] = useState([]);
+  const [usedDeepFade, setUsedDeepFade] = useState(false);
+  const [usedEchoStep, setUsedEchoStep] = useState(false);
+  const [lastAction, setLastAction] = useState('Awaiting your choice.');
   const dc = difficultyFor(trial.type, realm.realmNumber);
   const damageProfile = damageProfileFor(trial.type, realm.realmNumber);
   const statOptions = getTrialStatOptions(trial.type);
@@ -193,10 +192,15 @@ export default function ScenarioScreen({ route, navigation }) {
       const firstRoll = randomDie();
       const secondRoll = randomDie();
       const hasDominionCharge = (state.shadowDominionCharges[realm.id] || 0) > 0;
-      const useDeepFade = statKey === 'veil' && hasShadowCrownPerk(state.level, 'deep_fade') && !usedDeepFade;
+      const autoSuccessFromDominion = statKey === 'veil' && hasDominionCharge;
+      const useDeepFade =
+        statKey === 'veil'
+        && !autoSuccessFromDominion
+        && hasShadowCrownPerk(state.level, 'deep_fade')
+        && !usedDeepFade;
       const roll = useDeepFade ? Math.max(firstRoll, secondRoll) : firstRoll;
       const total = statValue + roll;
-      let success = statKey === 'veil' && hasDominionCharge;
+      let success = autoSuccessFromDominion;
       let resolutionNote = '';
 
       if (useDeepFade) {
