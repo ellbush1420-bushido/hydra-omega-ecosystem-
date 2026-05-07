@@ -34,6 +34,7 @@ const NAV_THEME = {
 function MainTabs() {
   const { state } = usePlayer();
   const homeHeaderTitle = state.faction?.name || DEFAULT_CROWN.name;
+  const realmHeaderTitle = state.faction?.realm || DEFAULT_CROWN.realm;
 
   return (
     <Tab.Navigator
@@ -80,7 +81,7 @@ function MainTabs() {
         options={{
           title: 'Realm',
           tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>🌀</Text>,
-          headerTitle: 'Obsidian Gate',
+          headerTitle: realmHeaderTitle,
         }}
       />
     </Tab.Navigator>

@@ -43,9 +43,9 @@ export const crowns = [
 
 export const DEFAULT_CROWN = crowns[0] || {
   id: 0,
-  name: 'Crown',
-  color: '#4a4a4a',
+  name: 'Unchosen Crown',
+  color: '#6b7280',
   description: 'Select a crown to begin your path.',
-  realm: 'Obsidian Gate',
-  trial: 'Steel',
+  realm: 'Awaiting Realm',
+  trial: 'Awaiting Trial',
 };

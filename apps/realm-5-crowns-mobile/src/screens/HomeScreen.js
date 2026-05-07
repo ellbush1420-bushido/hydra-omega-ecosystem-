@@ -13,7 +13,7 @@ export default function HomeScreen() {
       <Text style={styles.title}>{selectedCrown.name}</Text>
       <Text style={styles.subtitle}>Realm: {selectedCrown.realm}</Text>
       <Text style={styles.subtitle}>Trial: {selectedCrown.trial}</Text>
-      <Text style={styles.description}>{selectedCrown?.description}</Text>
+      <Text style={styles.description}>{selectedCrown.description}</Text>
     </View>
   );
 }
