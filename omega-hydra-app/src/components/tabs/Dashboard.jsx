@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 const metrics = [
   { label: "Today's Drops", value: "4", icon: "🔥", accent: "violet" },
   { label: "Revenue", value: "$847", icon: "💰", accent: "gold" },
@@ -39,6 +41,29 @@ const funnelSteps = [
 ];
 
 export default function Dashboard() {
+  const [ledgerRows, setLedgerRows] = useState([]);
+  const [ledgerError, setLedgerError] = useState('');
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function load() {
+      try {
+        const res = await fetch('/api/ledger/recent');
+        if (!res.ok) throw new Error(`Ledger HTTP ${res.status}`);
+        const data = await res.json();
+        if (!cancelled) setLedgerRows(Array.isArray(data.rows) ? data.rows : []);
+      } catch (e) {
+        if (!cancelled) setLedgerError(e instanceof Error ? e.message : String(e));
+      }
+    }
+
+    load();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
     <div className="space-y-8">
       <div>
@@ -87,6 +112,46 @@ export default function Dashboard() {
           "Build characters like this."
         </div>
         <div className="text-xs text-gray-500 mt-2">Primary affiliate call-to-action — used across all posts and content</div>
+      </div>
+
+      <div className="card">
+        <h2 className="text-base font-bold text-white mb-3">🧾 Delivery Ledger</h2>
+        {ledgerError ? (
+          <div className="text-xs text-red-400">{ledgerError}</div>
+        ) : ledgerRows.length === 0 ? (
+          <div className="text-xs text-gray-500">No delivery events yet.</div>
+        ) : (
+          <div className="space-y-2">
+            {ledgerRows.slice(0, 10).map((row) => (
+              <div
+                key={row.id}
+                className="flex items-center justify-between rounded border border-slate-800 bg-black/20 px-3 py-2"
+              >
+                <div className="min-w-0">
+                  <div className="text-xs text-gray-300 truncate">
+                    {row.whopEventId || 'whop_event'} • {row.whopProductId || 'product'}
+                  </div>
+                  <div className="text-[11px] text-gray-500 truncate">
+                    {row.tier} • {row.manifestVersion}
+                  </div>
+                </div>
+                <div className="text-xs">
+                  <span
+                    className={
+                      row.status === 'success'
+                        ? 'text-emerald-400'
+                        : row.status === 'failure'
+                          ? 'text-red-400'
+                          : 'text-gray-400'
+                    }
+                  >
+                    {row.status}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
