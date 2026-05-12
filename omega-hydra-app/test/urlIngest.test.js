@@ -27,8 +27,8 @@ test('ingestTrackingUrl rejects malformed urls', () => {
 test('ingestTrackingUrl stops after the maximum redirect hop count', () => {
   let nestedUrl = 'https://final.example.com/path?utm_source=test';
 
-  for (let index = 0; index < 6; index += 1) {
-    nestedUrl = `https://redirect${index}.example.com/?url=${encodeURIComponent(nestedUrl)}`;
+  for (let redirectLevel = 0; redirectLevel < 6; redirectLevel += 1) {
+    nestedUrl = `https://redirect${redirectLevel}.example.com/?url=${encodeURIComponent(nestedUrl)}`;
   }
 
   const result = ingestTrackingUrl(nestedUrl);

@@ -11,6 +11,15 @@ const REDIRECT_PARAM_KEYS = [
 ];
 
 const MAX_REDIRECT_HOPS = 5;
+const TRACKING_PARAM_KEYS = [
+  'utm_source',
+  'utm_medium',
+  'utm_campaign',
+  'utm_term',
+  'utm_content',
+  'msclkid',
+  'gclid',
+];
 
 function safeDecodeURIComponent(value) {
   try {
@@ -110,15 +119,7 @@ export function ingestTrackingUrl(rawInput) {
   const destination = new URL(resolvedUrl);
   const metadata = {};
 
-  [
-    'utm_source',
-    'utm_medium',
-    'utm_campaign',
-    'utm_term',
-    'utm_content',
-    'msclkid',
-    'gclid',
-  ].forEach((key) => {
+  TRACKING_PARAM_KEYS.forEach((key) => {
     const value = destination.searchParams.get(key);
     if (value) metadata[key] = value;
   });
