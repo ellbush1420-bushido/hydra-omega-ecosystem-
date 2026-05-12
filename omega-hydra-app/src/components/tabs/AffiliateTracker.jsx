@@ -23,7 +23,7 @@ export default function AffiliateTracker() {
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
   const ingestedLink = useMemo(() => ingestTrackingUrl(rawIngestUrl), [rawIngestUrl]);
-  const metadataEntries = useMemo(() => Object.entries(ingestedLink.metadata ?? {}), [ingestedLink]);
+  const metadataEntries = Object.entries(ingestedLink.metadata ?? {});
 
   const trackingString = (() => {
     const params = new URLSearchParams();

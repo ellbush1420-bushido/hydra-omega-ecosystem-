@@ -34,16 +34,18 @@ function safeDecodeBase64(value) {
   const padded = normalized + '='.repeat((4 - (normalized.length % 4)) % 4);
 
   try {
-    if (typeof atob === 'function') {
-      return atob(padded);
+    if (typeof globalThis.Buffer !== 'undefined') {
+      return globalThis.Buffer.from(padded, 'base64').toString('utf8');
     }
   } catch {
     return null;
   }
 
   try {
-    if (typeof globalThis.Buffer !== 'undefined') {
-      return globalThis.Buffer.from(padded, 'base64').toString('utf8');
+    if (typeof atob === 'function') {
+      const binary = atob(padded);
+      const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
+      return new TextDecoder().decode(bytes);
     }
   } catch {
     return null;
