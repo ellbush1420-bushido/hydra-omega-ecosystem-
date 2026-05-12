@@ -1,5 +1,6 @@
 import { useState, useCallback, useMemo } from 'react';
 import { ingestTrackingUrl } from '../../utils/urlIngest';
+import { SAMPLE_BING_INGEST_URL } from '../../constants/urlSamples';
 
 const sampleStats = [
   { subid: 'velrya-tiktok-bio-shadow-v1', clicks: 312, epc: '$2.87', revenue: '$143.54', lastActive: '2h ago' },
@@ -9,8 +10,6 @@ const sampleStats = [
   { subid: 'hydra-discord-bio-labyrinth-v1', clicks: 43, epc: '$1.54', revenue: '$18.76', lastActive: '2d ago' },
 ];
 
-const sampleIngestUrl = 'https://www.bing.com/aclk?ld=e8r0tYTNUhDaNVFXPEfWMrFTVUCUwAy-EI6Zm1h2XqWU7TFegleksIM_MfOJ7LOUUsCWbNeUR75kJtbh9tQAW3U84SPp6AAqVIBuhPN37nxC9WiqxBdqBmJgkgFods1wzfRMap5H2fODFRRxoBo8Fc8mpDkmyZOPSpSKQ37-ByakU9-vlct8l9waeJ3wSOaXahj2-ih3PaRADNPz8DVLacTK3kCzY&amp;u=aHR0cHMlM2ElMmYlMmZ3d3cuZ2Vuc3BhcmsuYWklMmYlM2Z1dG1fc291cmNlJTNkYmluZyUyNnV0bV9tZWRpdW0lM2RjcGMtc2VhcmNoJTI2dXRtX2NhbXBhaWduJTNkdXMtY29tcGV0aXRvciUyNnV0bV90ZXJtJTNkY29tcGV0aXRvciUyNm1zY2xraWQlM2RiNzM2MjlkOTU5NzQxZThmMjEwNzQzZGEzMDQ2MTBjOQ&amp;rlid=b73629d959741e8f210743da304610c9';
-
 export default function AffiliateTracker() {
   const [form, setForm] = useState({
     sub1: 'velrya',
@@ -19,12 +18,12 @@ export default function AffiliateTracker() {
     sub4: 'shadow-monastery-intro',
     sub5: 'v1',
   });
-  const [rawIngestUrl, setRawIngestUrl] = useState(sampleIngestUrl);
+  const [rawIngestUrl, setRawIngestUrl] = useState(SAMPLE_BING_INGEST_URL);
   const [copiedTarget, setCopiedTarget] = useState(null);
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
   const ingestedLink = useMemo(() => ingestTrackingUrl(rawIngestUrl), [rawIngestUrl]);
-  const metadataEntries = useMemo(() => Object.entries(ingestedLink.metadata ?? {}), [ingestedLink.metadata]);
+  const metadataEntries = useMemo(() => Object.entries(ingestedLink.metadata ?? {}), [ingestedLink]);
 
   const trackingString = (() => {
     const params = new URLSearchParams();

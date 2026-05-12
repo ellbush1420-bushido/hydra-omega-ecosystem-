@@ -80,7 +80,7 @@ export function ingestTrackingUrl(rawInput) {
   const input = rawInput.trim();
 
   if (!input) {
-    return { error: 'Paste a URL to ingest.' };
+    return { error: 'URL input is empty.' };
   }
 
   const initialUrl = coerceUrl(input);
