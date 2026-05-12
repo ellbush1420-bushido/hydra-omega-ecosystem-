@@ -10,6 +10,8 @@ const REDIRECT_PARAM_KEYS = [
   'r',
 ];
 
+const MAX_REDIRECT_HOPS = 5;
+
 function safeDecodeURIComponent(value) {
   try {
     return decodeURIComponent(value);
@@ -89,7 +91,7 @@ export function ingestTrackingUrl(rawInput) {
   let resolvedUrl = initialUrl;
   let hops = 0;
 
-  while (hops < 5) {
+  while (hops < MAX_REDIRECT_HOPS) {
     const current = new URL(resolvedUrl);
     const nestedValue = REDIRECT_PARAM_KEYS
       .map((key) => current.searchParams.get(key))

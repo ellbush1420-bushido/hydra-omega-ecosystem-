@@ -24,6 +24,7 @@ export default function AffiliateTracker() {
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
   const ingestedLink = useMemo(() => ingestTrackingUrl(rawIngestUrl), [rawIngestUrl]);
+  const metadataEntries = useMemo(() => Object.entries(ingestedLink.metadata ?? {}), [ingestedLink.metadata]);
 
   const trackingString = (() => {
     const params = new URLSearchParams();
@@ -119,7 +120,7 @@ export default function AffiliateTracker() {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                {Object.entries(ingestedLink.metadata).length ? Object.entries(ingestedLink.metadata).map(([key, value]) => (
+                {metadataEntries.length ? metadataEntries.map(([key, value]) => (
                   <div key={key} className="rounded-lg border border-[#1a1a2e] px-3 py-2">
                     <div className="text-[10px] text-gray-500 uppercase tracking-widest">{key}</div>
                     <div className="text-sm text-white break-all mt-1">{value}</div>
