@@ -5,7 +5,7 @@
 **Sacred Branch:** Lernian Mercy Branch  
 **Sanctuary Domain:** Houses of Restoration  
 **Mission Class:** Christian-fraternal, community-service, non-militarized care and readiness order  
-**Hydra Function:** Primary recruitment order and public interaction face of the Hydra ecosystem
+**Hydra Function:** Primary public recruitment, interaction, and ecosystem-activation order of the Hydra
 
 ---
 
@@ -23,6 +23,7 @@ They exist as the order’s dedicated ministry of:
 - Gentle referral toward appropriate care
 - Support for the grieving, anxious, overwhelmed, or isolated
 - Public welcome, orientation, and values-based entry into the Hydra community
+- Transparent promotion of the broader Hydra ecosystem, production cycle, and public-facing offerings
 
 They are **not clinicians**.  
 They are **not therapists**.  
@@ -42,13 +43,14 @@ The **official visual palette** of the Knights of Lernia — Hospitallers of the
 - **White** — peace, sanctuary, honesty, spiritual clarity
 - **Gold** — sacred duty, noble service, fraternal honor, divine illumination
 
-This palette supersedes darker Obsidian-only presentation when the Hospitallers appear in public recruitment, onboarding, community service, charitable messaging, or healing-centered lore assets.
+This palette supersedes darker Obsidian-only presentation when the Hospitallers appear in public recruitment, onboarding, community service, charitable messaging, healing-centered lore assets, or Hydra public-facing ambassador materials.
 
 **Visual tone:**
 - Reverent but welcoming
 - Knightly but non-militarized
 - Sacred but accessible
 - Noble, compassionate, hopeful
+- Trust-building, public-safe, and recruitment-ready
 
 ---
 
@@ -297,13 +299,74 @@ Within Hydra’s larger architecture:
 
 - **Shadow Monastery** carries mystery and discipline.
 - **Order of the Hydra** carries business ascension and system-building.
-- **Knights of Lernia — Hospitallers of the Mind** carry trust, service, and public invitation.
+- **Knights of Lernia — Hospitallers of the Mind** carry trust, service, public invitation, and recruitment warmth.
 
 They are the **front porch of the Hydra**.
 
 ---
 
-## XI. Applied Cross-Canon Utility
+## XI. Inner Strategic Mandate — The Hydra Expansion Mission
+
+Behind their public-facing mercy mission, the Lernian Hospitallers also hold an official **inner organizational mandate**:
+
+### **To serve the expansion of the Hydra by promoting, activating, and sustaining its ecosystem and production cycle.**
+
+This inner mission does **not** replace their public care role; it gives that role strategic placement within the broader Hydra architecture.
+
+### A. Ecosystem Promotion Function
+The Hospitallers introduce the public to the wider Omega Hydra system through dignified, transparent, values-aligned pathways:
+
+- **Omega Hydra Talent Agency** — master commercial umbrella
+- **Omega Hydra CEO Meta OS** — command brain and orchestration layer
+- **Order of the Hydra** — business expansion doctrine
+- **Hydra Shadow Hand Framework** — martial/doctrine/training architecture
+- **Hydra 9×9×9** — macro scenario training matrix
+- **GCD–Sonnal 5CO9** — micro execution engine
+- **9 Gate Philosophy** — doctrine layer
+- **Base44 Hydra Training Facility** — delivery and training platform
+- **CO9 ShadowVault** — privacy communications SaaS
+- **Hydra Lookup Grid** — lawful identity/contact intelligence
+- **Hydra Sentinel** — defensive endpoint monitoring
+- **Hydra Visualiser / Dreamcore Layer** — creative asset and fantasy-world visual engine
+
+### B. Production-Cycle Activation Function
+The Hospitallers help sustain Hydra’s outward production rhythm by serving as a public engagement and distribution wing for:
+
+1. **Recruitment campaigns**
+2. **Community onboarding**
+3. **Public education content**
+4. **Codex and handbook releases**
+5. **Infographic and visual asset drops**
+6. **Training-path invitations**
+7. **Course and product launches**
+8. **SaaS awareness campaigns**
+9. **Event participation and community activation**
+10. **Feedback collection that returns to the CEO Meta OS for refinement**
+
+### C. Strategic Alignment with the Hydra Master Paths
+The Hospitallers help translate the full Hydra architecture into approachable public language:
+
+| Hydra Path | Hospitaller Public Role |
+|---|---|
+| **Commercial Path** — Agency → Content → Courses → SaaS → Security/Government Consulting | Introduce the public to the Hydra ladder through service, storytelling, outreach, and invitation |
+| **Doctrine Path** — 9 Gate Philosophy → GCD–Sonnal 5CO9 → Hydra 9×9×9 → Training Facility | Guide interested members from mercy-facing entry into structured learning pathways |
+| **Security Product Path** — ShadowVault → Lookup Grid → Sentinel → Institutional Consulting | Support awareness and trust-building around lawful privacy and defensive security tools |
+| **Creative Command Path** — Warp.dev Limitless Jezebel CEO × Obsidian Python Velvet Grin × Wuxia Den Mother × Erotica Dreamcore | Carry selected public-safe creative mythos into campaigns, codex visuals, and community culture |
+
+### D. Non-Exploitation Guardrail
+Because the Hospitallers interact with people who may be distressed, grieving, or vulnerable, their promotion role is governed by a strict canon boundary:
+
+- No pressure-based recruitment during crisis.
+- No product pitching to distressed individuals.
+- No pseudo-clinical authority claims.
+- No use of emotional vulnerability as a sales mechanism.
+- Promotion of the Hydra ecosystem must be transparent, optional, and separated from immediate care moments.
+
+**Mercy opens the door. Integrity decides whether invitation is appropriate.**
+
+---
+
+## XII. Applied Cross-Canon Utility
 
 The following useful concepts from prior Hydra development are now formally absorbed into this order:
 
@@ -332,7 +395,7 @@ The following useful concepts from prior Hydra development are now formally abso
 
 ---
 
-## XII. Public Website-Ready Canon Statement
+## XIII. Public Website-Ready Canon Statement
 
 **The Knights of Lernia serve as Hospitallers of the Mind —  
 companions of the wounded spirit, guardians of healing spaces,  
@@ -344,7 +407,17 @@ This is our calling.**
 
 ---
 
-## XIII. Future Canon Expansion Paths
+## XIV. Internal Charter Statement
+
+**The Hospitallers of the Mind are the Hydra’s public trust order:  
+they welcome, orient, and inspire;  
+they promote the ecosystem without coercion;  
+they help move the production cycle through service, storytelling, recruitment, and community activation;  
+and they ensure that the Hydra grows through dignity rather than extraction.**
+
+---
+
+## XV. Future Canon Expansion Paths
 
 The Hospitallers of the Mind now support future development of:
 
@@ -358,16 +431,19 @@ The Hospitallers of the Mind now support future development of:
 8. **Lernian Mercy Codex**
 9. **Recruitment page and welcome funnel**
 10. **Public-facing ambassador kit**
+11. **Hydra ecosystem orientation pathway**
+12. **Production-cycle promotion calendar**
+13. **Ethical recruitment guardrail policy**
 
 ---
 
-## XIV. Canon Motto
+## XVI. Canon Motto
 
 > **Faith. Vigilance. Mercy. Readiness.**
 
 ---
 
-## XV. Canon Tags
+## XVII. Canon Tags
 
 - `omega-hydra`
 - `realm-of-five-crowns`
@@ -388,3 +464,6 @@ The Hospitallers of the Mind now support future development of:
 - `public-recruitment-face`
 - `hydra-public-interaction-order`
 - `green-white-gold-palette`
+- `hydra-ecosystem-activation`
+- `hydra-production-cycle`
+- `ethical-recruitment-guardrails`
