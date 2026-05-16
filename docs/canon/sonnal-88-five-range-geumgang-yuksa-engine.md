@@ -23,9 +23,9 @@ It formalizes the synthesis of:
 - **3×3 Lo Shu Grid spatial mapping**
 - **Tri-Axis movement and control logic**
 - **Geumgang Yuksa guardian-force archetype**
-- **Sonnal Maki Torque Engine** as the system's rotational hand-shield conversion core
+- **Sonnal Maki Torque Engine** as the system’s Taekwondo knife-hand block, knife-hand offensive line, catch-counter, and Hapkido coil-grip conversion core
 
-Sonnal 88 becomes the **refined hand, range, torque, and guardian-force execution engine** of the Hydra Shadow Hand doctrine.
+Sonnal 88 becomes the **refined hand, range, torque, catch-counter, grip-coil, and guardian-force execution engine** of the Hydra Shadow Hand doctrine.
 
 ---
 
@@ -36,34 +36,45 @@ Sonnal 88 becomes the **refined hand, range, torque, and guardian-force executio
 | Doctrine Layer | **9 Gate Philosophy** | Governs ethical, symbolic, and developmental meaning |
 | Macro Training Layer | **Hydra 9×9×9** | Drill × Scenario × Resolution matrix |
 | Micro Execution Layer | **GCD–Sonnal 5CO9** | Combat execution engine |
-| New Specialized Engine | **Sonnal 88** | Five-range hand, angle, grid, torque, and guardian-force synthesis |
-| Internal Motion Core | **Sonnal Maki Torque Engine** | Converts shield, wave, angle, and range into a single rotational hand-line doctrine |
+| New Specialized Engine | **Sonnal 88** | Five-range hand, angle, grid, torque, catch-counter, and guardian-force synthesis |
+| Internal Motion Core | **Sonnal Maki Torque Engine** | Expands the Taekwondo knife-hand block into a rotational offense-defense-control doctrine |
 
 ### Canon Relationship
 
 > **Hydra 9×9×9 trains the world.**  
 > **GCD–Sonnal 5CO9 governs the execution.**  
-> **Sonnal 88 sharpens the hand, the angle, the range, the torque, and the guardian force.**
+> **Sonnal 88 sharpens the hand, the angle, the range, the torque, the coil, and the guardian force.**
 
 ---
 
 # III. Name Logic
 
 ## Sonnal
-Within Hydra canon, **Sonnal** represents the decisive hand-line: the cutting edge of entry, interruption, redirection, and structural influence.
+Within Hydra canon, **Sonnal** represents the decisive knife-hand line: the cutting edge of entry, interception, offensive expression, redirection, and structural influence.
 
-## Maki / Makgi
-Within the Hydra lexicon, **Maki** is retained as the short-form codex spelling for the defensive hand-shield concept. In Korean martial-arts romanization, **makgi** or **makki** is commonly used for blocking actions; **sonnal makgi** refers to a knife-hand defensive form or block concept.
+## Sonnal Maki
+Within the Hydra lexicon, **Sonnal Maki** is the canon shorthand for the **Taekwondo knife-hand block doctrine**.
+
+The base meaning is:
+
+> **Sonnal Maki = Taekwondo knife-hand block.**
+
+The Hydra innovation is not the base meaning of Sonnal Maki itself, but the way Sonnal 88 expands it into a **three-function hand doctrine**:
+
+1. **Defensive Frame** — knife-hand block and sector protection
+2. **Offensive Edge** — knife-hand striking or pressure-line expression
+3. **Control Conversion** — catch-counter transition into coiling Hapkido grip logic
 
 ## Torque Engine
-The **Torque Engine** is the rotational conversion principle of Sonnal 88:
+The **Torque Engine** is the Hydra rotational overlay added to Sonnal Maki. It explains how the knife-hand defensive frame and offensive edge become a movement-conversion principle:
 
-- shield becomes redirection
-- redirection becomes angle
-- angle becomes range transition
-- range transition becomes stabilized structure
+- frame becomes strike-line
+- strike-line becomes catch
+- catch becomes counter-position
+- counter-position becomes Hapkido coil grip
+- coil grip becomes stabilization, disengagement, or lawful control resolution
 
-It is **not merely a block**. It is a **rotational defensive architecture**.
+It is **not merely a block** once integrated into Sonnal 88. It becomes a **rotational offense-defense-control architecture built from the TKD knife-hand block root**.
 
 ## 88
 The **88** designation marks the system as a double-octave execution branch:
@@ -97,8 +108,8 @@ Provides the **range ladder** and transition logic.
 ### Five-range canon frame
 1. **Outer Range** — awareness and pre-contact angle
 2. **Bridge Range** — entry and interception
-3. **Hand Range** — contact, redirection, and hand-line dominance
-4. **Clinch Range** — balance disruption and containment
+3. **Hand Range** — offensive hand-line, catch-counter, and contact conversion
+4. **Clinch Range** — coil grip, balance influence, and containment
 5. **Ground / Finish Range** — stabilization, disengagement, or controlled resolution
 
 ---
@@ -212,54 +223,83 @@ In Hydra canon, Geumgang Yuksa is the **mythic body of the system**: the order�
 
 ## Official Definition
 
-**The Sonnal Maki Torque Engine** is the rotational defensive-conversion core of Sonnal 88. It fuses:
+**The Sonnal Maki Torque Engine** is the rotational offense-defense-control core of Sonnal 88. It begins with the **Taekwondo knife-hand block** and expands that root into a wider Hydra movement doctrine by fusing:
 
-- **Sonnal knife-hand structure**
-- **Maki / defensive interception logic**
+- **Sonnal Maki knife-hand defensive frame**
+- **Knife-hand offensive striking line**
+- **Catch-counter interception principle**
+- **Coiling Hapkido grip conversion**
 - **Krav Maga 360 perimeter awareness**
 - **Tai Sabaki displacement**
 - **ITF Sine Wave rise-settle timing**
 - **Tri-Axis rotation through vertical, horizontal, and depth lines**
 - **Lo Shu Hall transition from center to angle**
 
-It is the subsystem that explains how Sonnal 88 changes **incoming pressure into rotational structure**.
+It is the subsystem that explains how Sonnal 88 changes **contact into pressure, pressure into catch, catch into coil, and coil into lawful control or release**.
+
+---
+
+## The Three Faces of Sonnal Maki
+
+### 1. Maki Face — Defensive Frame
+The Taekwondo knife-hand block root.
+
+**Function:** protect the line, create structure, orient the body, and establish a safe contact frame.
+
+### 2. Sonnal Edge — Offensive Knife-Hand Line
+The knife-hand is not limited to interception; it also becomes an offensive hand-line inside Sonnal 88.
+
+**Function:** express direct hand-line authority, disrupt rhythm symbolically, and create the moment for catch-counter transition.
+
+### 3. Coil Face — Hapkido Grip Conversion
+Once contact is established, Sonnal 88 converts the moment into a coiling control logic drawn from Hapkido gripping structure.
+
+**Function:** transition from contact to catch, from catch to counter-position, and from counter-position to grip-coil containment or release.
 
 ---
 
 ## Torque Engine Formula
 
-> **Shield → Turn → Settle → Redirect → Recenter**
+> **Frame → Edge → Catch → Counter → Coil → Control / Release**
 
-### 1. Shield
-The perimeter recognizes the line and establishes a protective frame.
+### 1. Frame
+The Sonnal Maki structure establishes the knife-hand protective line.
 
-### 2. Turn
-Tai Sabaki and torso rotation refuse the straight-line clash.
+### 2. Edge
+The same hand-line can express controlled offensive intent within the doctrine model.
 
-### 3. Settle
-ITF Sine Wave rhythm drops the body into structure, activating the Diamond Wave Load Cycle.
+### 3. Catch
+Contact is received, recognized, or converted into a managed hand connection.
 
-### 4. Redirect
-Sonnal hand-line structure translates the motion into a redirected path or safe transition.
+### 4. Counter
+The body, angle, and hall position reorganize the exchange into a more favorable geometry.
 
-### 5. Recenter
-Lo Shu Hall 5 awareness returns; the practitioner regains center, exits, or proceeds into the next training phase.
+### 5. Coil
+Hapkido-inspired spiral grip logic becomes the conversion mechanism for containment or transition.
+
+### 6. Control / Release
+The system resolves toward stabilization, disengagement, or the next lawful training phase.
 
 ---
 
-## The Three Torque Rings
+## The Four Torque Rings
 
 ### Ring I — Hand Torque
-The visible Sonnal / Maki arc.
+The visible Sonnal Maki knife-hand arc and offensive edge.
 
-**Function:** frame, catch, guide, protect, return.
+**Function:** frame, strike-line, catch, guide, protect, return.
 
-### Ring II — Torso Torque
+### Ring II — Wrist-and-Grip Torque
+The Hapkido-inspired coil channel.
+
+**Function:** convert managed contact into a spiral grip relationship, containment vector, or reset path.
+
+### Ring III — Torso Torque
 The Tai Sabaki rotational body line.
 
 **Function:** turn the core so pressure is not met squarely.
 
-### Ring III — Grid Torque
+### Ring IV — Grid Torque
 The Lo Shu hall transition.
 
 **Function:** move from center Hall 5 to a neighboring hall while maintaining orientation.
@@ -272,14 +312,14 @@ The Lo Shu hall transition.
 |---|---|
 | **Vertical** | ITF Sine Wave rise-settle cycle |
 | **Horizontal** | Krav 360 sector shield and lateral Tai Sabaki turn |
-| **Depth** | 5-Range Hapkido entry, withdrawal, and bridge transitions |
+| **Depth** | 5-Range Hapkido entry, withdrawal, bridge, and grip-coil transitions |
 
 ### Canon Insight
 
 > **Sine Wave loads the vertical line.**  
 > **360 Defense protects the horizontal ring.**  
-> **Hapkido transitions the depth channel.**  
-> **Sonnal Maki Torque Engine converts all three into a unified rotational doctrine.**
+> **Hapkido transitions the depth channel and coils the grip.**  
+> **Sonnal Maki Torque Engine converts all three into a unified knife-hand offense, catch-counter, and coil-control doctrine.**
 
 ---
 
@@ -288,27 +328,32 @@ The Lo Shu hall transition.
 1. **Center** — establish Hall 5 guardian awareness
 2. **Wave** — rise, float, settle, express
 3. **Shield** — activate the 360 perimeter frame
-4. **Torque** — rotate shield, torso, and hall position into alignment
-5. **Angle** — use Tai Sabaki to refuse linear collision
-6. **Bridge** — connect through the safest available range
+4. **Edge** — express the knife-hand offensive line
+5. **Catch** — convert contact into managed hand connection
+6. **Coil** — organize the Hapkido grip conversion pathway
 7. **Resolve** — complete the immediate training objective
 8. **Release** — disengage, reset, and restore lawful balance
+
+### Embedded Motion Laws
+- **Torque** operates through Edge, Catch, and Coil.
+- **Angle** operates through Tai Sabaki across the full cycle.
+- **Bridge** operates through 5-Range Hapkido as the system transitions between phases.
 
 ---
 
 # VII. The Eight Integration Channels
 
 1. **Range** — five-range movement ladder
-2. **Hand** — Sonnal / palm-line expression
+2. **Hand** — Sonnal Maki knife-hand block and offensive edge
 3. **Impact** — Iron Palm symbolic authority
 4. **Urgency** — Krav Maga decision compression
 5. **Shield** — Krav Maga 360 perimeter logic
 6. **Wave** — ITF Sine Wave power rhythm
-7. **Torque** — Sonnal Maki rotational conversion core
+7. **Coil** — Catch-counter into Hapkido grip conversion
 8. **Guardian** — Geumgang Yuksa identity and restraint
 
 ### Supporting Geometry Layer
-The **Lo Shu 3×3 Grid** and **Tri-Axis** remain the governing spatial and dimensional architecture that organize all eight channels.
+The **Lo Shu 3×3 Grid**, **Tri-Axis**, and **Sonnal Maki Torque Engine** remain the governing spatial, dimensional, and rotational architecture that organize all eight channels.
 
 ---
 
@@ -331,8 +376,11 @@ The broader micro-execution system that organizes:
 ### Sonnal 88
 The more concentrated execution codex that emphasizes:
 
-- Sonnal hand-line concepts
+- Sonnal knife-hand concepts
 - Sonnal Maki Torque Engine
+- knife-hand offensive striking line
+- catch-counter hand conversion
+- coiling Hapkido grip logic
 - Iron Palm embodiment
 - five-range Hapkido flow
 - Krav directness and Krav 360 perimeter logic
@@ -358,13 +406,15 @@ The more concentrated execution codex that emphasizes:
 > **× Tri-Axis**  
 > **× Geumgang Yuksa**  
 > **× Sonnal Maki Torque Engine**  
-> **= Sonnal 88 Diamond Wave Shield Engine**
+> **× Knife-Hand Offensive Line**  
+> **× Catch-Counter Coil Grip Conversion**  
+> **= Sonnal 88 Diamond Wave Shield-Coil Engine**
 
 ---
 
 # X. Canon Positioning Statement
 
-**Sonnal 88 is the Hydra’s Diamond Wave Shield Engine: a structured martial synthesis of five-range movement, hand-line authority, impact doctrine, urgency logic, 360 perimeter shielding, vertical wave rhythm, spatial geometry, three-axis control, rotational torque conversion, and guardian-force identity. It refines GCD–Sonnal 5CO9 into a recognizable sub-system for codex development, visual doctrine boards, training architecture, and future productization.**
+**Sonnal 88 is the Hydra’s Diamond Wave Shield-Coil Engine: a structured martial synthesis of five-range movement, Taekwondo knife-hand block lineage, offensive knife-hand expression, impact doctrine, urgency logic, 360 perimeter shielding, vertical wave rhythm, spatial geometry, three-axis control, rotational torque conversion, catch-counter transition, Hapkido coil-grip logic, and guardian-force identity. It refines GCD–Sonnal 5CO9 into a recognizable sub-system for codex development, visual doctrine boards, training architecture, and future productization.**
 
 ---
 
@@ -380,6 +430,7 @@ Sonnal 88 can become:
 6. **Infographic / poster pack**
 7. **Grandmaster Elliott Bush authority asset**
 8. **Sonnal Maki Torque Engine technical plate set**
+9. **Catch-Counter Coil Grip doctrine board**
 
 ---
 
@@ -401,7 +452,7 @@ They should avoid presenting step-by-step real-world harm instructions.
 
 # XIII. Canon Command Phrase
 
-> **Sonnal 88 awakened: the shield turns, the wave settles, the hand arcs, the grid rotates, and the Diamond Guardian holds the center.**
+> **Sonnal 88 awakened: the knife-hand guards, the edge speaks, the catch turns, the grip coils, the grid rotates, and the Diamond Guardian holds the center.**
 
 ---
 
@@ -412,6 +463,9 @@ They should avoid presenting step-by-step real-world harm instructions.
 - `gcd-sonnal-5co9`
 - `sonnal-88`
 - `sonnal-maki-torque-engine`
+- `taekwondo-knife-hand-block`
+- `knife-hand-offensive-line`
+- `catch-counter-coil-grip`
 - `five-range-hapkido`
 - `iron-palm`
 - `krav-maga`
