@@ -1,4 +1,6 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
+import { ingestTrackingUrl } from '../../utils/urlIngest';
+import { SAMPLE_BING_INGEST_URL } from '../../constants/urlSamples';
 
 const sampleStats = [
   { subid: 'velrya-tiktok-bio-shadow-v1', clicks: 312, epc: '$2.87', revenue: '$143.54', lastActive: '2h ago' },
@@ -16,9 +18,12 @@ export default function AffiliateTracker() {
     sub4: 'shadow-monastery-intro',
     sub5: 'v1',
   });
-  const [copied, setCopied] = useState(false);
+  const [rawIngestUrl, setRawIngestUrl] = useState(SAMPLE_BING_INGEST_URL);
+  const [copiedTarget, setCopiedTarget] = useState(null);
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
+  const ingestedLink = useMemo(() => ingestTrackingUrl(rawIngestUrl), [rawIngestUrl]);
+  const metadataEntries = Object.entries(ingestedLink.metadata ?? {});
 
   const trackingString = (() => {
     const params = new URLSearchParams();
@@ -41,18 +46,93 @@ export default function AffiliateTracker() {
   const handleCopy = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(fullUrl);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setCopiedTarget('full');
+      setTimeout(() => setCopiedTarget(null), 2000);
     } catch {
       // clipboard unavailable — do not show false success state
     }
   }, [fullUrl]);
+
+  const handleCopyDestination = useCallback(async () => {
+    if (!ingestedLink.destinationUrl) return;
+
+    try {
+      await navigator.clipboard.writeText(ingestedLink.destinationUrl);
+      setCopiedTarget('destination');
+      setTimeout(() => setCopiedTarget(null), 2000);
+    } catch {
+      // clipboard unavailable — do not show false success state
+    }
+  }, [ingestedLink.destinationUrl]);
 
   return (
     <div className="space-y-8">
       <div>
         <h1 className="section-title">🔗 Affiliate Tracker</h1>
         <p className="section-subtitle">SubID generator and performance analytics dashboard</p>
+      </div>
+
+      <div className="card">
+        <h2 className="text-base font-bold text-white mb-4">🧲 External Link Ingest</h2>
+        <div className="space-y-4">
+          <div>
+            <label className="text-xs text-gray-400 block mb-1">Raw Tracking URL</label>
+            <textarea
+              className="textarea-field"
+              rows={4}
+              value={rawIngestUrl}
+              onChange={e => setRawIngestUrl(e.target.value)}
+              placeholder="Paste a Bing, Google, or affiliate redirect URL..."
+            />
+          </div>
+
+          {ingestedLink.error ? (
+            <div className="bg-red-950/30 border border-red-800 rounded-lg p-4 text-sm text-red-300">
+              {ingestedLink.error}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <div className="bg-[#0a0a0f] rounded-lg p-4 border border-[#1a1a2e]">
+                <div className="text-xs text-gray-500 uppercase tracking-widest mb-2">Source</div>
+                <div className="text-sm font-semibold text-white break-all">{ingestedLink.sourceHost}</div>
+                <div className="font-mono text-[10px] text-gray-500 break-all mt-2">{ingestedLink.sourceUrl}</div>
+              </div>
+              <div className="bg-[#0a0a0f] rounded-lg p-4 border border-emerald-700/40">
+                <div className="text-xs text-gray-500 uppercase tracking-widest mb-2">Resolved Destination</div>
+                <div className="text-sm font-semibold text-emerald-400 break-all">{ingestedLink.destinationHost}</div>
+                <div className="font-mono text-[10px] text-gray-500 break-all mt-2">{ingestedLink.destinationUrl}</div>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <span className="badge-green">Redirect hops: {ingestedLink.redirectDepth}</span>
+                  <span className="badge-violet">Path: {ingestedLink.pathname}</span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {!ingestedLink.error && (
+            <div className="bg-[#0a0a0f] rounded-lg p-4 border border-violet-700/50">
+              <div className="flex items-center justify-between gap-3 flex-wrap mb-3">
+                <div className="text-xs text-gray-500 uppercase tracking-widest">Extracted Campaign Metadata</div>
+                <button className="btn-primary text-xs" onClick={handleCopyDestination}>
+                  {copiedTarget === 'destination' ? '✅ Copied!' : '📋 Copy Destination URL'}
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                {metadataEntries.length ? metadataEntries.map(([key, value]) => (
+                  <div key={key} className="rounded-lg border border-[#1a1a2e] px-3 py-2">
+                    <div className="text-[10px] text-gray-500 uppercase tracking-widest">{key}</div>
+                    <div className="text-sm text-white break-all mt-1">{value}</div>
+                  </div>
+                )) : (
+                  <div className="rounded-lg border border-[#1a1a2e] px-3 py-2 text-sm text-gray-400 sm:col-span-2 lg:col-span-3">
+                    No campaign parameters detected in the resolved destination.
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="card">
@@ -112,7 +192,7 @@ export default function AffiliateTracker() {
             {fullUrl}
           </div>
           <button className="btn-primary text-xs" onClick={handleCopy}>
-            {copied ? '✅ Copied!' : '📋 Copy Full URL'}
+            {copiedTarget === 'full' ? '✅ Copied!' : '📋 Copy Full URL'}
           </button>
         </div>
       </div>
