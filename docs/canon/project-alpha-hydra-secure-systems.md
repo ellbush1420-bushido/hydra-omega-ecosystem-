@@ -67,7 +67,31 @@ Project Alpha exists to build a defensible bridge between:
 
 ---
 
-## 4. Business Alignment
+## 4. Formal Separation from the Martial Doctrine Stack
+
+**CO9 ShadowVault is not part of the Hydra martial canon.**
+
+It does not belong inside:
+
+- **9 Gate Philosophy Manual**
+- **VFI9**
+- **Iron Lotus Rooting Body Engine**
+- **Nine Halls / Lo Shu Grid**
+- **GCD 5-Range CO9TE Framework**
+- **Hydra 9×9×9 Matrix**
+- **Sonnal 88 Diamond Wave Iron Lotus Shield-Coil Control Lattice**
+
+Instead, CO9 ShadowVault remains under:
+
+## **Omega Hydra CEO OS → AI SaaS Niche Tool / Security Product Lane**
+
+### Separation Rule
+
+> **CO9 ShadowVault may share the Hydra umbrella, commercial infrastructure, and aesthetic language, but it remains a separate privacy/security product path rather than a martial doctrine sub-system.**
+
+---
+
+## 5. Business Alignment
 
 Project Alpha maps directly to the Order of the Hydra commercial ladder:
 
@@ -81,7 +105,7 @@ Project Alpha maps directly to the Order of the Hydra commercial ladder:
 
 ---
 
-## 5. Initial Execution Tracks
+## 6. Initial Execution Tracks
 
 ### Track 1 — Offer Creation
 - Define first small-business agency offer around AI workflow automation + secure communication hygiene.
@@ -112,7 +136,7 @@ Project Alpha maps directly to the Order of the Hydra commercial ladder:
 
 ---
 
-## 6. Public Positioning Statement
+## 7. Public Positioning Statement
 
 **Project Alpha** is the Omega Hydra initiative for secure, intelligent, and scalable digital systems: a disciplined path from cash-flowing AI services to privacy-first software, defensive intelligence products, and eventually high-trust institutional consulting.
 
@@ -120,13 +144,13 @@ It is not a side project. It is the first official execution banner of the Order
 
 ---
 
-## 7. Canon Command Phrase
+## 8. Canon Command Phrase
 
 > **Project Alpha initiated. The Hydra commercial doctrine now has its first execution arm: secure systems, lawful intelligence, defensive software, and institutional ascent.**
 
 ---
 
-## 8. Canon Tags
+## 9. Canon Tags
 
 - `omega-hydra`
 - `order-of-the-hydra`
@@ -138,3 +162,4 @@ It is not a side project. It is the first official execution banner of the Order
 - `crown-of-dominion`
 - `secure-communications`
 - `defensive-security-saas`
+- `separate-from-martial-canon`
