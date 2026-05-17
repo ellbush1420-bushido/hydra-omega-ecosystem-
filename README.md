@@ -5,12 +5,23 @@ This repository is the primary mono-repo for the Hydra/Omega ecosystem.
 ## Projects
 
 - `omega-hydra-app/` – React + Vite app
+- `apps/react-router-app/` – React Router v7 app (SSR, file-based routing, Tailwind CSS)
 - `automatic-adventure/` – Preserved content from the former standalone repository
 - `realm-of-5-crowns/` – Launch module docs
 - `aurelian-os/` – Aurelian OS docs
 - `Shadow Monastery/` – Doctrine, orders, engine notes
 
 ## Development
+
+### apps/react-router-app
+
+```sh
+cd apps/react-router-app
+npm install
+npm run dev        # development server
+npm run build      # production build
+npm run typecheck  # TypeScript type-check
+```
 
 ### omega-hydra-app
 
