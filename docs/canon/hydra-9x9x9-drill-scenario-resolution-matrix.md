@@ -3,7 +3,8 @@
 
 **Canonical Status:** Official Omega Hydra / Hydra Digital Academy Framework  
 **Function:** 9 drill families × 9 scenario families × 9 resolution families = 729 structured learning states  
-**Governs:** Curriculum design, interactive modules, reflection systems, codex products, and app logic
+**Governs:** Curriculum design, interactive modules, reflection systems, codex products, and app logic  
+**Founder Cognitive Origin:** Elliott Bush — **Systemic Vision**
 
 ---
 
@@ -21,6 +22,12 @@ It creates a single expandable structure for:
 - instructor planning
 - codex and visual product creation
 
+Its founder cognitive origin is now formally recognized as:
+
+# **Systemic Vision**
+
+The ability to see a chaotic environment as an organized field of patterns, paths, halls, and possible resolutions — then convert that perception into a repeatable teaching matrix.
+
 ### Master Formula
 
 > **9 Drill Families**  
@@ -30,12 +37,17 @@ It creates a single expandable structure for:
 
 The Matrix functions as a **living learning lattice** that turns doctrine into repeatable developmental pathways.
 
+### Canon Line
+
+> **Systemic Vision sees the hidden structure. The Hydra 9×9×9 Matrix turns that structure into trainable states.**
+
 ---
 
 # II. Relationship to the Hydra Doctrine Stack
 
 | Layer | System | Role |
 |---|---|---|
+| Founder Cognitive Signature | **Systemic Vision** | Converts disorder into patterns, halls, paths, and resolution logic |
 | Doctrine | **9 Gate Philosophy** | Defines the principles and developmental meaning |
 | Calibration | **VFI9** | Defines proportionality, restraint, and intensity language |
 | Spatial Grammar | **Nine Halls / Lo Shu** | Maps center, sectors, and transitions |
@@ -45,7 +57,7 @@ The Matrix functions as a **living learning lattice** that turns doctrine into r
 
 ### Canon Line
 
-> **The 9 Gates teach what must be preserved. The Hydra 9×9×9 tests whether it remains intact under variation.**
+> **The 9 Gates teach what must be preserved. The Hydra 9×9×9 tests whether it remains intact under variation. Systemic Vision explains why the matrix exists at all.**
 
 ---
 
@@ -63,6 +75,16 @@ The Matrix functions as a **living learning lattice** that turns doctrine into r
 | 8 | **Command Drill** | multi-system integration, instructor language, sequencing clarity |
 | 9 | **Sovereignty Drill** | self-command, teaching transfer, reflection, stewardship |
 
+### Founder Cognition Mapping
+
+The drill families reflect the founder’s Systemic Vision progression:
+
+- **Perceive** the field.
+- **Structure** the field.
+- **Move** through the field.
+- **Resolve** within the field.
+- **Teach** the field to others.
+
 ---
 
 # IV. The Nine Scenario Families
@@ -79,6 +101,10 @@ The Matrix functions as a **living learning lattice** that turns doctrine into r
 | 8 | **Cognitive Load Scenario** | reduced clarity, need for disciplined simplification |
 | 9 | **Command Integration Scenario** | multiple systems, teaching judgment, reflective clarity |
 
+### Founder Cognition Mapping
+
+Scenario variation formalizes the **Hydra mindset** described in Systemic Vision: when one path changes, the doctrine generates a secondary and tertiary line of response rather than collapsing into panic.
+
 ---
 
 # V. The Nine Resolution Families
@@ -94,6 +120,10 @@ The Matrix functions as a **living learning lattice** that turns doctrine into r
 | 7 | **Adapt** | choose a new pathway when the first plan changes |
 | 8 | **Command** | demonstrate integrated judgment and instructional clarity |
 | 9 | **Reflect** | convert the event into learning, metrics, and refinement |
+
+### Founder Cognition Mapping
+
+Resolution families embody the Systemic Vision principle that every pattern must point toward a lawful and teachable end state rather than open-ended reaction.
 
 ---
 
@@ -115,6 +145,10 @@ Each Hydra state is built as:
 
 A learner practices directional organization while adapting to a spatial shift, then seeks a stable and measured end state.
 
+### Founder Link
+
+This is Systemic Vision translated into curriculum logic: **see the hall, identify the shift, choose the resolution.**
+
 ---
 
 # VII. Integration with VFI9
@@ -127,7 +161,7 @@ A learner practices directional organization while adapting to a spatial shift, 
 
 ### Canon Line
 
-> **Hydra 9×9×9 creates the state. VFI9 defines the burden carried through the state.**
+> **Hydra 9×9×9 creates the state. VFI9 defines the burden carried through the state. Systemic Vision keeps the state readable instead of overwhelming.**
 
 ---
 
@@ -145,6 +179,10 @@ Any drill, scenario, or resolution may be mapped to:
 - a transition hall
 - a resolution hall
 
+### Founder Link
+
+The Nine Halls give the Hydra 9×9×9 its spatial grammar, while Systemic Vision explains the founder-level habit of seeing environments as maps of pressure, choice, and control.
+
 ---
 
 # IX. Integration with GCD 5-Range CO9TE
@@ -155,6 +193,10 @@ Any drill, scenario, or resolution may be mapped to:
 | **Five Ranges** | define phase of interaction or instructional distance |
 | **CO9TE sequencing** | define how the system identifies, transitions, stabilizes, and resolves |
 | **Reflection loop** | capture what changed, what held, and what must improve |
+
+### Founder Link
+
+The Matrix distributes Systemic Vision across a curriculum engine, while GCD 5-Range CO9TE compresses the same logic into a structured movement-and-decision framework.
 
 ---
 
@@ -169,12 +211,14 @@ The Hydra 9×9×9 Matrix becomes the backbone for:
 - **reflection dashboards**
 - **premium codex packs**
 - **gamified community challenges**
+- **Founder Systemic Vision doctrine cards**
+- **Grid-to-resolution simulator prompts**
 
 ---
 
 # XI. Founder Doctrine Statement
 
-**The Hydra 9×9×9 Matrix is the learning engine that converts doctrine into repeatable states. It prevents the system from becoming a loose collection of ideas by forcing every lesson to answer three questions: what is being cultivated, what condition tests it, and what resolution proves it.**
+**The Hydra 9×9×9 Matrix is the learning engine that converts doctrine into repeatable states. It prevents the system from becoming a loose collection of ideas by forcing every lesson to answer three questions: what is being cultivated, what condition tests it, and what resolution proves it. Its founder cognitive origin is Elliott Bush’s Systemic Vision — the ability to perceive hidden structure within disorder and transform that perception into a scalable matrix of drills, scenarios, and resolutions.**
 
 ---
 
@@ -189,6 +233,8 @@ The Hydra 9×9×9 Matrix becomes the backbone for:
 7. Founder Doctrine Plate series
 8. Community challenge engine
 9. Reflection worksheet bundle
+10. **Systemic Vision × Hydra 9×9×9 doctrine plate**
+11. **Founder matrix cognition infographic**
 
 ---
 
@@ -211,3 +257,6 @@ The Hydra 9×9×9 Matrix becomes the backbone for:
 - `hydra-digital-academy`
 - `base44-training-facility`
 - `scenario-engine`
+- `elliott-bush`
+- `systemic-vision`
+- `founder-cognitive-signature`
