@@ -14,11 +14,13 @@ import ComplianceCenter from './components/tabs/ComplianceCenter';
 import CEOPythons from './components/tabs/CEOPythons';
 import EvolutionScanner from './components/tabs/EvolutionScanner';
 import Realm5Crowns from './components/tabs/Realm5Crowns';
+import BlackVaultConsole from './components/tabs/BlackVaultConsole';
 
 const tabComponents = {
   dashboard: Dashboard,
   sfw: SFWPipeline,
   adult: AdultPipeline,
+  blackvault: BlackVaultConsole,
   characters: CharacterFactory,
   drops: DailyDropEngine,
   books: BookForge,
