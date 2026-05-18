@@ -47,7 +47,6 @@ export default function ContextMap() {
               if (target) {
                 const dx = target.x - node.x;
                 const dy = target.y - node.y;
-                const dist = Math.sqrt(dx * dx + dy * dy) || 1;
                 fx += dx * 0.01;
                 fy += dy * 0.01;
               }

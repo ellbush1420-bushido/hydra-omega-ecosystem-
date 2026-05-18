@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 
 export default function SystemsArchitect() {
   const [nodes, setNodes] = useState([
@@ -13,7 +13,6 @@ export default function SystemsArchitect() {
   ]);
 
   const [selectedNode, setSelectedNode] = useState(null);
-  const [draggingNode, setDraggingNode] = useState(null);
 
   const nodeTypes = [
     { type: 'generate', label: 'Generate Media', icon: '🎨', color: 'violet' },

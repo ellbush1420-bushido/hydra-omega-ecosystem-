@@ -3,14 +3,17 @@ import { useState } from 'react';
 export default function ConclaveReviewBoard() {
   const [selectedCard, setSelectedCard] = useState(null);
 
-  const cards = Array.from({ length: 81 }, (_, i) => ({
-    id: i + 1,
-    name: `Asset ${i + 1}`,
-    aiScore: Math.floor(Math.random() * 100),
-    humanScore: Math.floor(Math.random() * 100),
-    thumbnail: `https://via.placeholder.com/150?text=${i + 1}`,
-    status: ['pending', 'approved', 'rejected'][Math.floor(Math.random() * 3)],
-  }));
+  // Generate mock data with stable values
+  const [cards] = useState(() =>
+    Array.from({ length: 81 }, (_, i) => ({
+      id: i + 1,
+      name: `Asset ${i + 1}`,
+      aiScore: ((i * 17 + 13) % 100),
+      humanScore: ((i * 23 + 7) % 100),
+      thumbnail: `https://via.placeholder.com/150?text=${i + 1}`,
+      status: ['pending', 'approved', 'rejected'][i % 3],
+    }))
+  );
 
   const getScoreColor = (score) => {
     if (score >= 80) return 'text-emerald-400';

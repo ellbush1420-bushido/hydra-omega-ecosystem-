@@ -5,15 +5,18 @@ export default function TheVault() {
   const [filterType, setFilterType] = useState('all');
   const [uploadZoneActive, setUploadZoneActive] = useState(false);
 
-  const assets = Array.from({ length: 24 }, (_, i) => ({
-    id: i + 1,
-    name: `Asset ${i + 1}`,
-    type: ['image', 'video', 'audio', 'model'][i % 4],
-    score: Math.floor(Math.random() * 100),
-    ipStatus: ['safe', 'pending', 'flagged'][Math.floor(Math.random() * 3)],
-    thumbnail: `https://via.placeholder.com/300x200?text=Asset+${i + 1}`,
-    createdAt: new Date(Date.now() - Math.random() * 10000000000).toLocaleDateString(),
-  }));
+  // Generate mock data with stable values
+  const [assets] = useState(() =>
+    Array.from({ length: 24 }, (_, i) => ({
+      id: i + 1,
+      name: `Asset ${i + 1}`,
+      type: ['image', 'video', 'audio', 'model'][i % 4],
+      score: ((i * 17 + 13) % 100),
+      ipStatus: ['safe', 'pending', 'flagged'][i % 3],
+      thumbnail: `https://via.placeholder.com/300x200?text=Asset+${i + 1}`,
+      createdAt: new Date(2026, 4, 18 - (i % 30)).toLocaleDateString(),
+    }))
+  );
 
   const filteredAssets = filterType === 'all'
     ? assets
