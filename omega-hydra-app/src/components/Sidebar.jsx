@@ -1,16 +1,26 @@
 const NAV_ITEMS = [
-  { id: 'dashboard', label: 'Dashboard', icon: '⬡' },
-  { id: 'sfw', label: 'SFW Pipeline', icon: '🌿' },
-  { id: 'adult', label: '18+ Pipeline', icon: '🔒' },
-  { id: 'characters', label: 'Character Factory', icon: '👁' },
-  { id: 'drops', label: 'Daily Drops', icon: '🔥' },
-  { id: 'books', label: 'Book Forge', icon: '📖' },
-  { id: 'factions', label: 'Faction Map', icon: '🐍' },
-  { id: 'affiliate', label: 'Affiliate Tracker', icon: '🔗' },
-  { id: 'compliance', label: 'Compliance', icon: '✅' },
-  { id: 'pythons', label: 'CEO Pythons', icon: '🖤' },
-  { id: 'scanner', label: 'Evolution Scanner', icon: '📡' },
-  { id: 'realm5crowns', label: 'Realm of 5 Crowns', icon: '👑' },
+  { id: 'dashboard', label: 'Dashboard', icon: '⬡', type: 'tab' },
+  { id: 'sfw', label: 'SFW Pipeline', icon: '🌿', type: 'tab' },
+  { id: 'adult', label: '18+ Pipeline', icon: '🔒', type: 'tab' },
+  { id: 'characters', label: 'Character Factory', icon: '👁', type: 'tab' },
+  { id: 'drops', label: 'Daily Drops', icon: '🔥', type: 'tab' },
+  { id: 'books', label: 'Book Forge', icon: '📖', type: 'tab' },
+  { id: 'factions', label: 'Faction Map', icon: '🐍', type: 'tab' },
+  { id: 'affiliate', label: 'Affiliate Tracker', icon: '🔗', type: 'tab' },
+  { id: 'compliance', label: 'Compliance', icon: '✅', type: 'tab' },
+  { id: 'pythons', label: 'CEO Pythons', icon: '🖤', type: 'tab' },
+  { id: 'scanner', label: 'Evolution Scanner', icon: '📡', type: 'tab' },
+  { id: 'realm5crowns', label: 'Realm of 5 Crowns', icon: '👑', type: 'tab' },
+];
+
+const NEW_PAGES = [
+  { path: '/create', label: 'Media Forge', icon: '🎨' },
+  { path: '/personas', label: 'Persona Lab', icon: '👥' },
+  { path: '/vault', label: 'The Vault', icon: '🗄️' },
+  { path: '/conclave', label: 'Conclave Review', icon: '🎯' },
+  { path: '/workflows', label: 'Systems Architect', icon: '⚙️' },
+  { path: '/warp', label: 'Warp Terminal', icon: '⚡' },
+  { path: '/orbit/map', label: 'Context Map', icon: '🗺️' },
 ];
 
 export default function Sidebar({ activeTab, onTabChange, isOpen, onClose }) {
@@ -38,6 +48,11 @@ export default function Sidebar({ activeTab, onTabChange, isOpen, onClose }) {
         </div>
 
         <nav className="flex-1 overflow-y-auto p-3 space-y-1">
+          {/* Section Header - Tab-Based Pages */}
+          <div className="text-xs font-semibold text-gray-600 uppercase tracking-wider px-3 py-2">
+            Tabs
+          </div>
+
           {NAV_ITEMS.map((item) => (
             <button
               key={item.id}
@@ -47,6 +62,26 @@ export default function Sidebar({ activeTab, onTabChange, isOpen, onClose }) {
               <span className="text-base">{item.icon}</span>
               <span className="text-sm font-medium">{item.label}</span>
             </button>
+          ))}
+
+          {/* Section Header - Full-Screen Pages */}
+          <div className="text-xs font-semibold text-gray-600 uppercase tracking-wider px-3 py-2 mt-4">
+            Tools
+          </div>
+
+          {NEW_PAGES.map((page) => (
+            <a
+              key={page.path}
+              href={page.path}
+              onClick={(e) => {
+                e.preventDefault();
+                window.location.href = page.path;
+              }}
+              className="sidebar-item w-full text-left block"
+            >
+              <span className="text-base">{page.icon}</span>
+              <span className="text-sm font-medium">{page.label}</span>
+            </a>
           ))}
         </nav>
 
