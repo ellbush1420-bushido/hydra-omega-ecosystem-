@@ -387,3 +387,24 @@ The app succeeds when it can:
 5. Conclave Release Board
 6. Product Pack Studio
 7. Campaign 001 Control Room
+
+---
+
+## UI Implementation (Dev/Build)
+
+This repository includes a standalone UI implementation under `apps/shadow-vault-transfer-console/ui`.
+
+```sh
+cd apps/shadow-vault-transfer-console/ui
+npm install
+npm run dev
+```
+
+Build + preview:
+
+```sh
+cd apps/shadow-vault-transfer-console/ui
+npm run lint
+npm run build
+npm run preview
+```
