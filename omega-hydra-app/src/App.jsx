@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Footer from './components/Footer';
 
@@ -15,6 +16,15 @@ import CEOPythons from './components/tabs/CEOPythons';
 import EvolutionScanner from './components/tabs/EvolutionScanner';
 import Realm5Crowns from './components/tabs/Realm5Crowns';
 
+// New full-screen pages
+import MediaForge from './pages/MediaForge';
+import PersonaLaboratory from './pages/PersonaLaboratory';
+import TheVault from './pages/TheVault';
+import ConclaveReviewBoard from './pages/ConclaveReviewBoard';
+import SystemsArchitect from './pages/SystemsArchitect';
+import WarpExecutionTerminal from './pages/WarpExecutionTerminal';
+import ContextMap from './pages/ContextMap';
+
 const tabComponents = {
   dashboard: Dashboard,
   sfw: SFWPipeline,
@@ -30,9 +40,17 @@ const tabComponents = {
   realm5crowns: Realm5Crowns,
 };
 
-export default function App() {
-  const [activeTab, setActiveTab] = useState('dashboard');
+function TabLayout() {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // Extract active tab from URL
+  const activeTab = location.pathname.split('/')[2] || 'dashboard';
+
+  const handleTabChange = (tab) => {
+    navigate(`/tabs/${tab}`);
+  };
 
   const TabComponent = tabComponents[activeTab] || Dashboard;
 
@@ -40,7 +58,7 @@ export default function App() {
     <div className="min-h-screen bg-[#0a0a0f] flex flex-col">
       <Sidebar
         activeTab={activeTab}
-        onTabChange={setActiveTab}
+        onTabChange={handleTabChange}
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
       />
@@ -71,5 +89,29 @@ export default function App() {
         <Footer />
       </div>
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* Full-screen pages without sidebar/header */}
+        <Route path="/create" element={<MediaForge />} />
+        <Route path="/personas" element={<PersonaLaboratory />} />
+        <Route path="/vault" element={<TheVault />} />
+        <Route path="/conclave" element={<ConclaveReviewBoard />} />
+        <Route path="/workflows" element={<SystemsArchitect />} />
+        <Route path="/warp" element={<WarpExecutionTerminal />} />
+        <Route path="/orbit/map" element={<ContextMap />} />
+
+        {/* Tab-based pages with sidebar */}
+        <Route path="/tabs/:tab" element={<TabLayout />} />
+        <Route path="/tabs" element={<TabLayout />} />
+
+        {/* Redirect root to dashboard */}
+        <Route path="/" element={<Navigate to="/tabs/dashboard" replace />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
