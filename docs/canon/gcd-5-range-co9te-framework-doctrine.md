@@ -3,7 +3,8 @@
 
 **Canonical Status:** Official Omega Hydra / Shadow Hand Framework  
 **Framework Class:** Geometric, range-based, proportional, and scenario-compatible doctrine  
-**Governs:** GCD positional logic, Five-Range progression, CO9TE sequencing, VFI9 calibration, Nine-Hall mapping, Sonnal 88 integration
+**Governs:** GCD positional logic, Five-Range progression, CO9TE sequencing, VFI9 calibration, Nine-Hall mapping, Sonnal 88 integration  
+**Founder Cognitive Origin:** Elliott Bush — **Systemic Vision**
 
 ---
 
@@ -17,6 +18,22 @@ It unifies three governing ideas:
 2. **5-Range Progression**
 3. **CO9TE — Control Order 9 Tactical Engine**
 
+Its founder cognitive origin is formally defined as:
+
+# **Systemic Vision**
+
+The ability to look at a chaotic environment and perceive:
+
+- line
+- center
+- angle
+- range
+- hall relationship
+- secondary pathway
+- organized resolution
+
+before panic or noise governs the response.
+
 Its purpose is to organize complex doctrine into a readable and teachable sequence:
 
 > **Read the field.**  
@@ -25,12 +42,17 @@ Its purpose is to organize complex doctrine into a readable and teachable sequen
 > **Move through the correct range.**  
 > **Resolve through organized structure.**
 
+### Canon Line
+
+> **Systemic Vision sees the architecture of the moment. GCD 5-Range CO9TE turns that perception into a disciplined framework.**
+
 ---
 
 # II. Relationship to the Hydra Stack
 
 | Layer | System | Role |
 |---|---|---|
+| Founder Cognitive Signature | **Systemic Vision** | Sees the invisible grid, usable line, and branching paths within disorder |
 | Doctrine | **9 Gate Philosophy** | Governs meaning, ethics, and progression |
 | Calibration | **VFI9** | Regulates proportionality and response posture |
 | Spatial Grammar | **Nine Halls / Lo Shu** | Maps center, sectors, and directional transitions |
@@ -40,7 +62,7 @@ Its purpose is to organize complex doctrine into a readable and teachable sequen
 
 ### Canon Line
 
-> **The 9 Gates define why. VFI9 defines how much. GCD defines where. Five Range defines when. CO9TE defines how the sequence stays organized.**
+> **The 9 Gates define why. VFI9 defines how much. GCD defines where. Five Range defines when. CO9TE defines how the sequence stays organized. Systemic Vision explains how the founder first saw the whole architecture as one map.**
 
 ---
 
@@ -64,6 +86,10 @@ Its purpose is to organize complex doctrine into a readable and teachable sequen
 4. **Can structure be improved before intensity rises?**
 5. **What resolution path preserves proportion and clarity?**
 
+### Founder Link
+
+These questions are the codified expression of **Systemic Vision**. They translate raw geometric perception into a repeatable teaching method.
+
 ### Canon Line
 
 > **Geometry first. Intensity second.**
@@ -86,6 +112,10 @@ The **5-Range Progression** gives CO9TE a phase model for instruction, scenario 
 
 > **Range is not merely distance. Range is the phase of responsibility.**
 
+### Founder Link
+
+Systemic Vision does not see distance as empty space. It reads range as a changing responsibility field: what can be seen, what can be influenced, what must be stabilized, and what should be released.
+
 ---
 
 # V. CO9TE — Control Order 9 Tactical Engine
@@ -106,6 +136,10 @@ Within Hydra canon, **CO9TE** is the sequencing logic that prevents the framewor
 | 8 | **Resolve** — protect, contain, separate, or complete the scenario objective |
 | 9 | **Review** — convert the event into insight, metrics, and doctrine refinement |
 
+### Founder Link
+
+CO9TE is the organized response pathway generated from Systemic Vision: it transforms **calculation under pressure** into a teachable nine-order sequence.
+
 ### Canon Line
 
 > **CO9TE is the order of operations for Hydra structure logic.**
@@ -121,10 +155,11 @@ The three parts work as one framework:
 | **GCD** | determines positional logic |
 | **Five Range** | determines phase of interaction |
 | **CO9TE** | determines sequence of decision and resolution |
+| **Systemic Vision** | explains the founder cognition that saw these layers as one integrated map |
 
 ## Unified Formula
 
-> **Geometry + Range + Sequencing = Structured Hydra Execution**
+> **Systemic Vision → Geometry + Range + Sequencing = Structured Hydra Execution**
 
 ---
 
@@ -168,6 +203,10 @@ This allows the framework to become:
 - codex-ready
 - scenario-compatible
 
+### Founder Link
+
+Nine-Hall mapping is the visual body of Systemic Vision: a way to express how Bush sees disorder as a field of halls, vectors, and options rather than as an undifferentiated blur.
+
 ---
 
 # IX. Sonnal 88 Integration
@@ -181,10 +220,11 @@ This allows the framework to become:
 | Catch-counter | Hand Range to Containment Range |
 | Coil-grip concept | Containment Range |
 | Wave / Shield / Hall logic | GCD, Nine Halls, and VFI9 overlays |
+| Linear Authority | Founder Systemic Vision expressed as efficient direct-path doctrine |
 
 ### Canon Line
 
-> **Sonnal 88 is a specialized engine. GCD 5-Range CO9TE is the chassis that holds it.**
+> **Sonnal 88 is a specialized engine. GCD 5-Range CO9TE is the chassis that holds it. Systemic Vision is the founder cognition that made the chassis possible.**
 
 ---
 
@@ -198,11 +238,15 @@ The framework becomes teachable through the Hydra Matrix.
 | **Scenario** | place that skill under a changing condition |
 | **Resolution** | evaluate whether doctrine stayed organized |
 
+### Founder Link
+
+Hydra 9×9×9 generalizes Systemic Vision into a curriculum engine: the founder's grid-perception becomes a repeatable matrix for drill, scenario, and resolution design.
+
 ---
 
 # XI. Founder Doctrine Statement
 
-**The GCD 5-Range CO9TE Framework Doctrine is the organizing spine of Hydra execution logic. It ensures that philosophy does not drift into abstraction and structured movement does not collapse into randomness. It gives the system a repeatable grammar: geometry, range, order, proportion, resolution.**
+**The GCD 5-Range CO9TE Framework Doctrine is the organizing spine of Hydra execution logic. It ensures that philosophy does not drift into abstraction and structured movement does not collapse into randomness. It gives the system a repeatable grammar: geometry, range, order, proportion, resolution. Its founder cognitive origin is Elliott Bush’s Systemic Vision — the ability to perceive the invisible grid within disorder and convert it into structured command.**
 
 ---
 
@@ -218,6 +262,8 @@ The framework becomes teachable through the Hydra Matrix.
 8. CO9TE sequence card deck
 9. Five-Range learning board
 10. Nine-Hall framework diagram
+11. **Systemic Vision × GCD architecture plate**
+12. **Linear Authority founder doctrine card**
 
 ---
 
@@ -242,3 +288,6 @@ The framework becomes teachable through the Hydra Matrix.
 - `sonnal-88`
 - `hydra-digital-academy`
 - `base44-training-facility`
+- `elliott-bush`
+- `systemic-vision`
+- `linear-authority`
