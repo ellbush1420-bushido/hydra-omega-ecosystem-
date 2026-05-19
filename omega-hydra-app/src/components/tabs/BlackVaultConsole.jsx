@@ -11,6 +11,7 @@ import {
 import {
   fetchBlackVaultDashboard,
   saveBlackVaultOffer,
+  syncBlackVaultWarpRuns,
 } from '../../services/blackVaultService';
 
 const toneClasses = {
@@ -77,25 +78,31 @@ export default function BlackVaultConsole() {
   const [editingOfferId, setEditingOfferId] = useState(null);
   const [offerDraft, setOfferDraft] = useState(null);
   const [saveState, setSaveState] = useState(null);
+  const [warpSyncState, setWarpSyncState] = useState(null);
+  const [isSyncingWarp, setIsSyncingWarp] = useState(false);
+
+  const hydrate = async () => {
+    setIsLoading(true);
+    const dashboard = await fetchBlackVaultDashboard();
+    setMetrics(dashboard.metrics?.length ? dashboard.metrics : vaultMetrics);
+    setOffers((dashboard.offers?.length ? dashboard.offers : offerLadder).map(normalizeOffer));
+    setMatrix((dashboard.matrix?.length ? dashboard.matrix : affiliateMatrix).map(normalizeMatrixRow));
+    setRuns((dashboard.runs?.length ? dashboard.runs : warpRuns).map(normalizeRun));
+    setDataSource(dashboard.source || 'unknown');
+    setIsLoading(false);
+  };
 
   useEffect(() => {
     let mounted = true;
 
-    const hydrate = async () => {
-      setIsLoading(true);
-      const dashboard = await fetchBlackVaultDashboard();
+    const safeHydrate = async () => {
       if (!mounted) return;
-      setMetrics(dashboard.metrics?.length ? dashboard.metrics : vaultMetrics);
-      setOffers((dashboard.offers?.length ? dashboard.offers : offerLadder).map(normalizeOffer));
-      setMatrix((dashboard.matrix?.length ? dashboard.matrix : affiliateMatrix).map(normalizeMatrixRow));
-      setRuns((dashboard.runs?.length ? dashboard.runs : warpRuns).map(normalizeRun));
-      setDataSource(dashboard.source || 'unknown');
-      setIsLoading(false);
+      await hydrate();
     };
 
-    hydrate();
+    safeHydrate();
 
-    const refreshFromMatrixEvent = () => hydrate();
+    const refreshFromMatrixEvent = () => safeHydrate();
     window.addEventListener('hydra:black-vault:matrix-updated', refreshFromMatrixEvent);
 
     return () => {
@@ -132,6 +139,25 @@ export default function BlackVaultConsole() {
     setSaveState(result.persisted ? 'Saved to API / storage' : 'Saved locally; API persistence pending');
     setEditingOfferId(null);
     setOfferDraft(null);
+    await hydrate();
+  };
+
+  const syncWarpRuns = async () => {
+    setIsSyncingWarp(true);
+    setWarpSyncState(null);
+    const sync = await syncBlackVaultWarpRuns();
+    if (sync.runs?.length) {
+      setRuns(sync.runs.map(normalizeRun));
+    }
+    setWarpSyncState(
+      sync.error
+        ? `Warp sync unavailable: ${sync.error}`
+        : sync.persisted
+          ? `Warp runs synced and persisted from ${sync.source}.`
+          : `Warp sync returned ${sync.runs.length} run(s) from ${sync.source}; persistence pending.`
+    );
+    setIsSyncingWarp(false);
+    await hydrate();
   };
 
   return (
@@ -291,13 +317,20 @@ export default function BlackVaultConsole() {
         </div>
 
         <div className="card border border-emerald-900/50">
-          <div className="flex items-center justify-between gap-3">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h2 className="text-base font-bold text-white">⚡ Warp Limitless Run Center</h2>
-              <p className="text-xs text-gray-500">Hydrates from run API and accepts external run-event intake</p>
+              <p className="text-xs text-gray-500">Hydrates from run API, accepts run-event intake, and can sync from a configured Warp runs endpoint</p>
             </div>
-            <span className="badge-green">Live Queue</span>
+            <button className="btn-emerald text-xs" onClick={syncWarpRuns} disabled={isSyncingWarp}>
+              {isSyncingWarp ? 'Syncing...' : 'Sync Warp Runs'}
+            </button>
           </div>
+          {warpSyncState && (
+            <div className="mt-4 rounded-xl border border-emerald-900/50 bg-emerald-950/20 px-3 py-2 text-xs text-emerald-200">
+              {warpSyncState}
+            </div>
+          )}
           <div className="mt-4 space-y-3">
             {runs.map((run) => (
               <div key={run.id} className="rounded-xl border border-[#1a1a2e] bg-[#0a0a0f] p-4">
