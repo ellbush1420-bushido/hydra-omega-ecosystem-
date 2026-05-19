@@ -59,10 +59,24 @@ create table if not exists public.black_vault_reviews (
   updated_at timestamptz not null default now()
 );
 
+create table if not exists public.black_vault_metric_snapshots (
+  id uuid primary key default gen_random_uuid(),
+  source text not null default 'black-vault-console',
+  metric_count integer not null default 0,
+  metrics jsonb not null default '[]'::jsonb,
+  offers_count integer not null default 0,
+  matrix_count integer not null default 0,
+  runs_count integer not null default 0,
+  reviews_count integer not null default 0,
+  metadata jsonb not null default '{}'::jsonb,
+  created_at timestamptz not null default now()
+);
+
 create index if not exists idx_black_vault_offers_sort on public.black_vault_offers(sort_order, created_at);
 create index if not exists idx_black_vault_matrix_created on public.black_vault_affiliate_matrix(created_at desc);
 create index if not exists idx_black_vault_runs_updated on public.black_vault_warp_runs(updated_at desc);
 create index if not exists idx_black_vault_reviews_updated on public.black_vault_reviews(updated_at desc);
+create index if not exists idx_black_vault_metric_snapshots_created on public.black_vault_metric_snapshots(created_at desc);
 
 -- Optional seed rows for the console offer ladder.
 insert into public.black_vault_offers (tier, title, price, purpose, sort_order)
