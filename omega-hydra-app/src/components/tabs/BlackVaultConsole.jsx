@@ -1,3 +1,4 @@
+import { useEffect, useMemo, useState } from 'react';
 import {
   vaultMetrics,
   commandCouncil,
@@ -7,6 +8,10 @@ import {
   visualizerTracks,
   pythonHeads,
 } from '../../data/blackVaultConsole';
+import {
+  fetchBlackVaultDashboard,
+  saveBlackVaultOffer,
+} from '../../services/blackVaultService';
 
 const toneClasses = {
   violet: 'border-violet-700 text-violet-300',
@@ -23,12 +28,112 @@ const decisionBadges = {
 
 const statusBadges = {
   Running: 'badge-green',
+  running: 'badge-green',
   Queued: 'badge-amber',
+  queued: 'badge-amber',
   Review: 'badge-violet',
+  review: 'badge-violet',
   Completed: 'badge-blue',
+  completed: 'badge-blue',
 };
 
+const normalizeOffer = (offer, index) => ({
+  id: offer.id || `offer-${index + 1}`,
+  tier: offer.tier || offer.offer_tier || 'Tier',
+  title: offer.title || 'Untitled Offer',
+  price: offer.price || offer.price_label || 'TBD',
+  purpose: offer.purpose || offer.description || '',
+  status: offer.status || 'active',
+  accessTier: offer.accessTier || offer.access_tier || 'age-gated',
+  sortOrder: offer.sortOrder ?? offer.sort_order ?? index + 1,
+});
+
+const normalizeMatrixRow = (row, index) => ({
+  id: row.id || `matrix-${index + 1}`,
+  lane: row.lane || 'Tracker Route',
+  source: row.source || 'unknown',
+  cta: row.cta || 'Tracked CTA',
+  ctr: row.ctr || row.ctr_label || '—',
+  epc: row.epc || row.epc_label || '—',
+  decision: row.decision || 'Monitor',
+  trackingUrl: row.trackingUrl || row.tracking_url || '',
+});
+
+const normalizeRun = (run, index) => ({
+  id: run.id || `run-${index + 1}`,
+  run: run.run || run.run_id || `Warp-VA-${index + 1}`,
+  task: run.task || 'Unlabeled run',
+  status: run.status || 'Queued',
+  progress: Number(run.progress || 0),
+});
+
 export default function BlackVaultConsole() {
+  const [metrics, setMetrics] = useState(vaultMetrics);
+  const [offers, setOffers] = useState(offerLadder.map(normalizeOffer));
+  const [matrix, setMatrix] = useState(affiliateMatrix.map(normalizeMatrixRow));
+  const [runs, setRuns] = useState(warpRuns.map(normalizeRun));
+  const [dataSource, setDataSource] = useState('seed');
+  const [isLoading, setIsLoading] = useState(true);
+  const [editingOfferId, setEditingOfferId] = useState(null);
+  const [offerDraft, setOfferDraft] = useState(null);
+  const [saveState, setSaveState] = useState(null);
+
+  useEffect(() => {
+    let mounted = true;
+
+    const hydrate = async () => {
+      setIsLoading(true);
+      const dashboard = await fetchBlackVaultDashboard();
+      if (!mounted) return;
+      setMetrics(dashboard.metrics?.length ? dashboard.metrics : vaultMetrics);
+      setOffers((dashboard.offers?.length ? dashboard.offers : offerLadder).map(normalizeOffer));
+      setMatrix((dashboard.matrix?.length ? dashboard.matrix : affiliateMatrix).map(normalizeMatrixRow));
+      setRuns((dashboard.runs?.length ? dashboard.runs : warpRuns).map(normalizeRun));
+      setDataSource(dashboard.source || 'unknown');
+      setIsLoading(false);
+    };
+
+    hydrate();
+
+    const refreshFromMatrixEvent = () => hydrate();
+    window.addEventListener('hydra:black-vault:matrix-updated', refreshFromMatrixEvent);
+
+    return () => {
+      mounted = false;
+      window.removeEventListener('hydra:black-vault:matrix-updated', refreshFromMatrixEvent);
+    };
+  }, []);
+
+  const runningCount = useMemo(
+    () => runs.filter((run) => String(run.status).toLowerCase() === 'running').length,
+    [runs]
+  );
+
+  const beginOfferEdit = (offer) => {
+    setEditingOfferId(offer.id);
+    setOfferDraft({ ...offer });
+    setSaveState(null);
+  };
+
+  const updateDraft = (key, value) => {
+    setOfferDraft((draft) => ({ ...draft, [key]: value }));
+  };
+
+  const cancelOfferEdit = () => {
+    setEditingOfferId(null);
+    setOfferDraft(null);
+    setSaveState(null);
+  };
+
+  const saveOffer = async () => {
+    if (!offerDraft) return;
+    const result = await saveBlackVaultOffer(offerDraft);
+    setOffers((current) => current.map((offer) => offer.id === offerDraft.id ? { ...offer, ...result.offer } : offer));
+    setSaveState(result.persisted ? 'Saved to API / storage' : 'Saved locally; API persistence pending');
+    setEditingOfferId(null);
+    setOfferDraft(null);
+  };
+
   return (
     <div className="space-y-8">
       <section className="rounded-2xl border border-red-900/80 bg-gradient-to-br from-[#161018] via-[#120d14] to-[#0a0a0f] p-5 sm:p-6 shadow-[0_0_40px_rgba(127,29,29,0.16)]">
@@ -40,6 +145,12 @@ export default function BlackVaultConsole() {
               Warp.dev Limitless × Omega Hydra CEO operating surface for gated affiliate funnels, mature fictional media planning,
               Vault IP governance, revenue intelligence, and Den Mother review discipline.
             </p>
+            <div className="mt-3 flex flex-wrap gap-2 text-xs">
+              <span className={isLoading ? 'badge-amber' : 'badge-green'}>{isLoading ? 'Hydrating console' : 'Console hydrated'}</span>
+              <span className="badge-violet">Source: {dataSource}</span>
+              <span className="badge-blue">Live running jobs: {runningCount}</span>
+              {saveState && <span className="badge-amber">{saveState}</span>}
+            </div>
           </div>
           <div className="grid grid-cols-2 gap-2 text-xs sm:min-w-[280px]">
             <div className="rounded-xl border border-emerald-800/70 bg-emerald-950/20 p-3">
@@ -63,7 +174,7 @@ export default function BlackVaultConsole() {
       </section>
 
       <section className="grid grid-cols-2 gap-4 sm:grid-cols-4 xl:grid-cols-8">
-        {vaultMetrics.map((metric) => (
+        {metrics.map((metric) => (
           <div key={metric.label} className={`metric-card border ${toneClasses[metric.tone] || toneClasses.violet}`}>
             <div className="text-[10px] uppercase tracking-widest text-gray-500">{metric.label}</div>
             <div className="mt-2 text-xl font-black text-white">{metric.value}</div>
@@ -98,22 +209,46 @@ export default function BlackVaultConsole() {
         </div>
 
         <div className="card border border-amber-900/50">
-          <div className="flex items-center justify-between gap-3">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h2 className="text-base font-bold text-white">🪜 Offer Ladder / Black Vault Revenue Rail</h2>
-              <p className="text-xs text-gray-500">Traffic signal → gated route → product pack → premium console</p>
+              <p className="text-xs text-gray-500">Editable commercial objects with API/local fallback persistence</p>
             </div>
             <span className="badge-amber">Commercial Bridge</span>
           </div>
           <div className="mt-4 grid grid-cols-1 gap-3 lg:grid-cols-5">
-            {offerLadder.map((offer) => (
-              <div key={offer.title} className="rounded-xl border border-amber-900/40 bg-[#0a0a0f] p-4">
-                <div className="text-[10px] uppercase tracking-widest text-amber-400">{offer.tier}</div>
-                <div className="mt-2 text-sm font-bold text-white">{offer.title}</div>
-                <div className="mt-2 text-lg font-black text-emerald-300">{offer.price}</div>
-                <p className="mt-3 text-xs leading-relaxed text-gray-400">{offer.purpose}</p>
-              </div>
-            ))}
+            {offers.map((offer) => {
+              const editing = editingOfferId === offer.id;
+              const draft = editing ? offerDraft : offer;
+              return (
+                <div key={offer.id} className="rounded-xl border border-amber-900/40 bg-[#0a0a0f] p-4">
+                  <div className="text-[10px] uppercase tracking-widest text-amber-400">{draft.tier}</div>
+                  {editing ? (
+                    <div className="mt-3 space-y-2">
+                      <input className="input-field text-xs" value={draft.title} onChange={(event) => updateDraft('title', event.target.value)} />
+                      <input className="input-field text-xs" value={draft.price} onChange={(event) => updateDraft('price', event.target.value)} />
+                      <textarea className="textarea-field text-xs" rows={4} value={draft.purpose} onChange={(event) => updateDraft('purpose', event.target.value)} />
+                    </div>
+                  ) : (
+                    <>
+                      <div className="mt-2 text-sm font-bold text-white">{draft.title}</div>
+                      <div className="mt-2 text-lg font-black text-emerald-300">{draft.price}</div>
+                      <p className="mt-3 text-xs leading-relaxed text-gray-400">{draft.purpose}</p>
+                    </>
+                  )}
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {editing ? (
+                      <>
+                        <button className="btn-emerald text-xs py-1 px-2" onClick={saveOffer}>Save</button>
+                        <button className="btn-outline text-xs py-1 px-2" onClick={cancelOfferEdit}>Cancel</button>
+                      </>
+                    ) : (
+                      <button className="btn-outline text-xs py-1 px-2" onClick={() => beginOfferEdit(offer)}>Edit</button>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -123,7 +258,7 @@ export default function BlackVaultConsole() {
           <div className="flex items-center justify-between gap-3">
             <div>
               <h2 className="text-base font-bold text-white">🧬 Velvet Affiliate Matrix</h2>
-              <p className="text-xs text-gray-500">Offer lane performance, CTA posture, and CEO decisions</p>
+              <p className="text-xs text-gray-500">Tracker-linked rows appear here after route submission</p>
             </div>
             <span className="badge-violet">EPC / CTR / Decision</span>
           </div>
@@ -140,8 +275,8 @@ export default function BlackVaultConsole() {
                 </tr>
               </thead>
               <tbody>
-                {affiliateMatrix.map((row) => (
-                  <tr key={row.lane}>
+                {matrix.map((row) => (
+                  <tr key={row.id}>
                     <td className="font-medium text-white">{row.lane}</td>
                     <td className="text-gray-400">{row.source}</td>
                     <td className="text-gray-400">{row.cta}</td>
@@ -159,13 +294,13 @@ export default function BlackVaultConsole() {
           <div className="flex items-center justify-between gap-3">
             <div>
               <h2 className="text-base font-bold text-white">⚡ Warp Limitless Run Center</h2>
-              <p className="text-xs text-gray-500">Automation queue for gated commercial workflows</p>
+              <p className="text-xs text-gray-500">Hydrates from run API and accepts external run-event intake</p>
             </div>
             <span className="badge-green">Live Queue</span>
           </div>
           <div className="mt-4 space-y-3">
-            {warpRuns.map((run) => (
-              <div key={run.run} className="rounded-xl border border-[#1a1a2e] bg-[#0a0a0f] p-4">
+            {runs.map((run) => (
+              <div key={run.id} className="rounded-xl border border-[#1a1a2e] bg-[#0a0a0f] p-4">
                 <div className="flex items-center justify-between gap-3">
                   <div>
                     <div className="font-mono text-xs text-violet-300">{run.run}</div>
