@@ -180,3 +180,28 @@ export async function updateBlackVaultReviewStatus(reviewId, status) {
     return { review: nextReviews.find((review) => review.id === reviewId), persisted: false };
   }
 }
+
+export async function syncBlackVaultWarpRuns() {
+  try {
+    const response = await fetch('/api/black-vault-warp-sync', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ scope: 'black-vault' }),
+    });
+    const payload = await safeJson(response);
+    if (!response.ok || !payload) throw new Error(payload?.error || 'Warp sync unavailable');
+    return {
+      runs: Array.isArray(payload.runs) ? payload.runs : [],
+      persisted: Boolean(payload.persisted),
+      source: payload.source || 'warp-api',
+      error: null,
+    };
+  } catch (error) {
+    return {
+      runs: [],
+      persisted: false,
+      source: 'warp-sync-unavailable',
+      error: error?.message || 'Warp sync unavailable',
+    };
+  }
+}
