@@ -194,7 +194,7 @@ export async function syncBlackVaultWarpRuns() {
       runs: Array.isArray(payload.runs) ? payload.runs : [],
       persisted: Boolean(payload.persisted),
       source: payload.source || 'warp-api',
-      error: null,
+      error: payload.error || null,
     };
   } catch (error) {
     return {
@@ -202,6 +202,37 @@ export async function syncBlackVaultWarpRuns() {
       persisted: false,
       source: 'warp-sync-unavailable',
       error: error?.message || 'Warp sync unavailable',
+    };
+  }
+}
+
+export async function createBlackVaultMetricSnapshot({ metrics, offers, matrix, runs, reviews, metadata = {} }) {
+  try {
+    const response = await fetch('/api/black-vault-metric-snapshots', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        source: 'black-vault-console',
+        metrics,
+        offersCount: offers?.length || 0,
+        matrixCount: matrix?.length || 0,
+        runsCount: runs?.length || 0,
+        reviewsCount: reviews?.length || 0,
+        metadata,
+      }),
+    });
+    const payload = await safeJson(response);
+    if (!response.ok || !payload) throw new Error(payload?.error || 'Metric snapshot unavailable');
+    return {
+      snapshot: payload.snapshot || null,
+      persisted: Boolean(payload.persisted),
+      error: null,
+    };
+  } catch (error) {
+    return {
+      snapshot: null,
+      persisted: false,
+      error: error?.message || 'Metric snapshot unavailable',
     };
   }
 }
