@@ -12,6 +12,7 @@ import {
   fetchBlackVaultDashboard,
   saveBlackVaultOffer,
   syncBlackVaultWarpRuns,
+  createBlackVaultMetricSnapshot,
 } from '../../services/blackVaultService';
 
 const toneClasses = {
@@ -73,6 +74,7 @@ export default function BlackVaultConsole() {
   const [offers, setOffers] = useState(offerLadder.map(normalizeOffer));
   const [matrix, setMatrix] = useState(affiliateMatrix.map(normalizeMatrixRow));
   const [runs, setRuns] = useState(warpRuns.map(normalizeRun));
+  const [reviews, setReviews] = useState([]);
   const [dataSource, setDataSource] = useState('seed');
   const [isLoading, setIsLoading] = useState(true);
   const [editingOfferId, setEditingOfferId] = useState(null);
@@ -80,6 +82,8 @@ export default function BlackVaultConsole() {
   const [saveState, setSaveState] = useState(null);
   const [warpSyncState, setWarpSyncState] = useState(null);
   const [isSyncingWarp, setIsSyncingWarp] = useState(false);
+  const [snapshotState, setSnapshotState] = useState(null);
+  const [isSavingSnapshot, setIsSavingSnapshot] = useState(false);
 
   const hydrate = async () => {
     setIsLoading(true);
@@ -88,6 +92,7 @@ export default function BlackVaultConsole() {
     setOffers((dashboard.offers?.length ? dashboard.offers : offerLadder).map(normalizeOffer));
     setMatrix((dashboard.matrix?.length ? dashboard.matrix : affiliateMatrix).map(normalizeMatrixRow));
     setRuns((dashboard.runs?.length ? dashboard.runs : warpRuns).map(normalizeRun));
+    setReviews(dashboard.reviews || []);
     setDataSource(dashboard.source || 'unknown');
     setIsLoading(false);
   };
@@ -160,6 +165,31 @@ export default function BlackVaultConsole() {
     await hydrate();
   };
 
+  const saveMetricSnapshot = async () => {
+    setIsSavingSnapshot(true);
+    setSnapshotState(null);
+    const result = await createBlackVaultMetricSnapshot({
+      metrics,
+      offers,
+      matrix,
+      runs,
+      reviews,
+      metadata: {
+        source: dataSource,
+        liveRunningJobs: runningCount,
+      },
+    });
+
+    setSnapshotState(
+      result.error
+        ? `Snapshot unavailable: ${result.error}`
+        : result.persisted
+          ? 'Metric snapshot persisted to Black Vault storage.'
+          : 'Metric snapshot prepared, but persistence is pending.'
+    );
+    setIsSavingSnapshot(false);
+  };
+
   return (
     <div className="space-y-8">
       <section className="rounded-2xl border border-red-900/80 bg-gradient-to-br from-[#161018] via-[#120d14] to-[#0a0a0f] p-5 sm:p-6 shadow-[0_0_40px_rgba(127,29,29,0.16)]">
@@ -176,6 +206,7 @@ export default function BlackVaultConsole() {
               <span className="badge-violet">Source: {dataSource}</span>
               <span className="badge-blue">Live running jobs: {runningCount}</span>
               {saveState && <span className="badge-amber">{saveState}</span>}
+              {snapshotState && <span className="badge-green">{snapshotState}</span>}
             </div>
           </div>
           <div className="grid grid-cols-2 gap-2 text-xs sm:min-w-[280px]">
@@ -207,6 +238,19 @@ export default function BlackVaultConsole() {
             <div className="mt-1 text-xs opacity-90">{metric.delta}</div>
           </div>
         ))}
+      </section>
+
+      <section className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[#1a1a2e] bg-[#101018] p-4">
+        <div>
+          <div className="text-sm font-bold text-white">Phase 2 persistence controls</div>
+          <div className="text-xs text-gray-500">Capture a metric snapshot or refresh the console against current API-backed state.</div>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <button className="btn-outline text-xs" onClick={hydrate}>Refresh Console</button>
+          <button className="btn-gold text-xs" onClick={saveMetricSnapshot} disabled={isSavingSnapshot}>
+            {isSavingSnapshot ? 'Saving Snapshot...' : 'Save Metric Snapshot'}
+          </button>
+        </div>
       </section>
 
       <section className="grid grid-cols-1 gap-6 xl:grid-cols-[1.1fr_1.4fr]">
