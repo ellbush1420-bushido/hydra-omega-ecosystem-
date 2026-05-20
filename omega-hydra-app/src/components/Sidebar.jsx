@@ -2,6 +2,7 @@ const NAV_ITEMS = [
   { id: 'dashboard', label: 'Dashboard', icon: '⬡' },
   { id: 'sfw', label: 'SFW Pipeline', icon: '🌿' },
   { id: 'adult', label: '18+ Pipeline', icon: '🔒' },
+  { id: 'blackvault', label: 'Black Vault Console', icon: '🗝' },
   { id: 'characters', label: 'Character Factory', icon: '👁' },
   { id: 'drops', label: 'Daily Drops', icon: '🔥' },
   { id: 'books', label: 'Book Forge', icon: '📖' },

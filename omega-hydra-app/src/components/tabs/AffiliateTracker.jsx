@@ -1,6 +1,7 @@
 import { useState, useCallback, useMemo } from 'react';
 import { ingestTrackingUrl } from '../../utils/urlIngest';
 import { SAMPLE_BING_INGEST_URL } from '../../constants/urlSamples';
+import { submitAffiliateMatrixRoute } from '../../services/blackVaultService';
 
 const sampleStats = [
   { subid: 'velrya-tiktok-bio-shadow-v1', clicks: 312, epc: '$2.87', revenue: '$143.54', lastActive: '2h ago' },
@@ -20,6 +21,8 @@ export default function AffiliateTracker() {
   });
   const [rawIngestUrl, setRawIngestUrl] = useState(SAMPLE_BING_INGEST_URL);
   const [copiedTarget, setCopiedTarget] = useState(null);
+  const [matrixState, setMatrixState] = useState(null);
+  const [isSubmittingMatrix, setIsSubmittingMatrix] = useState(false);
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
   const ingestedLink = useMemo(() => ingestTrackingUrl(rawIngestUrl), [rawIngestUrl]);
@@ -65,11 +68,37 @@ export default function AffiliateTracker() {
     }
   }, [ingestedLink.destinationUrl]);
 
+  const handleSendToMatrix = useCallback(async () => {
+    setIsSubmittingMatrix(true);
+    setMatrixState(null);
+    const result = await submitAffiliateMatrixRoute({
+      lane: `${form.sub1 || 'hydra'} / ${form.sub4 || 'campaign'}`,
+      source: form.sub2 || ingestedLink.sourceHost || 'unknown',
+      cta: `${form.sub3 || 'placement'} route`,
+      decision: 'Monitor',
+      trackingUrl: fullUrl,
+      metadata: {
+        sub1: form.sub1,
+        sub2: form.sub2,
+        sub3: form.sub3,
+        sub4: form.sub4,
+        sub5: form.sub5,
+        destinationUrl: ingestedLink.destinationUrl || null,
+        sourceHost: ingestedLink.sourceHost || null,
+        destinationHost: ingestedLink.destinationHost || null,
+        extractedMetadata: ingestedLink.metadata || {},
+      },
+    });
+
+    setMatrixState(result.persisted ? 'Route synced to Black Vault Matrix API.' : 'Route saved locally; API persistence pending.');
+    setIsSubmittingMatrix(false);
+  }, [form, fullUrl, ingestedLink]);
+
   return (
     <div className="space-y-8">
       <div>
         <h1 className="section-title">🔗 Affiliate Tracker</h1>
-        <p className="section-subtitle">SubID generator and performance analytics dashboard</p>
+        <p className="section-subtitle">SubID generator, redirect ingest, and Black Vault Matrix feed</p>
       </div>
 
       <div className="card">
@@ -191,9 +220,19 @@ export default function AffiliateTracker() {
           <div className="font-mono text-[10px] text-gray-500 break-all mb-3">
             {fullUrl}
           </div>
-          <button className="btn-primary text-xs" onClick={handleCopy}>
-            {copiedTarget === 'full' ? '✅ Copied!' : '📋 Copy Full URL'}
-          </button>
+          <div className="flex flex-wrap gap-2">
+            <button className="btn-primary text-xs" onClick={handleCopy}>
+              {copiedTarget === 'full' ? '✅ Copied!' : '📋 Copy Full URL'}
+            </button>
+            <button className="btn-emerald text-xs" onClick={handleSendToMatrix} disabled={isSubmittingMatrix}>
+              {isSubmittingMatrix ? '⏳ Sending...' : '🧬 Send to Black Vault Matrix'}
+            </button>
+          </div>
+          {matrixState && (
+            <div className="mt-3 rounded-lg border border-emerald-900/50 bg-emerald-950/20 px-3 py-2 text-xs text-emerald-200">
+              {matrixState}
+            </div>
+          )}
         </div>
       </div>
 
