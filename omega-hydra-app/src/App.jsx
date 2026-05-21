@@ -14,6 +14,7 @@ import ComplianceCenter from './components/tabs/ComplianceCenter';
 import CEOPythons from './components/tabs/CEOPythons';
 import EvolutionScanner from './components/tabs/EvolutionScanner';
 import Realm5Crowns from './components/tabs/Realm5Crowns';
+import JezebelIngest from './components/tabs/JezebelIngest';
 
 const tabComponents = {
   dashboard: Dashboard,
@@ -28,6 +29,7 @@ const tabComponents = {
   pythons: CEOPythons,
   scanner: EvolutionScanner,
   realm5crowns: Realm5Crowns,
+  jezebel: JezebelIngest,
 };
 
 export default function App() {
