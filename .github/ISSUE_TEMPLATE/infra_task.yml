@@ -1,0 +1,39 @@
+name: Infrastructure task
+description: Track CI/CD, Supabase, worker, deployment, or repository-governance work
+title: "[Infra]: "
+labels: [infra]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What infrastructure change is needed?
+    validations:
+      required: true
+  - type: checkboxes
+    id: area
+    attributes:
+      label: Area
+      options:
+        - label: CI/CD
+        - label: Supabase schema
+        - label: Supabase RLS policies
+        - label: Tracking worker
+        - label: Health checks
+        - label: Secrets / environment
+        - label: Branch protection
+        - label: Deployment docs
+  - type: textarea
+    id: rollout
+    attributes:
+      label: Rollout plan
+      description: Include migration order, deployment order, and rollback notes.
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation plan
+      description: Commands, checks, monitoring, or proof required before merge.
+    validations:
+      required: true
