@@ -1,0 +1,48 @@
+name: Feature request
+description: Propose a new CEO Dashboard module, workflow, screen, or automation
+title: "[Feature]: "
+labels: [feature]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What should be added?
+    validations:
+      required: true
+  - type: dropdown
+    id: module
+    attributes:
+      label: Module
+      options:
+        - Command
+        - HydraEyes
+        - World
+        - Arena
+        - Commerce
+        - Content
+        - Roster
+        - Action
+        - Supabase
+        - Worker / automation
+        - CI/CD
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: What must be true for this to be complete?
+      placeholder: |
+        - User can...
+        - CI passes...
+        - Health check confirms...
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Add implementation notes, references, screenshots, or constraints.
