@@ -10,6 +10,10 @@ This repository is the primary mono-repo for the Hydra/Omega ecosystem.
 - `aurelian-os/` – Aurelian OS docs
 - `Shadow Monastery/` – Doctrine, orders, engine notes
 
+## OpenAI developer workflow reference
+
+- `docs/operations/openai-developer-workflows.md` – Codex CLI workflows, ChatGPT Apps SDK, Agentic Commerce Protocol, Ads, and developer-mode routing notes.
+
 ## Development
 
 ### omega-hydra-app
