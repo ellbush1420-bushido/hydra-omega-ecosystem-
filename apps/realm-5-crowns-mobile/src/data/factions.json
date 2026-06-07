@@ -1,0 +1,72 @@
+[
+  {
+    "id": "shadow_serpent",
+    "name": "Shadow Serpent Monastery",
+    "shortName": "SERPENT",
+    "emoji": "🐍",
+    "color": "#7c3aed",
+    "accent": "#a78bfa",
+    "bg": "#1a0a2e",
+    "lore": "Perception, restraint, shadow wisdom. The silence between words carries the doctrine.",
+    "trialType": "perception",
+    "xpBonus": "2× Labyrinth XP",
+    "startingRank": "Shadow Initiate",
+    "codexUnlock": "Serpent Cipher Vol. I"
+  },
+  {
+    "id": "scarlet_temple",
+    "name": "Crimson Coil Cathedral",
+    "shortName": "SCARLET",
+    "emoji": "🔴",
+    "color": "#dc2626",
+    "accent": "#fca5a5",
+    "bg": "#2e0a0a",
+    "lore": "Command, discipline, sacred force. Commands are spoken once.",
+    "trialType": "command",
+    "xpBonus": "2× Kingdom Raid XP",
+    "startingRank": "Scarlet Initiate",
+    "codexUnlock": "Crimson Codex Vol. I"
+  },
+  {
+    "id": "ophiuchus",
+    "name": "Cult of Ophiuchus",
+    "shortName": "WEB",
+    "emoji": "🌀",
+    "color": "#059669",
+    "accent": "#6ee7b7",
+    "bg": "#0a2e1a",
+    "lore": "Serpent prophecy, transformation, Void Hydra influence. The thirteenth sign devours the zodiac.",
+    "trialType": "transformation",
+    "xpBonus": "2× Arena XP",
+    "startingRank": "Void Aspirant",
+    "codexUnlock": "Ophiuchus Prophecy Scroll I"
+  },
+  {
+    "id": "black_sun",
+    "name": "Order of the Black Sun",
+    "shortName": "SUN",
+    "emoji": "☀️",
+    "color": "#4b5563",
+    "accent": "#d1d5db",
+    "bg": "#0f0f14",
+    "lore": "Judgment, containment, sacred law. The Black Sun sees all transgression.",
+    "trialType": "judgment",
+    "xpBonus": "2× Scale Score",
+    "startingRank": "Inquisitor Novice",
+    "codexUnlock": "Black Sun Ledger Vol. I"
+  },
+  {
+    "id": "lazarus",
+    "name": "Radiant Guardian Knight Society",
+    "shortName": "LAZARUS",
+    "emoji": "⚔️",
+    "color": "#10b981",
+    "accent": "#34d399",
+    "bg": "#0a1e14",
+    "lore": "Healing, restoration, guardian intervention. Silver-white-green Asclepian order.",
+    "trialType": "restoration",
+    "xpBonus": "2× Join Bonus XP",
+    "startingRank": "Guardian Aspirant",
+    "codexUnlock": "Lazarus Codex Vol. I"
+  }
+]

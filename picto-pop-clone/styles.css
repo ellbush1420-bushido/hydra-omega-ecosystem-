@@ -1,0 +1,13 @@
+// Styling for Shadow Monastery aesthetic (adult-themed gothic animations).
+/* Insert style definitions or animation configurations */
+
+body {
+    background-color: black;
+    color: white;
+    font-family: Gothic, serif;
+}
+
+.animation-effect {
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
+}
