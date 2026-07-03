@@ -69,7 +69,7 @@ Routing:
 - **Flux Pro:** premium photoreal face, skin, lighting, portrait quality
 - **SDXL:** stylized fantasy, faction variants, poster style, card art
 - **Marketplace / LoRA route:** repeatable visual signature and faction consistency
-- **Video route:** image-to-motion teasers and short cinematic clips
+- **Video route:** image-to-motion teasers and short cinematic clips — see `hybrid-hydra-video-pipeline.md` for the full Wan 2.2 / Kling / Runway / HeyGen / Grok Imagine → Fanvue pipeline spec
 
 ### 3.2 OurDreamAI Atmosphere Engine
 
