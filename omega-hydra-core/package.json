@@ -2,14 +2,17 @@
   "name": "omega-hydra-core",
   "version": "0.1.0",
   "private": true,
-  "description": "Omega Hydra Core MVP foundation: identity, companion, labyrinth, telemetry, marketplace, and capital city shell.",
+  "description": "Omega Hydra Core MVP foundation: identity, companion, labyrinth, telemetry, marketplace, capital city, skill forge, and agent control plane.",
   "type": "module",
   "scripts": {
     "dev": "node apps/guardian-simulator/src/index.js",
     "genesis": "node packages/hydra-identity/src/demo.js",
     "mission": "node packages/hydra-labyrinth/src/demo.js",
     "marketplace": "node apps/marketplace/src/index.js",
-    "city": "node apps/capital-city/src/index.js"
+    "city": "node apps/capital-city/src/index.js",
+    "skill-forge": "node apps/skill-forge/src/index.js",
+    "agent-control": "node packages/hydra-agent-control-plane/src/demo.js",
+    "test:agent-control": "node --test packages/hydra-agent-control-plane/test/*.test.js"
   },
   "keywords": [
     "omega-hydra",
@@ -17,7 +20,10 @@
     "hydra-identity",
     "hydra-labyrinth",
     "hydra-eyes",
-    "hydra-zeta"
+    "hydra-zeta",
+    "hydra-skill-forge",
+    "agent-control-plane",
+    "warp-agents"
   ],
   "license": "UNLICENSED"
 }
