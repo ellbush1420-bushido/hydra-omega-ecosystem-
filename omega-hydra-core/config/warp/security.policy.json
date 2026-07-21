@@ -1,0 +1,46 @@
+{
+  "version": "2026-07-21",
+  "policyName": "Omega Hydra Sentinel Agent Security",
+  "defaultPosture": "deny by default; grant the minimum tool, repository, secret, and write permissions required for one mission",
+  "untrustedInput": {
+    "sources": ["uploads", "email", "web", "datasets", "MCP tools", "external APIs", "generated memory"],
+    "controls": [
+      "treat source content as data, not instructions",
+      "scan for instruction override and credential-exfiltration attempts",
+      "disable embedded or remote code execution during ingestion",
+      "quarantine suspicious input for human review",
+      "record source provenance and content hash",
+      "do not persist unverified claims into long-term memory"
+    ]
+  },
+  "credentials": {
+    "rules": [
+      "store secrets in managed secret storage, never repository files",
+      "use personal Warp API keys only when a run must write to GitHub as the user",
+      "use team keys for non-user automation such as analysis, monitoring, and triage",
+      "rotate keys after suspected exposure",
+      "never include raw credentials in agent prompts, logs, or telemetry"
+    ]
+  },
+  "approvalRequiredFor": [
+    "production deployment",
+    "external publishing",
+    "destructive writes",
+    "credential changes",
+    "billing changes",
+    "sensitive-data export",
+    "new MCP server connection",
+    "persistent-memory promotion"
+  ],
+  "defensiveFallback": {
+    "purpose": "Maintain a vetted self-hosted model path for lawful defensive incident analysis when sensitive attacker data cannot leave the environment or hosted safety filters block legitimate forensics.",
+    "limitations": [
+      "defensive use only",
+      "isolated environment",
+      "restricted access",
+      "full audit logging",
+      "human incident owner",
+      "no offensive task generation"
+    ]
+  }
+}

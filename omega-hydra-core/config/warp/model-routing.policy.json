@@ -1,0 +1,44 @@
+{
+  "version": "2026-07-21",
+  "policyName": "Omega Hydra ValueMax Model Router",
+  "principle": "Route by task complexity, consequence, sensitivity, latency, and verified business value—not prestige or token volume.",
+  "tiers": {
+    "economy": {
+      "useFor": ["formatting", "classification", "boilerplate", "known-template transformations", "routine repository searches"],
+      "requirements": ["low risk", "repeatable", "deterministic", "clear acceptance criteria"],
+      "fallback": "balanced"
+    },
+    "balanced": {
+      "useFor": ["normal implementation", "product synthesis", "course generation", "documentation", "standard analysis"],
+      "requirements": ["bounded scope", "testable output", "normal consequence"],
+      "fallback": "frontier"
+    },
+    "frontier": {
+      "useFor": ["architecture", "ambiguous planning", "complex debugging", "high-consequence review", "final verification"],
+      "requirements": ["explicit budget", "completion evidence", "Sentinel review"],
+      "fallback": null
+    },
+    "self_hosted_defensive": {
+      "useFor": ["approved defensive incident response involving attacker artifacts or restricted telemetry"],
+      "requirements": ["vetted local model", "isolated environment", "no external data transfer", "human incident owner"],
+      "fallback": null
+    }
+  },
+  "contextControls": {
+    "trimNoisyToolOutput": true,
+    "defaultOutputLimitChars": 6000,
+    "preferTargetedCodeSearch": true,
+    "preferCodeGraphOverBlindReads": true,
+    "cacheStableDoctrineAndSchemas": true,
+    "doNotSendSecretsToModels": true
+  },
+  "valueMetrics": [
+    "accepted_output",
+    "verification_pass_rate",
+    "time_saved_minutes",
+    "rework_rate",
+    "cost_per_verified_outcome",
+    "deployment_success_rate",
+    "customer_or_revenue_impact"
+  ]
+}
