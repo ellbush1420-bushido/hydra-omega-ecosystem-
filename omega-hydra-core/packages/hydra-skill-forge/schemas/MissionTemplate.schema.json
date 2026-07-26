@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://omega-hydra.dev/schemas/MissionTemplate",
+  "title": "MissionTemplate",
+  "description": "A daily mission template derived from a HydraSkill.",
+  "type": "object",
+  "required": ["title", "objective", "output", "sourceId", "claimStatus"],
+  "additionalProperties": false,
+  "properties": {
+    "title": { "type": "string" },
+    "objective": { "type": "string" },
+    "output": { "type": "string" },
+    "sourceId": { "type": "string" },
+    "claimStatus": {
+      "type": "string",
+      "enum": ["verified", "inferred", "proprietary", "requiresReview"]
+    },
+    "permittedUse": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "durationMinutes": { "type": "integer" },
+    "difficulty": {
+      "type": "string",
+      "enum": ["beginner", "intermediate", "advanced"]
+    }
+  }
+}

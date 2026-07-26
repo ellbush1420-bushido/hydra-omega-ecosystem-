@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://omega-hydra.dev/schemas/ExecutionRequest",
+  "title": "ExecutionRequest",
+  "description": "A request to execute a Skill Forge job through the control plane or Warp/Oz adapter.",
+  "type": "object",
+  "required": ["requestId", "jobType", "sourceId", "approvalStatus", "submittedAt"],
+  "additionalProperties": false,
+  "properties": {
+    "requestId": { "type": "string" },
+    "jobType": {
+      "type": "string",
+      "enum": ["skill_forge", "safety_review", "mission_generation", "product_generation"]
+    },
+    "sourceId": { "type": "string" },
+    "approvalStatus": {
+      "type": "string",
+      "enum": ["approved", "pending", "blocked"]
+    },
+    "modelTier": {
+      "type": "string",
+      "enum": ["economy", "balanced", "frontier", "self_hosted_defensive"]
+    },
+    "dryRun": { "type": "boolean" },
+    "mockMode": { "type": "boolean" },
+    "submittedAt": { "type": "string", "format": "date-time" },
+    "budgetUsd": { "type": "number", "minimum": 0 },
+    "payload": { "type": "object" }
+  }
+}

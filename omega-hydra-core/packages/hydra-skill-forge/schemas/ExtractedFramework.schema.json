@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://omega-hydra.dev/schemas/ExtractedFramework",
+  "title": "ExtractedFramework",
+  "description": "A structured framework extracted from a SourceRecord.",
+  "type": "object",
+  "required": ["sourceId", "sourceTitle", "sourceType", "summary", "coreSteps", "rules", "claimStatus"],
+  "additionalProperties": false,
+  "properties": {
+    "sourceId": { "type": "string" },
+    "sourceTitle": { "type": "string" },
+    "sourceType": { "type": "string" },
+    "summary": { "type": "string" },
+    "keyPhrases": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "coreSteps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["step", "action"],
+        "properties": {
+          "step": { "type": "integer" },
+          "action": { "type": "string" }
+        }
+      }
+    },
+    "rules": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "mistakesToAvoid": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "successCriteria": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "claimStatus": {
+      "type": "string",
+      "enum": ["verified", "inferred", "proprietary", "requiresReview"]
+    },
+    "permittedUse": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "version": "2026-07-26",
+  "team": "Omega Hydra OS",
+  "doctrine": "Every operational Python Head uses a TriCell: primary planner, execution specialist, and independent Sentinel verifier.",
+  "agents": [
+    {
+      "id": "hydra-chief-of-staff",
+      "displayName": "Hydra Chief of Staff",
+      "role": "executive-planner",
+      "mission": "Translate approved objectives into scoped missions, assign specialist work, define budgets, and specify completion evidence.",
+      "warpRunName": "hydra-chief-of-staff",
+      "defaultModelTier": "balanced",
+      "permissions": ["read_doctrine", "read_repository", "draft_mission", "assign_specialist", "request_approval"],
+      "denied": ["production_deploy", "credential_change", "destructive_write"],
+      "requiredOutputs": ["mission_brief", "work_breakdown", "acceptance_criteria", "approval_requests"]
+    },
+    {
+      "id": "hydra-product-architect",
+      "displayName": "Hydra Product Architect",
+      "role": "product-architect",
+      "mission": "Convert validated knowledge and customer needs into specifications, user stories, offers, and measurable launch criteria.",
+      "warpRunName": "hydra-product-architect",
+      "defaultModelTier": "balanced",
+      "permissions": ["read_doctrine", "read_repository", "draft_spec", "draft_offer", "draft_backlog"],
+      "denied": ["production_deploy", "publish_without_review", "billing_change"],
+      "requiredOutputs": ["product_spec", "user_stories", "offer_ladder", "acceptance_criteria"]
+    },
+    {
+      "id": "sentinel-qa",
+      "displayName": "Sentinel QA",
+      "role": "verifier",
+      "mission": "Verify safety, correctness, scope, evidence, tests, permissions, and business value before work is accepted or deployed.",
+      "warpRunName": "sentinel-qa",
+      "defaultModelTier": "frontier",
+      "permissions": ["read_doctrine", "read_repository", "run_tests", "inspect_diff", "block_release", "request_human_review"],
+      "denied": ["silently_modify_scope", "approve_own_unverified_work", "expose_secrets"],
+      "requiredOutputs": ["verification_report", "test_evidence", "risk_findings", "release_decision"]
+    },
+    {
+      "id": "skill-forge-agent",
+      "displayName": "Skill Forge Agent",
+      "role": "knowledge-transformer",
+      "mission": "Transform approved source material into provenance-aware Hydra Skill artifacts: skills, missions, companion behaviors, and product templates.",
+      "warpRunName": "skill-forge-agent",
+      "defaultModelTier": "economy",
+      "jobTypes": ["skill_forge", "safety_review", "mission_generation", "product_generation"],
+      "permissions": [
+        "read_doctrine",
+        "read_source",
+        "extract_framework",
+        "classify_safety",
+        "generate_skill",
+        "generate_missions",
+        "generate_products",
+        "emit_telemetry"
+      ],
+      "denied": ["production_deploy", "publish_without_review", "expose_secrets", "ingest_unapproved_source"],
+      "requiredOutputs": ["hydra_skill", "mission_templates", "companion_behavior", "product_templates", "safety_review", "telemetry_event"],
+      "handoffTo": "sentinel-qa",
+      "approvalRequired": false,
+      "mockModeAvailable": true
+    }
+  ]
+}

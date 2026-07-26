@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://omega-hydra.dev/schemas/SourceRecord",
+  "title": "SourceRecord",
+  "description": "Represents a raw knowledge source ingested by Hydra Skill Forge.",
+  "type": "object",
+  "required": ["sourceId", "title", "sourceType", "provenance", "permittedUse"],
+  "additionalProperties": false,
+  "properties": {
+    "sourceId": {
+      "type": "string",
+      "description": "Unique identifier for this source record."
+    },
+    "title": {
+      "type": "string",
+      "description": "Human-readable title of the source material."
+    },
+    "sourceType": {
+      "type": "string",
+      "enum": ["pdf", "course", "manual", "framework", "book", "credential", "training_notes", "text_source"],
+      "description": "Classification of the source material type."
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["origin", "author", "accessedAt"],
+      "properties": {
+        "origin": { "type": "string" },
+        "author": { "type": "string" },
+        "institution": { "type": "string" },
+        "datePublished": { "type": "string" },
+        "accessedAt": { "type": "string", "format": "date-time" },
+        "url": { "type": "string" },
+        "licenseType": { "type": "string" }
+      }
+    },
+    "permittedUse": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Scopes in which this source may be applied."
+    },
+    "claimStatus": {
+      "type": "string",
+      "enum": ["verified", "inferred", "proprietary", "requiresReview"],
+      "description": "How claims from this source should be treated."
+    },
+    "text": {
+      "type": "string",
+      "description": "Full or summary text of the source."
+    },
+    "description": {
+      "type": "string",
+      "description": "Short description of the source."
+    },
+    "disclaimer": {
+      "type": "string",
+      "description": "Required attribution or disclaimer for outputs derived from this source."
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

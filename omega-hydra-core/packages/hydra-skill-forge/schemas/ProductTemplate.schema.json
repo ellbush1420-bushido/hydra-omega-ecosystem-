@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://omega-hydra.dev/schemas/ProductTemplate",
+  "title": "ProductTemplate",
+  "description": "A product template generated from a HydraSkill for marketplace listing.",
+  "type": "object",
+  "required": ["productName", "productType", "priceSuggestion", "deliverable", "useCase", "sourceId"],
+  "additionalProperties": false,
+  "properties": {
+    "productName": { "type": "string" },
+    "productType": { "type": "string" },
+    "priceSuggestion": { "type": "number", "minimum": 0 },
+    "deliverable": { "type": "string" },
+    "useCase": { "type": "string" },
+    "sourceId": { "type": "string" },
+    "claimStatus": {
+      "type": "string",
+      "enum": ["verified", "inferred", "proprietary", "requiresReview"]
+    },
+    "permittedUse": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "disclaimer": { "type": "string" }
+  }
+}

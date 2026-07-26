@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://omega-hydra.dev/schemas/ExecutionResult",
+  "title": "ExecutionResult",
+  "description": "The result of a Skill Forge execution request.",
+  "type": "object",
+  "required": ["requestId", "status", "sourceId", "completedAt"],
+  "additionalProperties": false,
+  "properties": {
+    "requestId": { "type": "string" },
+    "status": {
+      "type": "string",
+      "enum": ["success", "failed", "pending", "blocked", "mock"]
+    },
+    "sourceId": { "type": "string" },
+    "completedAt": { "type": "string", "format": "date-time" },
+    "artifacts": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "errorMessage": { "type": "string" },
+    "provenance": { "type": "object" },
+    "telemetryEventId": { "type": "string" },
+    "modelTierUsed": { "type": "string" },
+    "costUsd": { "type": "number", "minimum": 0 }
+  }
+}

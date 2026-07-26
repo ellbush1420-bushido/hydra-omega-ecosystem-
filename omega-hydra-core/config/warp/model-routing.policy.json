@@ -1,0 +1,36 @@
+{
+  "version": "2026-07-26",
+  "policyName": "Omega Hydra Model Routing",
+  "defaultBudgetUsd": 1.5,
+  "outputLimitChars": 6000,
+  "tiers": {
+    "economy": {
+      "description": "Deterministic, repetitive, low-risk work with clear instructions.",
+      "fallback": "balanced",
+      "examples": ["skill_forge_from_fixture", "format_known_template", "classify_safety"]
+    },
+    "balanced": {
+      "description": "Normal implementation, synthesis, and product work.",
+      "fallback": "frontier",
+      "examples": ["extract_framework", "generate_skill", "mission_planning"]
+    },
+    "frontier": {
+      "description": "Ambiguous, high-complexity, architecture, or high-consequence reasoning.",
+      "fallback": null,
+      "examples": ["novel_architecture", "complex_ethical_review", "ambiguous_provenance"]
+    },
+    "self_hosted_defensive": {
+      "description": "Approved defensive incident analysis involving sensitive attacker data that must remain inside a controlled environment.",
+      "fallback": null,
+      "examples": ["forensic_analysis", "sensitive_incident_review"]
+    }
+  },
+  "approvalRequiredFor": [
+    "production_deploy",
+    "external_publish",
+    "destructive_write",
+    "credential_change",
+    "billing_change",
+    "sensitive_data_export"
+  ]
+}

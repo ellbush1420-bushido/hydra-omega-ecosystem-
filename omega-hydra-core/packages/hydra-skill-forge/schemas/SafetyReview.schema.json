@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://omega-hydra.dev/schemas/SafetyReview",
+  "title": "SafetyReview",
+  "description": "Safety and claims review for a skill or source artifact.",
+  "type": "object",
+  "required": ["sourceId", "passed", "claimStatus", "flags", "permittedUse", "reviewedAt"],
+  "additionalProperties": false,
+  "properties": {
+    "sourceId": { "type": "string" },
+    "passed": { "type": "boolean" },
+    "claimStatus": {
+      "type": "string",
+      "enum": ["verified", "inferred", "proprietary", "requiresReview"]
+    },
+    "flags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "List of safety concern labels found."
+    },
+    "permittedUse": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "blockedReasons": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "requiredDisclaimer": { "type": "string" },
+    "reviewedAt": { "type": "string", "format": "date-time" },
+    "approvalStatus": {
+      "type": "string",
+      "enum": ["approved", "pending_review", "blocked"]
+    }
+  }
+}
