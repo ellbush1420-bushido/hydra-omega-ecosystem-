@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://omega-hydra.dev/schemas/HydraSkill",
+  "title": "HydraSkill",
+  "description": "A reusable Hydra asset derived from a source and framework.",
+  "type": "object",
+  "required": ["id", "name", "version", "sourceId", "sourceTitle", "sourceType", "claimStatus", "activationTrigger", "summary", "coreSteps", "rules", "safetyScope"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "version": { "type": "string" },
+    "sourceId": { "type": "string" },
+    "sourceTitle": { "type": "string" },
+    "sourceType": { "type": "string" },
+    "claimStatus": {
+      "type": "string",
+      "enum": ["verified", "inferred", "proprietary", "requiresReview"]
+    },
+    "activationTrigger": { "type": "string" },
+    "summary": { "type": "string" },
+    "keyPhrases": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "coreSteps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["step", "action"],
+        "properties": {
+          "step": { "type": "integer" },
+          "action": { "type": "string" }
+        }
+      }
+    },
+    "rules": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "mistakesToAvoid": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "successCriteria": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "safetyScope": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "permittedUse": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "disclaimer": { "type": "string" },
+    "createdAt": { "type": "string", "format": "date-time" }
+  }
+}

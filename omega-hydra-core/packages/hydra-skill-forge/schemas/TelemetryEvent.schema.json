@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://omega-hydra.dev/schemas/TelemetryEvent",
+  "title": "TelemetryEvent",
+  "description": "Hydra Eyes telemetry event emitted during skill forge pipeline.",
+  "type": "object",
+  "required": ["id", "type", "sourceId", "payload", "createdAt", "safetyScope"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string" },
+    "type": { "type": "string" },
+    "sourceId": { "type": "string" },
+    "payload": { "type": "object" },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "safetyScope": { "type": "string" }
+  }
+}

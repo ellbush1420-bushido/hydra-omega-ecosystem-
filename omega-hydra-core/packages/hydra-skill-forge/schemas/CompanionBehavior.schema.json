@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://omega-hydra.dev/schemas/CompanionBehavior",
+  "title": "CompanionBehavior",
+  "description": "Companion behavior profile derived from a HydraSkill.",
+  "type": "object",
+  "required": ["companionMode", "tone", "canDo", "cannotDo", "openingLine", "sourceId"],
+  "additionalProperties": false,
+  "properties": {
+    "companionMode": { "type": "string" },
+    "tone": { "type": "string" },
+    "canDo": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "cannotDo": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "openingLine": { "type": "string" },
+    "sourceId": { "type": "string" },
+    "claimStatus": {
+      "type": "string",
+      "enum": ["verified", "inferred", "proprietary", "requiresReview"]
+    },
+    "permittedUse": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

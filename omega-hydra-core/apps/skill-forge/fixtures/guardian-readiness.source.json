@@ -1,0 +1,32 @@
+{
+  "sourceId": "src_guardian_readiness_v1",
+  "title": "Guardian Readiness Framework",
+  "sourceType": "framework",
+  "provenance": {
+    "origin": "hydra_proprietary",
+    "author": "Omega Hydra Team",
+    "institution": "Omega Hydra Federation",
+    "datePublished": "2026-01-01",
+    "accessedAt": "2026-07-26T00:00:00.000Z",
+    "licenseType": "proprietary"
+  },
+  "permittedUse": [
+    "lawful defensive education",
+    "readiness training",
+    "privacy awareness",
+    "business automation",
+    "product packaging",
+    "community service",
+    "learning support"
+  ],
+  "claimStatus": "proprietary",
+  "description": "A structured readiness review that converts observations into a scorecard, recommendations, follow-up actions, and a 30-day improvement map. Covers physical readiness, digital hygiene, communication protocols, privacy habits, and situational awareness. Designed for individual operators and small teams pursuing lawful defensive education and readiness improvement.",
+  "disclaimer": "This framework is a proprietary Omega Hydra educational tool. It does not represent TEEX, TCOLE, government, or military endorsement. Not professional, medical, or legal advice. All outputs are for lawful educational and personal development purposes only.",
+  "tags": [
+    "readiness",
+    "framework",
+    "guardian",
+    "proprietary",
+    "assessment"
+  ]
+}
