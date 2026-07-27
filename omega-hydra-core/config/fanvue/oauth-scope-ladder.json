@@ -1,0 +1,53 @@
+{
+  "version": "2026-07-27",
+  "apiVersionHeader": "2025-06-26",
+  "baseUrl": "https://api.fanvue.com",
+  "authorizationEndpoint": "https://auth.fanvue.com/oauth2/auth",
+  "tokenEndpoint": "https://auth.fanvue.com/oauth2/token",
+  "requiredSystemScopes": ["openid", "offline_access", "offline"],
+  "scopeLadder": [
+    {
+      "tier": "read_only_analytics_mvp",
+      "description": "Creator dashboard and analytics without message or write access.",
+      "scopes": ["read:self", "read:creator", "read:insights", "read:tracking_links"],
+      "requiresHumanApproval": false
+    },
+    {
+      "tier": "crm_and_chat_summary_mvp",
+      "description": "CRM sync and chat workload summaries. AI can summarize and draft suggestions only.",
+      "scopes": ["read:fan", "read:chat"],
+      "requiresHumanApproval": true
+    },
+    {
+      "tier": "creator_reviewed_actions",
+      "description": "Creator-approved posting, messaging, media, and tracking-link actions. No autonomous outbound messaging.",
+      "scopes": ["write:tracking_links", "write:post", "write:chat", "write:media"],
+      "requiresHumanApproval": true
+    },
+    {
+      "tier": "agency_mode",
+      "description": "Agency operations for managed creators with explicit consent, audit logs, and creator scoping.",
+      "scopes": ["read:agency", "write:agency"],
+      "requiresHumanApproval": true
+    }
+  ],
+  "tokenRules": {
+    "pkceRequired": true,
+    "storeCodeVerifier": "server_session_or_secure_http_only_cookie",
+    "clientSecretStorage": "server_side_secrets_manager_only",
+    "refreshTokenRotation": "single_use_rotate_and_overwrite",
+    "concurrentRefreshRule": "serialize_refresh_per_authorization"
+  },
+  "approvalRequiredFor": [
+    "send_message",
+    "send_mass_message",
+    "create_post",
+    "edit_post",
+    "upload_media",
+    "grant_media",
+    "change_subscription_price",
+    "create_promotion",
+    "invite_agency_member",
+    "export_private_data"
+  ]
+}
