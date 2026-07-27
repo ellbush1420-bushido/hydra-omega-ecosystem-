@@ -1,0 +1,171 @@
+{
+  "version": "2026-07-27",
+  "policyId": "hydra-zeta-ai-router-v1",
+  "defaultProvider": "auto",
+  "standingRules": [
+    "No autonomous loop without a gate.",
+    "No agent without an owner.",
+    "No connector without explicit permissions.",
+    "No AI-generated code merges without review and tests.",
+    "No long run without a budget and stop condition.",
+    "Fallback must never weaken the approved data boundary.",
+    "Consequential external actions require human approval."
+  ],
+  "sensitivityClasses": {
+    "public": {
+      "externalProviderAllowed": true,
+      "openModelAllowed": true
+    },
+    "internal": {
+      "externalProviderAllowed": true,
+      "openModelAllowed": true,
+      "redactionRequired": true
+    },
+    "confidential": {
+      "externalProviderAllowed": false,
+      "openModelAllowed": true,
+      "approvedDeploymentRequired": true,
+      "redactionRequired": true
+    },
+    "restricted_professional": {
+      "externalProviderAllowed": false,
+      "openModelAllowed": true,
+      "approvedDeploymentRequired": true,
+      "humanReviewRequired": true,
+      "publicDerivativeBlockedByDefault": true
+    }
+  },
+  "providers": [
+    {
+      "id": "openai",
+      "adapter": "openai_responses",
+      "enabled": true,
+      "allowedSensitivity": ["public", "internal"],
+      "preferredCapabilities": [
+        "conversation",
+        "customer_support",
+        "structured_output",
+        "tool_orchestration",
+        "workflow_decision"
+      ],
+      "secretRef": "OPENAI_API_KEY",
+      "healthCheck": "provider_specific_readiness_probe"
+    },
+    {
+      "id": "anthropic",
+      "adapter": "anthropic_messages",
+      "enabled": true,
+      "allowedSensitivity": ["public", "internal"],
+      "preferredCapabilities": [
+        "long_form_writing",
+        "documentation",
+        "architecture_review",
+        "technical_analysis",
+        "coding_assistance",
+        "large_context_synthesis"
+      ],
+      "secretRef": "ANTHROPIC_API_KEY",
+      "healthCheck": "provider_specific_readiness_probe"
+    },
+    {
+      "id": "approved_open_model",
+      "adapter": "openai_compatible_self_hosted",
+      "enabled": false,
+      "allowedSensitivity": [
+        "public",
+        "internal",
+        "confidential",
+        "restricted_professional"
+      ],
+      "preferredCapabilities": [
+        "private_inference",
+        "offline_workflow",
+        "classification",
+        "experimentation"
+      ],
+      "requiresApprovedDeployment": true,
+      "secretRef": "HYDRA_OPEN_MODEL_API_KEY",
+      "baseUrlRef": "HYDRA_OPEN_MODEL_BASE_URL",
+      "healthCheck": "provider_specific_readiness_probe"
+    }
+  ],
+  "taskRoutes": [
+    {
+      "taskPattern": "creator.*",
+      "preferredProviders": ["openai", "anthropic"],
+      "defaultApprovalMode": "review_before_external_action",
+      "maxAttempts": 2,
+      "fallbackAllowed": true
+    },
+    {
+      "taskPattern": "guardian.executive_report",
+      "preferredProviders": ["anthropic", "openai"],
+      "requiredCapabilities": ["long_form_writing", "structured_output"],
+      "defaultApprovalMode": "human_review",
+      "sourceReferencesRequired": true,
+      "maxAttempts": 2,
+      "fallbackAllowed": true
+    },
+    {
+      "taskPattern": "guardian.risk_classification",
+      "preferredProviders": ["approved_open_model", "openai"],
+      "requiredCapabilities": ["classification", "structured_output"],
+      "defaultApprovalMode": "human_review",
+      "maxAttempts": 2,
+      "fallbackAllowed": true
+    },
+    {
+      "taskPattern": "skill_forge.*",
+      "preferredProviders": ["anthropic", "openai", "approved_open_model"],
+      "defaultApprovalMode": "rights_and_quality_review",
+      "provenanceRequired": true,
+      "visibilityPropagationRequired": true,
+      "maxAttempts": 2,
+      "fallbackAllowed": true
+    },
+    {
+      "taskPattern": "commerce.*",
+      "preferredProviders": ["openai", "anthropic"],
+      "defaultApprovalMode": "review_before_external_action",
+      "blockedDecisions": [
+        "approve_restricted_product",
+        "authorize_affiliate_payout",
+        "approve_medical_claim",
+        "approve_ballistic_claim",
+        "approve_life_safety_claim"
+      ],
+      "maxAttempts": 2,
+      "fallbackAllowed": true
+    }
+  ],
+  "requiredRequestFields": [
+    "taskType",
+    "provider",
+    "sensitivity",
+    "ownerId",
+    "budget",
+    "approvalMode"
+  ],
+  "telemetry": {
+    "record": [
+      "traceId",
+      "taskType",
+      "provider",
+      "model",
+      "policyVersion",
+      "latencyMs",
+      "inputTokens",
+      "outputTokens",
+      "estimatedCostUsd",
+      "status",
+      "approvalState"
+    ],
+    "neverRecord": [
+      "apiKeys",
+      "oauthTokens",
+      "clientSecrets",
+      "privateMediaUrls",
+      "fullPrivateConversations"
+    ]
+  }
+}
