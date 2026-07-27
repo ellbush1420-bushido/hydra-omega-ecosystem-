@@ -1,0 +1,146 @@
+{
+  "version": "2026-07-27",
+  "policyId": "hydra-zeta-n8n-api-v1",
+  "officialDocumentation": "https://docs.n8n.io/connect/n8n-api/",
+  "connection": {
+    "baseUrlRef": "N8N_BASE_URL",
+    "apiKeyRef": "N8N_API_KEY",
+    "projectIdRef": "N8N_PROJECT_ID",
+    "apiKeyHeader": "X-N8N-API-KEY",
+    "serverSideOnly": true,
+    "timeoutMs": 15000
+  },
+  "pagination": {
+    "mode": "cursor",
+    "defaultLimit": 50,
+    "maxLimit": 100,
+    "maxPagesPerSync": 20,
+    "persistCursor": true
+  },
+  "resourcePolicies": [
+    {
+      "resource": "workflows",
+      "read": "allowed",
+      "create": "approval_required",
+      "update": "approval_required",
+      "activate": "approval_required",
+      "deactivate": "approval_required",
+      "delete": "blocked_by_default"
+    },
+    {
+      "resource": "executions",
+      "read": "allowed_minimized",
+      "retry": "approval_or_idempotent_policy_required",
+      "delete": "blocked_by_default",
+      "rawPayloadStorage": "disabled_by_default"
+    },
+    {
+      "resource": "audit",
+      "read": "instance_owner_only",
+      "write": "not_applicable",
+      "rawFindingStorage": "disabled_by_default"
+    },
+    {
+      "resource": "source_control",
+      "read": "approval_required",
+      "write": "protected_environment_approval_required"
+    }
+  ],
+  "webhookPolicy": {
+    "separateFromApiCredential": true,
+    "productionOnlyForExternalCallers": true,
+    "acceptedAuth": [
+      "signed_request",
+      "gateway_bearer_token",
+      "mutual_tls",
+      "private_network"
+    ],
+    "editorTestWebhookBlockedForProduction": true,
+    "idempotencyKeyRequiredFor": [
+      "payment",
+      "entitlement",
+      "outbound_message",
+      "discord_role_change",
+      "content_publish",
+      "commerce_sales_event"
+    ]
+  },
+  "executionSync": {
+    "storeRawExecutionData": false,
+    "storeFields": [
+      "instanceId",
+      "workflowId",
+      "executionId",
+      "environment",
+      "sourceStatus",
+      "normalizedStatus",
+      "startedAt",
+      "stoppedAt",
+      "retryOfExecutionId",
+      "traceId"
+    ],
+    "statusMap": {
+      "new": "queued",
+      "running": "running",
+      "waiting": "waiting",
+      "success": "succeeded",
+      "error": "failed",
+      "crashed": "failed",
+      "canceled": "cancelled"
+    },
+    "unknownStatus": "unknown"
+  },
+  "retryPolicy": {
+    "maxAttempts": 3,
+    "backoff": "bounded_exponential",
+    "automaticRetryRequiresIdempotent": true,
+    "manualReviewWhenSideEffectUncertain": true,
+    "forbidRecursiveHydraN8nRetryLoop": true
+  },
+  "registeredWorkflows": [
+    {
+      "key": "fanvue.new_subscriber_onboarding",
+      "module": "creator",
+      "riskTier": 3,
+      "approvalMode": "creator_review",
+      "idempotencyRequired": true
+    },
+    {
+      "key": "fanvue.daily_analytics_digest",
+      "module": "creator",
+      "riskTier": 1,
+      "approvalMode": "read_only",
+      "idempotencyRequired": true
+    },
+    {
+      "key": "guardian.weekly_watch_draft",
+      "module": "guardian",
+      "riskTier": 2,
+      "approvalMode": "human_review",
+      "idempotencyRequired": true
+    },
+    {
+      "key": "skill_forge.authorized_ingestion",
+      "module": "skill_forge",
+      "riskTier": 3,
+      "approvalMode": "rights_and_quality_review",
+      "idempotencyRequired": true
+    },
+    {
+      "key": "commerce.sales_event_reconciliation",
+      "module": "commerce",
+      "riskTier": 4,
+      "approvalMode": "compliance_review",
+      "idempotencyRequired": true
+    }
+  ],
+  "neverLog": [
+    "X-N8N-API-KEY",
+    "apiKeys",
+    "credentialPayloads",
+    "webhookSecrets",
+    "fullExecutionPayloads",
+    "privateMessageBodies",
+    "privateMediaUrls"
+  ]
+}
