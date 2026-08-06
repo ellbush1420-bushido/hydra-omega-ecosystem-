@@ -1,0 +1,104 @@
+{
+  "schema_version": "1.0.0",
+  "registry_id": "hydra-omega-connected-sites",
+  "updated_at": "2026-08-05T21:00:00Z",
+  "source": "user_reported",
+  "verification_status": "credentials_and_api_access_not_verified",
+  "security": {
+    "store_secrets_in_repository": false,
+    "required_secret_store": "deployment_environment_or_managed_vault",
+    "human_approval_required_for_write_actions": true
+  },
+  "sites": [
+    {
+      "id": "fanvue",
+      "name": "Fanvue",
+      "url": "https://www.fanvue.com",
+      "category": "creator_subscription_platform",
+      "status": "user_reported_connected",
+      "integration_mode": ["oauth", "mcp", "api"],
+      "hydra_role": ["creator_account_operations", "subscriptions", "audience_insights", "publishing_queue"],
+      "write_policy": "approval_required"
+    },
+    {
+      "id": "tumblr",
+      "name": "Tumblr",
+      "url": "https://www.tumblr.com",
+      "category": "social_and_lore_discovery",
+      "status": "user_reported_connected",
+      "integration_mode": ["oauth_or_manual", "tracking_links"],
+      "hydra_role": ["shadow_monastery_lore", "discovery", "subscriber_outreach"],
+      "write_policy": "approval_required"
+    },
+    {
+      "id": "rm11",
+      "name": "RM11",
+      "url": "https://rm11.com",
+      "category": "premium_creator_platform",
+      "status": "user_reported_connected",
+      "integration_mode": ["manual_or_provider_supported_api", "tracking_links"],
+      "hydra_role": ["premium_membership", "private_offers", "conversion_tracking"],
+      "write_policy": "approval_required"
+    },
+    {
+      "id": "instagram",
+      "name": "Instagram",
+      "url": "https://www.instagram.com",
+      "category": "social_discovery",
+      "status": "user_reported_connected",
+      "integration_mode": ["meta_oauth_or_manual", "tracking_links"],
+      "hydra_role": ["brand_discovery", "short_form_visuals", "funnel_entry"],
+      "write_policy": "approval_required"
+    },
+    {
+      "id": "tiktok",
+      "name": "TikTok",
+      "url": "https://www.tiktok.com",
+      "category": "short_form_discovery",
+      "status": "user_reported_connected",
+      "integration_mode": ["oauth_or_manual", "tracking_links"],
+      "hydra_role": ["short_form_discovery", "campaign_testing", "funnel_entry"],
+      "write_policy": "approval_required"
+    },
+    {
+      "id": "telegram",
+      "name": "Telegram",
+      "url": "https://telegram.org",
+      "category": "community_and_messaging",
+      "status": "user_reported_connected",
+      "integration_mode": ["bot_api_or_manual"],
+      "hydra_role": ["community_updates", "subscriber_nurture", "operator_alerts"],
+      "write_policy": "approval_required"
+    },
+    {
+      "id": "celebmaker-ai",
+      "name": "CelebMakerAI",
+      "url": "https://celebmakerai.com",
+      "category": "ai_asset_generation",
+      "status": "user_reported_connected",
+      "integration_mode": ["account_connection", "api_if_available", "manual_export"],
+      "hydra_role": ["character_assets", "campaign_media", "asset_pipeline"],
+      "write_policy": "approval_required"
+    },
+    {
+      "id": "candy-ai",
+      "name": "Candy.ai",
+      "url": "https://candy.ai",
+      "category": "ai_companion_platform",
+      "status": "user_reported_connected",
+      "integration_mode": ["affiliate_or_account_link", "api_if_available"],
+      "hydra_role": ["affiliate_offer", "character_experience", "conversion_tracking"],
+      "write_policy": "approval_required"
+    },
+    {
+      "id": "ourdream-ai",
+      "name": "OurDream.ai",
+      "url": "https://ourdream.ai",
+      "category": "ai_companion_platform",
+      "status": "user_reported_connected",
+      "integration_mode": ["affiliate_or_account_link", "api_if_available"],
+      "hydra_role": ["affiliate_offer", "character_experience", "conversion_tracking"],
+      "write_policy": "approval_required"
+    }
+  ]
+}
