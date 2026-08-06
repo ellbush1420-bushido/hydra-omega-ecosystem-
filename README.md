@@ -10,6 +10,13 @@ This repository is the primary mono-repo for the Hydra/Omega ecosystem.
 - `aurelian-os/` – Aurelian OS docs
 - `Shadow Monastery/` – Doctrine, orders, engine notes
 
+## Connected platform registry
+
+- `config/integrations/connected-sites.json` – Machine-readable registry for Fanvue, Tumblr, RM11, Instagram, TikTok, Telegram, CelebMakerAI, Candy.ai, and OurDream.ai.
+- `docs/integrations/connected-sites.md` – Roles, security controls, verification states, environment-variable conventions, and implementation order.
+
+The registry records user-reported connections only. Credentials, OAuth grants, webhook access, and production write permissions must be verified separately and must never be committed to the repository.
+
 ## OpenAI developer workflow reference
 
 - `docs/operations/openai-developer-workflows.md` – Codex CLI workflows, ChatGPT Apps SDK, Agentic Commerce Protocol, Ads, and developer-mode routing notes.
