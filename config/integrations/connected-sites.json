@@ -1,8 +1,8 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "registry_id": "hydra-omega-connected-sites",
-  "updated_at": "2026-08-05T21:00:00Z",
-  "source": "user_reported",
+  "updated_at": "2026-08-10T16:08:00Z",
+  "source": "user_reported_plus_public_docs",
   "verification_status": "credentials_and_api_access_not_verified",
   "security": {
     "store_secrets_in_repository": false,
@@ -56,9 +56,17 @@
       "url": "https://www.tiktok.com",
       "category": "short_form_discovery",
       "status": "user_reported_connected",
-      "integration_mode": ["oauth_or_manual", "tracking_links"],
+      "integration_mode": ["content_posting_api_if_eligible", "draft_upload", "manual", "tracking_links"],
       "hydra_role": ["short_form_discovery", "campaign_testing", "funnel_entry"],
-      "write_policy": "approval_required"
+      "write_policy": "approval_required",
+      "public_direct_posting": "disabled_until_client_audit_and_platform_eligibility_verified",
+      "unaudited_client_visibility": "private_only",
+      "status_tracking": ["polling", "webhooks"],
+      "webhook_events": ["post.publish.complete", "post.publish.failed", "post.publish.inbox_delivered"],
+      "docs": [
+        "https://developers.tiktok.com/doc/content-posting-api-reference-direct-post",
+        "https://developers.tiktok.com/doc/content-posting-api-reference-get-video-status"
+      ]
     },
     {
       "id": "telegram",
@@ -68,7 +76,15 @@
       "status": "user_reported_connected",
       "integration_mode": ["bot_api_or_manual"],
       "hydra_role": ["community_updates", "subscriber_nurture", "operator_alerts"],
-      "write_policy": "approval_required"
+      "write_policy": "approval_required",
+      "bot_api_version": "10.2",
+      "bot_api_release_date": "2026-07-14",
+      "mini_app_origin_protection": {
+        "required_verification": true,
+        "automatic_enforcement_date": "2026-07-20",
+        "action": "verify_configured_origin_matches_deployment_domain"
+      },
+      "docs": ["https://core.telegram.org/bots/api-changelog"]
     },
     {
       "id": "celebmaker-ai",
@@ -76,9 +92,16 @@
       "url": "https://celebmakerai.com",
       "category": "ai_asset_generation",
       "status": "user_reported_connected",
-      "integration_mode": ["account_connection", "api_if_available", "manual_export"],
+      "api_status": "api_available_unverified",
+      "integration_mode": ["account_connection", "bearer_api", "signed_webhooks", "manual_export"],
       "hydra_role": ["character_assets", "campaign_media", "asset_pipeline"],
-      "write_policy": "approval_required"
+      "write_policy": "approval_required",
+      "api_capabilities": ["characters", "image_generation", "image_edit_jobs", "video_jobs", "job_polling", "credit_checks", "signed_webhooks"],
+      "api_media_retention": "30_days_provider_reported",
+      "docs": [
+        "https://celebmakerai.com/developers",
+        "https://celebmakerai.com/developers/ai-influencer-api"
+      ]
     },
     {
       "id": "candy-ai",
