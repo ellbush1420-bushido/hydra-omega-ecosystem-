@@ -1,0 +1,8 @@
+[
+  { "sku": "HPS-001", "name": "Hydra Privacy Quick Check", "price": "Free", "lane": "delta", "format": "guided assessment", "status": "launch first" },
+  { "sku": "HPS-009", "name": "Hydra Privacy Shield Mini Pack", "price": "$9", "lane": "delta", "format": "PDF + checklist", "status": "catalog-ready" },
+  { "sku": "HDT-027", "name": "Hydra Data Trail Bundle", "price": "$27", "lane": "delta", "format": "toolkit", "status": "catalog-ready" },
+  { "sku": "HDE-047", "name": "Hydra Evidence Awareness Pack", "price": "$47", "lane": "delta", "format": "education pack", "status": "catalog-ready" },
+  { "sku": "HAA-097", "name": "Hydra AI + Privacy Starter Course", "price": "$97", "lane": "alpha", "format": "course", "status": "planned" },
+  { "sku": "SBA-299", "name": "Guardian Awareness Audit", "price": "$299+", "lane": "zeta", "format": "service + report", "status": "launch first" }
+]
