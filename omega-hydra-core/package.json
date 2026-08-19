@@ -1,8 +1,8 @@
 {
   "name": "omega-hydra-core",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "description": "Omega Hydra Core MVP foundation: identity, companion, labyrinth, telemetry, marketplace, capital city, and software-factory orchestration.",
+  "description": "Omega Hydra Core MVP foundation: identity, companion, labyrinth, telemetry, marketplace, software-factory orchestration, source intelligence, cloud operations, and workflow continuity.",
   "type": "module",
   "scripts": {
     "dev": "node apps/guardian-simulator/src/index.js",
@@ -11,7 +11,12 @@
     "marketplace": "node apps/marketplace/src/index.js",
     "city": "node apps/capital-city/src/index.js",
     "factory": "node apps/software-factory/src/index.js",
-    "factory:test": "node packages/hydra-software-factory/test/smoke.mjs"
+    "factory:test": "node packages/hydra-software-factory/test/smoke.mjs",
+    "extensions": "node apps/agent-extensions/src/index.js",
+    "source:test": "node packages/hydra-source-intel/test/smoke.mjs",
+    "cloud:test": "node packages/hydra-cloud-ops/test/smoke.mjs",
+    "continuity:test": "node packages/hydra-continuity/test/smoke.mjs",
+    "extensions:test": "npm run source:test && npm run cloud:test && npm run continuity:test"
   },
   "keywords": [
     "omega-hydra",
@@ -21,7 +26,10 @@
     "hydra-eyes",
     "hydra-zeta",
     "software-factory",
-    "agent-orchestration"
+    "agent-orchestration",
+    "source-intelligence",
+    "database-operations",
+    "workflow-continuity"
   ],
   "license": "UNLICENSED"
 }
