@@ -1,0 +1,1523 @@
+{
+  "pack_id": "hydra_launch_asset_pack_v2_final_hydra_merge",
+  "status": "active",
+  "public_safety_lock": "fictional_cinematic_platform_safe_non_explicit_non_operational",
+  "faction_cards": [
+    {
+      "id": "faction_shadow_monastery",
+      "name": "Shadow Monastery",
+      "colors": "black, violet, obsidian",
+      "role": "discipline order and hidden academy",
+      "tagline": "Master the gate before the gate masters you.",
+      "offer_angle": "dark fantasy self-mastery faction card"
+    },
+    {
+      "id": "faction_radiant_crusade",
+      "name": "Radiant Crusade",
+      "colors": "red, gold, white",
+      "role": "honor-bound crusader kingdom",
+      "tagline": "Light is not soft. It is judgment with a banner.",
+      "offer_angle": "heroic commander prompt card"
+    },
+    {
+      "id": "faction_cult_ophiuchus",
+      "name": "Cult of Ophiuchus",
+      "colors": "green, black, neon yellow",
+      "role": "serpent oracle faction",
+      "tagline": "The cure and the venom share one cup.",
+      "offer_angle": "serpent mystic prompt card"
+    },
+    {
+      "id": "faction_black_sun",
+      "name": "Order of the Black Sun",
+      "colors": "black, red, gold",
+      "role": "neutral eclipse arbiters",
+      "tagline": "When crowns collide, the eclipse records the debt.",
+      "offer_angle": "neutral judge codex card"
+    },
+    {
+      "id": "faction_knights_lernia",
+      "name": "Knights of Lernia",
+      "colors": "bone, steel, ash blue",
+      "role": "restoration knights and relic wardens",
+      "tagline": "What is broken may rise, but never unchanged.",
+      "offer_angle": "fallen knight redemption card"
+    },
+    {
+      "id": "faction_ebon_shield",
+      "name": "Knights of the Ebon Shield",
+      "colors": "matte black, iron, muted emerald",
+      "role": "mercenary boundary guardians",
+      "tagline": "No road opens until the shield decides.",
+      "offer_angle": "forbidden gate guardian card"
+    },
+    {
+      "id": "faction_blue_crest_fleet",
+      "name": "Blue Crest Fleet",
+      "colors": "navy, indigo, sea silver",
+      "role": "seafaring crown civilization",
+      "tagline": "The sea bends to no throne, but it remembers every captain.",
+      "offer_angle": "naval crown adventure card"
+    },
+    {
+      "id": "faction_spider_seminary",
+      "name": "Black Spider Seminary",
+      "colors": "velvet black, wine, silver web",
+      "role": "web-crown political academy",
+      "tagline": "Every vow is silk until power pulls it tight.",
+      "offer_angle": "gothic court intrigue card"
+    },
+    {
+      "id": "faction_guardian_aurelian",
+      "name": "Aurelian Guardian Academy",
+      "colors": "white gold, bronze, midnight blue",
+      "role": "public guardian academy",
+      "tagline": "Clarity first. Restraint always. Protection when required.",
+      "offer_angle": "ethical guardian training card"
+    }
+  ],
+  "leader_character_sheets": [
+    {
+      "id": "leader_nyssa",
+      "name": "Captain Nyssa",
+      "faction": "Radiant Crusade",
+      "archetype": "scarlet commander",
+      "traits": [
+        "disciplined",
+        "protective",
+        "severe",
+        "loyal"
+      ],
+      "visual_prompt": "short blonde commander in red gold white armor, radiant crusade banner, cinematic dark fantasy, non explicit"
+    },
+    {
+      "id": "leader_lera",
+      "name": "Lera",
+      "faction": "Shadow Monastery",
+      "archetype": "reformed hand",
+      "traits": [
+        "adaptive",
+        "dangerous",
+        "charismatic",
+        "conflicted"
+      ],
+      "visual_prompt": "dark fantasy monastery leader, black violet robes, velvet grin, symbolic power aura, non explicit"
+    },
+    {
+      "id": "leader_velrya",
+      "name": "Velrya",
+      "faction": "Shadow Monastery / Syndicate",
+      "archetype": "betraying fang",
+      "traits": [
+        "cunning",
+        "elegant",
+        "ruthless",
+        "haunted"
+      ],
+      "visual_prompt": "shadow syndicate queen, violet black ceremonial armor, serpent smoke, cinematic non explicit"
+    },
+    {
+      "id": "leader_black_sun_warden",
+      "name": "Black Sun Warden Commander",
+      "faction": "Order of the Black Sun",
+      "archetype": "eclipse adjudicator",
+      "traits": [
+        "neutral",
+        "unyielding",
+        "strategic",
+        "ancient"
+      ],
+      "visual_prompt": "black red gold eclipse warden, anubis inspired sigil, sacred archive chamber, non explicit"
+    },
+    {
+      "id": "leader_veyron",
+      "name": "Serpent Hierophant Veyron",
+      "faction": "Cult of Ophiuchus",
+      "archetype": "venom oracle",
+      "traits": [
+        "prophetic",
+        "ambiguous",
+        "magnetic",
+        "dangerous"
+      ],
+      "visual_prompt": "serpent priest in green black neon yellow robes, oracle temple, luminous snakes, non explicit"
+    },
+    {
+      "id": "leader_malvoth",
+      "name": "Malvoth the Red Knight",
+      "faction": "Radiant Crusade",
+      "archetype": "lion war champion",
+      "traits": [
+        "brave",
+        "proud",
+        "ferocious",
+        "honor-bound"
+      ],
+      "visual_prompt": "massive red gold lion knight with greatsword, crusade battlefield, cinematic fantasy, non explicit"
+    },
+    {
+      "id": "leader_marella_vayne",
+      "name": "Admiral Marella Vayne",
+      "faction": "Blue Crest Fleet",
+      "archetype": "queen of seas",
+      "traits": [
+        "fiesty",
+        "tomboyish",
+        "eloquent",
+        "fearless"
+      ],
+      "visual_prompt": "charismatic navy indigo admiral on ship Leviathan, ocean storm, sword and captain coat, non explicit"
+    },
+    {
+      "id": "leader_black_knight",
+      "name": "The Black Knight of the Green Scar",
+      "faction": "Knights of the Ebon Shield",
+      "archetype": "silent boundary guardian",
+      "traits": [
+        "motionless",
+        "mysterious",
+        "absolute",
+        "mythic"
+      ],
+      "visual_prompt": "silent black knight guarding bridge above glowing green scar, never yielding, dark fantasy, non explicit"
+    },
+    {
+      "id": "leader_solara",
+      "name": "Saint Solara / Fallen Solara",
+      "faction": "Aurelian Guardian Academy",
+      "archetype": "fallen saint guardian",
+      "traits": [
+        "radiant",
+        "burdened",
+        "merciful",
+        "resolute"
+      ],
+      "visual_prompt": "fallen saint in white gold armor with shadowed halo, guardian academy temple, non explicit"
+    }
+  ],
+  "prompt_pack_entries": [
+    "Create a collectible faction card for [FACTION] with dark fantasy border, sigil, motto, leader portrait, and three lore hooks.",
+    "Create a leader RPG sheet for [CHARACTER] including faction, oath, flaw, rival, relic, and arena move as symbolic fantasy only.",
+    "Generate a Shadow Arena trial where [FACTION A] and [FACTION B] settle a dispute through champion ritual, verdict, and crowd vote.",
+    "Design a Hydra Labyrinth side quest involving a sealed gate, an NPC test, a moral choice, and a nonviolent resolution path.",
+    "Create a cinematic poster for [LEADER] standing before their faction army, platform-safe, non-explicit, premium dark fantasy.",
+    "Write a 300-word codex page about [RELIC] and how it changes faction politics.",
+    "Generate 5 Instagram carousel captions for [FACTION] using hook, lore, CTA, and comment keyword.",
+    "Create a Discord event script for a Shadow Arena faction vote with roles, polls, and reward badges.",
+    "Create a Founder Pack product description for [FACTION] fans with prompt cards, lore pages, and digital badges.",
+    "Generate a 9-card prompt mini-pack for [LEADER] covering portrait, battle stance, throne room, relic, rival, oath, betrayal, victory, and exile.",
+    "Create a non-explicit gothic court intrigue scene between [CHARACTER A] and [CHARACTER B].",
+    "Design a naval crown civilization card for the Blue Crest Fleet with ship classes, admiral laws, and sea rites.",
+    "Generate a forbidden bridge encounter with the Black Knight where the player must earn passage without combat.",
+    "Create a Black Sun judgment scene using eclipse archive, oath tablets, and neutral verdict language.",
+    "Write a Shadow Monastery training codex page focused on discipline, perception, restraint, and symbolic gates.",
+    "Create an Aurelian Guardian Academy lesson card about awareness, positioning, restraint, and ethical protection.",
+    "Generate a Cult of Ophiuchus oracle prophecy that can be read three different ways.",
+    "Create a Knights of Lernia redemption quest for a broken knight carrying a cursed relic.",
+    "Design a Spider Seminary political trial with silk vows, hidden witnesses, and a Web Crown verdict.",
+    "Create a Shadow Arena scoreboard template with faction points, crowd heat, relic stakes, and verdict result.",
+    "Generate a ManyChat comment keyword campaign for [PRODUCT] with DM flow and tracked link CTA.",
+    "Write a Whop/Gumroad product fulfillment message for the Founder Pack.",
+    "Create a Supabase event log example for content click, keyword trigger, Discord join, and purchase.",
+    "Generate a mobile RTS-style world map description for Realm of 5 Crowns with faction territories.",
+    "Create a Hydra Visualiser manifest entry for [CHARACTER] with image prompts, lore, tags, and product routing.",
+    "Write a Scale/Test/Kill report for three content posts using views, clicks, joins, and purchases.",
+    "Create a 7-day launch calendar for Choose Your Crown with daily drop, keyword, offer, and event."
+  ],
+  "shadow_arena_trials": [
+    {
+      "id": "trial_01",
+      "name": "Trial of the Sealed Bridge",
+      "hook": "The Ebon Shield blocks all passage above the Green Scar.",
+      "resolution": "earn passage through oath, relic proof, or crowd verdict"
+    },
+    {
+      "id": "trial_02",
+      "name": "The Scarlet Verdict",
+      "hook": "Nyssa challenges Lera over a monastery defection.",
+      "resolution": "honor debate, champion stance, public vote"
+    },
+    {
+      "id": "trial_03",
+      "name": "Eclipse Arbitration",
+      "hook": "The Black Sun judges a relic dispute between three crowns.",
+      "resolution": "evidence cards, oath tablets, neutral ruling"
+    },
+    {
+      "id": "trial_04",
+      "name": "Serpent Cure, Serpent Curse",
+      "hook": "Ophiuchus offers a cure with hidden cost.",
+      "resolution": "oracle reading, risk choice, faction consequence"
+    },
+    {
+      "id": "trial_05",
+      "name": "Leviathan’s Toast",
+      "hook": "Marella settles a naval insult with wit, drink, and blade ceremony.",
+      "resolution": "oratory challenge, navigation test, captain vote"
+    },
+    {
+      "id": "trial_06",
+      "name": "The Web Crown Hearing",
+      "hook": "Spider Seminary accuses a noble of oath-theft.",
+      "resolution": "witness web, silk contract, political verdict"
+    },
+    {
+      "id": "trial_07",
+      "name": "Lernia’s Broken Bell",
+      "hook": "A fallen knight seeks restoration but the relic refuses him.",
+      "resolution": "confession, repair ritual, mercy vote"
+    },
+    {
+      "id": "trial_08",
+      "name": "Aurelian Line of Restraint",
+      "hook": "Guardians must stop a riot of crowns without escalation.",
+      "resolution": "awareness, positioning, dialogue, protection"
+    },
+    {
+      "id": "trial_09",
+      "name": "The Violet Gate",
+      "hook": "Velrya returns with a syndicate claim on the Monastery throne.",
+      "resolution": "shadow debate, faction vote, exile or coronation"
+    }
+  ],
+  "hydra_labyrinth_side_quests": [
+    {
+      "id": "quest_01",
+      "name": "The Green Scar Pilgrimage",
+      "objective": "discover why only Saint Eliot of Noreen was granted passage"
+    },
+    {
+      "id": "quest_02",
+      "name": "Nine Keys of the Violet Gate",
+      "objective": "recover symbolic keys from nine monastery chambers"
+    },
+    {
+      "id": "quest_03",
+      "name": "The Leviathan Compass",
+      "objective": "help Marella find a route through a living storm"
+    },
+    {
+      "id": "quest_04",
+      "name": "The Eclipse Ledger",
+      "objective": "audit broken oaths in the Black Sun archive"
+    },
+    {
+      "id": "quest_05",
+      "name": "The Serpent’s Second Cure",
+      "objective": "separate medicine, prophecy, and manipulation"
+    },
+    {
+      "id": "quest_06",
+      "name": "The Silk Witness",
+      "objective": "protect a witness inside the Spider Seminary court"
+    },
+    {
+      "id": "quest_07",
+      "name": "The Broken Bell of Lernia",
+      "objective": "restore a knightly relic without awakening its curse"
+    },
+    {
+      "id": "quest_08",
+      "name": "The Guardian’s Quiet Hour",
+      "objective": "resolve a faction conflict through restraint and clarity"
+    },
+    {
+      "id": "quest_09",
+      "name": "The Three Sisters’ Ashes",
+      "objective": "uncover what split Nyssa, Lera, and Velrya before the war"
+    }
+  ],
+  "founder_pack_sales_copy": {
+    "headline": "Choose Your Crown. Enter the Realm of 5 Crowns.",
+    "subheadline": "A premium dark-fantasy prompt, lore, and faction starter pack for building cinematic AI characters, codex pages, and Shadow Arena campaigns.",
+    "includes": [
+      "9 faction cards",
+      "9 leader character sheets",
+      "27 premium prompt entries",
+      "9 Shadow Arena trials",
+      "9 Hydra Labyrinth side quests",
+      "Discord founder role",
+      "future drop priority"
+    ],
+    "price_anchor": "Founder launch price: $27",
+    "cta": "Claim the Founder Pack and comment CROWN to unlock your faction path.",
+    "disclaimer": "Fictional creative product. Platform-safe, non-explicit, non-operational fantasy content."
+  },
+  "discord_role_structure": [
+    "Founder Crown",
+    "Shadow Monastery Initiate",
+    "Radiant Crusade Knight",
+    "Ophiuchus Oracle",
+    "Black Sun Warden",
+    "Knight of Lernia",
+    "Ebon Shield Guardian",
+    "Blue Crest Captain",
+    "Spider Seminary Adept",
+    "Aurelian Guardian",
+    "Shadow Arena Champion",
+    "Hydra Labyrinth Runner",
+    "Vault Keeper"
+  ],
+  "manychat_trigger_map": [
+    {
+      "keyword": "CROWN",
+      "reply": "Choose your Crown. Tap to get the Founder Pack and receive your faction path.",
+      "route": "founder_pack_sales_page"
+    },
+    {
+      "keyword": "SHADOW",
+      "reply": "The Shadow Monastery has opened one gate. Get the prompt pack here.",
+      "route": "shadow_moon_prompt_pack"
+    },
+    {
+      "keyword": "ARENA",
+      "reply": "Enter this week’s Shadow Arena trial and vote for the winning faction.",
+      "route": "discord_shadow_arena_channel"
+    },
+    {
+      "keyword": "FLEET",
+      "reply": "The Blue Crest Fleet is recruiting captains. Unlock Marella’s faction card.",
+      "route": "blue_crest_preview"
+    },
+    {
+      "keyword": "BLACKSUN",
+      "reply": "The eclipse has recorded your oath. Enter the Black Sun archive.",
+      "route": "black_sun_preview"
+    },
+    {
+      "keyword": "LABYRINTH",
+      "reply": "Your randomized side quest is ready. Enter the Hydra Labyrinth.",
+      "route": "labyrinth_generator"
+    },
+    {
+      "keyword": "FOUNDER",
+      "reply": "Founder access includes faction cards, leaders, prompts, trials, side quests, and Discord role.",
+      "route": "founder_pack_checkout"
+    },
+    {
+      "keyword": "PROMPTS",
+      "reply": "Get 27 cinematic prompts for faction cards, leaders, codex pages, and AI visuals.",
+      "route": "prompt_pack_checkout"
+    },
+    {
+      "keyword": "DISCORD",
+      "reply": "Join the Oracle’s Den and claim your faction role.",
+      "route": "discord_invite"
+    }
+  ],
+  "compatibility": {
+    "extends": "hydra_launch_asset_pack_v1",
+    "compatible_fields_preserved": true
+  },
+  "merge_contract": {
+    "destination_repository": "m4552fz28w-stack/final-hydra",
+    "all_assets_approved_for_destination": true,
+    "privacy_policy": "all current lanes approved by owner for final-hydra ingestion"
+  },
+  "merged_assets": [
+    {
+      "id": "asset_ba59220b8d8d",
+      "source_path": "apps/hydra-reflection-academy/database/supabase_schema.sql",
+      "normalized_path": "/identity/campaign-unassigned/schema_doc/2026-08-25/supabase-schema-asset_ba.sql",
+      "asset_type": "schema_doc",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "b251711b11dd879df0b196424f4b3a67c3bde39fdaa26abdd871a2e3507b6a8c",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_62750adc8f0a",
+      "source_path": "apps/hydra-reflection-academy/package.json",
+      "normalized_path": "/monetization/campaign-unassigned/data_pack/2026-08-25/package-asset_62.json",
+      "asset_type": "data_pack",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "2d0b05986147c0d995b771bd8c80b4b093a0fe3ee3bf23c9a50af309eafbcf51",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_baa8e93d20ec",
+      "source_path": "apps/hydra-reflection-academy/README.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/readme-asset_ba.md",
+      "asset_type": "codex_doc",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "5e0c7a15afbea63eac94dbf633d5a9026cef69145092ebcee51b6b66893a1429",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_7905446e92c6",
+      "source_path": "apps/realm-5-crowns-mobile/app.json",
+      "normalized_path": "/identity/campaign-001/data_pack/2026-08-25/app-asset_79.json",
+      "asset_type": "data_pack",
+      "faction": "Realm of 5 Crowns",
+      "campaign_id": "campaign-001",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "9dd71702b2bee5936114b6a593b44f8f4cf9af7dc60150fac15290c585ee2abc",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_0c25d129d1da",
+      "source_path": "apps/realm-5-crowns-mobile/eas.json",
+      "normalized_path": "/identity/campaign-001/data_pack/2026-08-25/eas-asset_0c.json",
+      "asset_type": "data_pack",
+      "faction": "Realm of 5 Crowns",
+      "campaign_id": "campaign-001",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "e6b7c57ea237a4c0e65129a898c392f87f143f67f2aea284f0c4f26632365788",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_3195be72e2bd",
+      "source_path": "apps/realm-5-crowns-mobile/package-lock.json",
+      "normalized_path": "/monetization/campaign-001/data_pack/2026-08-25/package-lock-asset_31.json",
+      "asset_type": "data_pack",
+      "faction": "Realm of 5 Crowns",
+      "campaign_id": "campaign-001",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "05e8106556b5008cc3a9f791c7499fdef751e0240cc410cd8758f46e2ba4ecb1",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_6436c40fd02e",
+      "source_path": "apps/realm-5-crowns-mobile/package.json",
+      "normalized_path": "/monetization/campaign-001/data_pack/2026-08-25/package-asset_64.json",
+      "asset_type": "data_pack",
+      "faction": "Realm of 5 Crowns",
+      "campaign_id": "campaign-001",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "a82b5a40a4a52d3fdaa8474078b50e465d25e868fa66bde17b78e6c40b6462b0",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_fccb85e4f038",
+      "source_path": "apps/realm-5-crowns-mobile/README.md",
+      "normalized_path": "/identity/campaign-001/codex_doc/2026-08-25/readme-asset_fc.md",
+      "asset_type": "codex_doc",
+      "faction": "Realm of 5 Crowns",
+      "campaign_id": "campaign-001",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "9e8e41b0e64db023a559ac5c43c115eead833b6db522227b292aa3c02b54f520",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_09197c497501",
+      "source_path": "apps/realm-5-crowns-mobile/src/data/factions.json",
+      "normalized_path": "/identity/campaign-001/data_pack/2026-08-25/factions-asset_09.json",
+      "asset_type": "data_pack",
+      "faction": "Realm of 5 Crowns",
+      "campaign_id": "campaign-001",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "c2e46a314579420bfaf7d948315af4318c44643293df51e65311ee007bc00ff3",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_742cdeffaf0d",
+      "source_path": "apps/realm-5-crowns-mobile/src/data/scenarios.json",
+      "normalized_path": "/identity/campaign-001/data_pack/2026-08-25/scenarios-asset_74.json",
+      "asset_type": "data_pack",
+      "faction": "Realm of 5 Crowns",
+      "campaign_id": "campaign-001",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "206cf8dc691fa8209c15e2dad48856c0cc7e34ab13608d8a201a4f0c51fbdf67",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_295d2ae3be40",
+      "source_path": "apps/realm-5-crowns-mobile/supabase/schema.sql",
+      "normalized_path": "/identity/campaign-001/schema_doc/2026-08-25/schema-asset_29.sql",
+      "asset_type": "schema_doc",
+      "faction": "Realm of 5 Crowns",
+      "campaign_id": "campaign-001",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "ad520edf2767377b0f86810f12ab0d0c0f2e439b7a076e7f1b5f2d9ed29b9191",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_4c25ac02740f",
+      "source_path": "apps/shadow-vault-transfer-console/README.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/readme-asset_4c.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "cc7135e31cec0245e9f99d0b3152161b33a038eea9ab334ed20d87ea2342d8b4",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_925c1323804e",
+      "source_path": "aurelian-os/black-sun-archive-doctrine.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/black-sun-archive-doctrine-asset_92.md",
+      "asset_type": "codex_doc",
+      "faction": "Order of the Black Sun",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "canonical",
+      "checksum_sha256": "08248ad887767130cd82e073a0b96d57c86c861fd5cbd3e69f92f1810582f42a",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_363d83f809ad",
+      "source_path": "aurelian-os/copilot-sources.json",
+      "normalized_path": "/identity/campaign-unassigned/data_pack/2026-08-25/copilot-sources-asset_36.json",
+      "asset_type": "data_pack",
+      "faction": "Aurelian Guardian Academy",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "3d2f186fc26a6453c9707bab12d3fc8b0f7e05c2bb670300b12c49030ec84221",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_04256086180d",
+      "source_path": "aurelian-os/DEPLOY_NOW.md",
+      "normalized_path": "/expansion/campaign-unassigned/codex_doc/2026-08-25/deploy-now-asset_04.md",
+      "asset_type": "codex_doc",
+      "faction": "Aurelian Guardian Academy",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "6e2fdba02575fed6aa5b8bdfb9624fb4c144a7793ceb9287d3776c1b93546a2e",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_6ff4aa387006",
+      "source_path": "aurelian-os/README_DEPLOY.md",
+      "normalized_path": "/expansion/campaign-unassigned/codex_doc/2026-08-25/readme-deploy-asset_6f.md",
+      "asset_type": "codex_doc",
+      "faction": "Aurelian Guardian Academy",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "a725f5ede53e6ef628c2024e246f9674f526d82ca71bdf51d2a836f70c8cacc2",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_5a0297f81fe4",
+      "source_path": "aurelian-os/sovereign-serpent-doctrine.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/sovereign-serpent-doctrine-asset_5a.md",
+      "asset_type": "codex_doc",
+      "faction": "Cult of Ophiuchus",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "canonical",
+      "checksum_sha256": "aeacb9f17b46ed0b1d30b35a729cddc7506abb72a3f7d762d80b886b247e4ac1",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_73866f378ff9",
+      "source_path": "docs/apps/shadow-hand-dojo-ai-persona-shortform-growth-suite.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/shadow-hand-dojo-ai-persona-shortform-growth-suite-asset_73.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "21f3258b528b2f5ff1245511f08fff2377641f5e25b2dcd9562c556063298915",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_25d251f8314b",
+      "source_path": "docs/black-vault/hydra-proprietary-asset-foundry.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/hydra-proprietary-asset-foundry-asset_25.md",
+      "asset_type": "codex_doc",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "15febeee1086c2fc7abc69fede86474e8cadabe5edfa60ba4fc4f4d9d1f3cd92",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_9449f5ead356",
+      "source_path": "docs/canon/9-gate-philosophy-manual.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/9-gate-philosophy-manual-asset_94.md",
+      "asset_type": "codex_doc",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "e2fd3f2a113aff94e16f31bc22c3208de8b4df196e051c28de590a80d7276906",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_54959e0049d9",
+      "source_path": "docs/canon/elliott-bush-founder-grandmaster-biography.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/elliott-bush-founder-grandmaster-biography-asset_54.md",
+      "asset_type": "codex_doc",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "2b6440a734fd1c63ee18a4536a956c335487847363fe2c91833e8a93e4a97e62",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_5fc978df9ed2",
+      "source_path": "docs/canon/elliott-bush-systemic-vision-founder-cognitive-signature.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/elliott-bush-systemic-vision-founder-cognitive-signature-asset_5f.md",
+      "asset_type": "codex_doc",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "ed5fc4972a3ad3f904af738a3fb89997719ac38858468c8d5a0d3fb5f01ef685",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_8c8909bf1eda",
+      "source_path": "docs/canon/gcd-5-range-co9te-framework-doctrine.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/gcd-5-range-co9te-framework-doctrine-asset_8c.md",
+      "asset_type": "codex_doc",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "canonical",
+      "checksum_sha256": "3f587b630024645dd160ea5640fcfc11aca1475930c35632e871f1c35a834b01",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_c994e2b23224",
+      "source_path": "docs/canon/hydra-9x9x9-drill-scenario-resolution-matrix.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/hydra-9x9x9-drill-scenario-resolution-matrix-asset_c9.md",
+      "asset_type": "codex_doc",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "5c594ef50bf88222a73d6090e440d69c5a424df7c7bf2fe5c0586eef2a33558f",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_98c8cdf60f1a",
+      "source_path": "docs/canon/hydra-martial-canon-master-stack.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/hydra-martial-canon-master-stack-asset_98.md",
+      "asset_type": "codex_doc",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "70cfbfb7db8c14f6d3f2a58fdefaf202bc7554079230bad262c5dfe053566116",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_6250913a23b5",
+      "source_path": "docs/canon/iron-lotus-rooting-body-engine.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/iron-lotus-rooting-body-engine-asset_62.md",
+      "asset_type": "codex_doc",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "6e5403aed88a154194330c96b787d2fc6c103098b871b360ec64cde9afd78434",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_bdc25ec70ae3",
+      "source_path": "docs/canon/knights-of-lernia-hospitallers-of-the-mind.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/knights-of-lernia-hospitallers-of-the-mind-asset_bd.md",
+      "asset_type": "codex_doc",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "38bc13d6b84d03bcc93768cbb10338b629052b3b10c6c857fa1a97cdb3e66a2e",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_28b602152f1e",
+      "source_path": "docs/canon/project-alpha-hydra-secure-systems.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/project-alpha-hydra-secure-systems-asset_28.md",
+      "asset_type": "codex_doc",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "793d52eb98c913d2bff7af334f382e72a54d6a7b7fb0fa6f38ec148864212522",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_fa3c864223b0",
+      "source_path": "docs/canon/sonnal-88-five-range-geumgang-yuksa-engine.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/sonnal-88-five-range-geumgang-yuksa-engine-asset_fa.md",
+      "asset_type": "codex_doc",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "793cf78f9cf5213e8adc7e4d7bcf8b2abb0a831288d9c75b29377a11bb9a71ed",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_c689ff4b6993",
+      "source_path": "docs/operations/hydra-automation-monetization-engine.md",
+      "normalized_path": "/automation/campaign-unassigned/codex_doc/2026-08-25/hydra-automation-monetization-engine-asset_c6.md",
+      "asset_type": "codex_doc",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "61f724973ff44283ba7d384671eb47eaa84d64851000df5b71bbe2aa53ed519d",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_02709d7e6e2e",
+      "source_path": "docs/operations/openai-developer-workflows.md",
+      "normalized_path": "/automation/campaign-unassigned/codex_doc/2026-08-25/openai-developer-workflows-asset_02.md",
+      "asset_type": "codex_doc",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "aed75dd3210e02d62b4aca04f31ce608c28f507d04551620e183a4de645fe8a5",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_1ca7f87a21c4",
+      "source_path": "docs/os/warp-limitless-quadratic-hydra-ceo-meta-os.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/warp-limitless-quadratic-hydra-ceo-meta-os-asset_1c.md",
+      "asset_type": "codex_doc",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "3c98d1d8ba77809885534bf4ffd8336b868390e3c7e73ae884dc36772a6d12f2",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_a0e73881bba3",
+      "source_path": "docs/python-character-engine-os/app-ui-ux-wireframe.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/app-ui-ux-wireframe-asset_a0.md",
+      "asset_type": "codex_doc",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "5e776348c790e47eb069373fc6a59e1a857b3bca7d7fe8a466bdebff1bcb3bd7",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_7b01c057197b",
+      "source_path": "docs/python-character-engine-os/character-card-template-velvet-v2.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/character-card-template-velvet-v2-asset_7b.md",
+      "asset_type": "codex_doc",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "b0143c9ce8d45a574eaae6e91924ee5dd35dfd12cfb1238877e91442a1354f1c",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_fd72a7cfa244",
+      "source_path": "docs/python-character-engine-os/characters/selene-voss-velvet-sentinel.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/selene-voss-velvet-sentinel-asset_fd.md",
+      "asset_type": "codex_doc",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "3f7ddfb74b0f231f854486150a1dd6ec03e0278f3e518fe27e1e822033652c08",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_de997c20d7ee",
+      "source_path": "docs/python-character-engine-os/generation-workflow-prompt-pack.md",
+      "normalized_path": "/automation/campaign-unassigned/codex_doc/2026-08-25/generation-workflow-prompt-pack-asset_de.md",
+      "asset_type": "codex_doc",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "6d7b5e0586ddee603487da0d3efeed7ac1a52cc9c01a0406fbdea04591d7152f",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_454aa7ed2816",
+      "source_path": "docs/python-character-engine-os/personality-layer-template-candy-style.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/personality-layer-template-candy-style-asset_45.md",
+      "asset_type": "codex_doc",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "bc3c93142336afb0273ed01143b5d0f33b72dfaa111af4ca15579bd7fa24ab4d",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_b15c4ed82b34",
+      "source_path": "hydra_warband_asset_transformation_brief.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/hydra-warband-asset-transformation-brief-asset_b1.md",
+      "asset_type": "codex_doc",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "canonical",
+      "checksum_sha256": "fedda73d4bb79a74d31806f79aabb7820dbdee050b732812b7b311f63aea20f2",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_38373a880d2d",
+      "source_path": "intelligence/2026-06-02_superhuman_ai_signal_ingest.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/2026-06-02-superhuman-ai-signal-ingest-asset_38.md",
+      "asset_type": "codex_doc",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "17ee1c624a27d46bd04a42eaeb7f616ca13d96aba418a2c9d4e2bfacabd30bd6",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_722ddb9e0b39",
+      "source_path": "launch-assets/hydra_launch_asset_pack_v1.json",
+      "normalized_path": "/monetization/campaign-unassigned/data_pack/2026-08-25/hydra-launch-asset-pack-v1-asset_72.json",
+      "asset_type": "data_pack",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "c1ff84df08f03c22c80cd8265a396cfb60ee7cda70d47e2b51033c5ca5259f1b",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_6f7eeefd6cfe",
+      "source_path": "migration-packs/hydra-creator-app-v69/001_core_schema.sql",
+      "normalized_path": "/monetization/campaign-unassigned/schema_doc/2026-08-25/001-core-schema-asset_6f.sql",
+      "asset_type": "schema_doc",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "2142b30ae633926bff90eb267d71fad92fa29fd31cba5e3e53093987347b6d8c",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_c6f9b4a75291",
+      "source_path": "migration-packs/hydra-creator-app-v69/002_rls_policies.sql",
+      "normalized_path": "/monetization/campaign-unassigned/schema_doc/2026-08-25/002-rls-policies-asset_c6.sql",
+      "asset_type": "schema_doc",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "9006ce6f7c7e6e7377a6716416500fd0c6163d23557e180dbee5bf2936dd560d",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_58e631da8c40",
+      "source_path": "migration-packs/hydra-creator-app-v69/003_storage_bucket_plan.md",
+      "normalized_path": "/monetization/campaign-unassigned/codex_doc/2026-08-25/003-storage-bucket-plan-asset_58.md",
+      "asset_type": "codex_doc",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "b0f1dae129fc5428cfa739b2cda3f7e22b5cb8cbf0a71c0624c48ff8c5c23f28",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_4ca557c08c65",
+      "source_path": "migration-packs/hydra-creator-app-v69/004_route_handler_contract.md",
+      "normalized_path": "/monetization/campaign-unassigned/codex_doc/2026-08-25/004-route-handler-contract-asset_4c.md",
+      "asset_type": "codex_doc",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "b443e22da00421d9654e4152574a5e484bb4413227ee8aeb658d6767290fb53b",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_52faa037a395",
+      "source_path": "migration-packs/hydra-creator-app-v69/final-hydra/source_repositories_approval.json",
+      "normalized_path": "/monetization/campaign-unassigned/data_pack/2026-08-25/source-repositories-approval-asset_52.json",
+      "asset_type": "data_pack",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "79ad98fd6781d26ac507444ef346e193e6aec16da961252d989f82002376b2a6",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_3f37d93cad0c",
+      "source_path": "omega_hydra_living_world/LAUNCH_MOBILE_DISCORD.md",
+      "normalized_path": "/retention/campaign-unassigned/codex_doc/2026-08-25/launch-mobile-discord-asset_3f.md",
+      "asset_type": "codex_doc",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "e423647c121bcffef09f795d01b6fe4d5aaaef8e5e9050bfd4221a61d0edf534",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_05e109f90ef2",
+      "source_path": "omega_hydra_living_world/requirements.txt",
+      "normalized_path": "/identity/campaign-unassigned/text_doc/2026-08-25/requirements-asset_05.txt",
+      "asset_type": "text_doc",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "6dc3f0323870c5ea0973495a16a27b27e2ff9d344757e8f84ca7a5ad65b89bbc",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_4a031ca6059c",
+      "source_path": "omega-hydra-app/package-lock.json",
+      "normalized_path": "/monetization/campaign-unassigned/data_pack/2026-08-25/package-lock-asset_4a.json",
+      "asset_type": "data_pack",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "0445fb1ef85532acbc703d716755f3b80a7bded3da47a8fa464954a385529736",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_265812c6d7d6",
+      "source_path": "omega-hydra-app/public/favicon.svg",
+      "normalized_path": "/identity/campaign-unassigned/image/2026-08-25/favicon-asset_26.svg",
+      "asset_type": "image",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "61bc9a161de58248288e6905425d7180f0624c2865007b97d763fdac12043a66",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_f4ea4069c9a2",
+      "source_path": "omega-hydra-app/public/icons.svg",
+      "normalized_path": "/identity/campaign-unassigned/image/2026-08-25/icons-asset_f4.svg",
+      "asset_type": "image",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "b45fa506195cfcdef406ba9f0c77b36ddc1a7c224040926ec70abc2fdea7b93a",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_f37fe86af59f",
+      "source_path": "omega-hydra-app/src/assets/hero.png",
+      "normalized_path": "/identity/campaign-unassigned/image/2026-08-25/hero-asset_f3.png",
+      "asset_type": "image",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "881ffbcaafc212e49addad08846a5b82761355fa20624253af3477ba33262c5c",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_b3233a64ed47",
+      "source_path": "omega-hydra-app/src/assets/react.svg",
+      "normalized_path": "/identity/campaign-unassigned/image/2026-08-25/react-asset_b3.svg",
+      "asset_type": "image",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "35ef61ed53b323ae94a16a8ec659b3d0af3880698791133f23b084085ab1c2e5",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_e032f2a0d418",
+      "source_path": "omega-hydra-app/src/assets/vite.svg",
+      "normalized_path": "/identity/campaign-unassigned/image/2026-08-25/vite-asset_e0.svg",
+      "asset_type": "image",
+      "faction": "unassigned",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "5be21acd42eb7b896e517f4e0f0f11eb5c5d9e54fbbcebe9453f033008fcca6f",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_f5c40dea0b48",
+      "source_path": "realm-of-5-crowns/BIRDS_EYE_AUTOMATION_SPEC.md",
+      "normalized_path": "/automation/campaign-001/codex_doc/2026-08-25/birds-eye-automation-spec-asset_f5.md",
+      "asset_type": "codex_doc",
+      "faction": "Realm of 5 Crowns",
+      "campaign_id": "campaign-001",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "7f9ee172309cb1bce2ead2549c617307d82f5342fb3758ee350b9f9940895377",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_6ccbae83b9d6",
+      "source_path": "Shadow Monastery/Daily Drop Console/CTA.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/cta-asset_6c.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "01bb1b0782330ecfa779b3496248cfe5b447ca7c4a01843081201883204aed84",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_fda6045cc026",
+      "source_path": "Shadow Monastery/Daily Drop Console/Faction.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/faction-asset_fd.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "b5052deca36fda266253009a5f926e5f79b036d4058b6f25e1be74b410494157",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_e45577379a4e",
+      "source_path": "Shadow Monastery/Daily Drop Console/Head.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/head-asset_e4.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "1a4d25da1379db2488d073dab7eed5a62249f2a20b225641e83c1c393f3612eb",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_ec47e3328c7a",
+      "source_path": "Shadow Monastery/Daily Drop Console/Hook.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/hook-asset_ec.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "e2296bf31238089391ed49a0dd7a04445f09ae11e93b72bd1c31414988fe407a",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_4d9b57a6823f",
+      "source_path": "Shadow Monastery/Daily Drop Console/KPI.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/kpi-asset_4d.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "4b2524c78113ad75346777b20bc517caba03b6e430d68d658914004dc39e54ab",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_e0fc365badf0",
+      "source_path": "Shadow Monastery/Daily Drop Console/Prompt.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/prompt-asset_e0.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "6486912e5c54ac55e586e81f23b6377faac14c8ef62b4b8eac420296f009a3da",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_72a61d1a460c",
+      "source_path": "Shadow Monastery/Daily Drop Console/Script.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/script-asset_72.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "8e0fe8a001ae7bb89e09101dbae7cf32158f2baf99cb412cc1ac87bd8809eb29",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_fecb98106bda",
+      "source_path": "Shadow Monastery/Doctrine/First Lantern.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/first-lantern-asset_fe.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "canonical",
+      "checksum_sha256": "502ca5c1c7de5103c4ab6a2052abd864e46d9af31c0e086745ece1b7b1443e28",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_8427019d4700",
+      "source_path": "Shadow Monastery/Doctrine/Five Ranks.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/five-ranks-asset_84.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "canonical",
+      "checksum_sha256": "6b2e5185c8f80a2e2d5e20539057938ea8dbd0d45917500ab0071fda558c7dab",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_a823bd6490ff",
+      "source_path": "Shadow Monastery/Doctrine/Maintainer Initiation Ceremony.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/maintainer-initiation-ceremony-asset_a8.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "canonical",
+      "checksum_sha256": "795d30ce70bdafee37e1151c28c744d6fc77d93b15c3a01eb9cf36336a53ae9b",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_4947bb7c4958",
+      "source_path": "Shadow Monastery/Doctrine/Nine Halls Wall Poster.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/nine-halls-wall-poster-asset_49.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "canonical",
+      "checksum_sha256": "bcc3cd62241a5e04f39a819ecdea47cd959a8a0ce05e3cff214d72fdb105da7f",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_b435b7524fca",
+      "source_path": "Shadow Monastery/Doctrine/Nine Halls.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/nine-halls-asset_b4.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "canonical",
+      "checksum_sha256": "9c7bca4140f9e070e03282782b33e19b037b2cf49f348ad6cdf9200bf005bb9b",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_3a6c829e4d08",
+      "source_path": "Shadow Monastery/Doctrine/Ninth Path.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/ninth-path-asset_3a.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "canonical",
+      "checksum_sha256": "d931b27f8602742bda47011b53e16450d4464b898276d847f4452d18518eacb1",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_cad6295854cb",
+      "source_path": "Shadow Monastery/Doctrine/Shadow Hand.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/shadow-hand-asset_ca.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "canonical",
+      "checksum_sha256": "9de0ac6fdc079bc2579de5e3dd11869736d0f6d7e40cf9ba8ac8551f714635b0",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_a4286af50be3",
+      "source_path": "Shadow Monastery/Doctrine/Vow Ledger.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/vow-ledger-asset_a4.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "canonical",
+      "checksum_sha256": "887fda55ed3d644667c62f890b2265b62e3acd98fc93be6b4d6d6d271790195f",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_0aa590c37f31",
+      "source_path": "Shadow Monastery/Empire/Affiliate Vault.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/affiliate-vault-asset_0a.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "d1daeada54e42786eb46bed9e2b690d31c283ecf8f62bc8507a7308599203125",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_4f679f037559",
+      "source_path": "Shadow Monastery/Empire/Community.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/community-asset_4f.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "54d63e8cdcb00806ee8766044f99b946bf0e0f8fd3a4554e399d1b5ae9127058",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_e699446ac5f0",
+      "source_path": "Shadow Monastery/Empire/Email Engine.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/email-engine-asset_e6.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "647646a8b4e0c3485f2fede1035acca338f7f791425002f40084116632b627df",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_ca1db9af13ee",
+      "source_path": "Shadow Monastery/Empire/Gumroad Drops.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/gumroad-drops-asset_ca.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "af339a1c6680d6be248557186b53af7f1e5245c989e49fc26cfe3098a1a12f3d",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_faa4dd768d21",
+      "source_path": "Shadow Monastery/Empire/Subscriber Checkout.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/subscriber-checkout-asset_fa.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "70b633d8e3bb5d138713b0687acbedb59d246bf6802551efacc4a55fd28c7ce8",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_010ae56171db",
+      "source_path": "Shadow Monastery/Hydra Engine/Bridge Head.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/bridge-head-asset_01.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "70d1b80481fe12d0dc277f16d99e78bca56bdffa0f39724a1a98ceccc38ec048",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_c9931afb13c2",
+      "source_path": "Shadow Monastery/Hydra Engine/Forge Head.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/forge-head-asset_c9.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "a1dcd1b4180f2d06677cb76305909e85aa4f9b2171a9c3fe3e6d4a8898d076f5",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_457716d11d69",
+      "source_path": "Shadow Monastery/Hydra Engine/Lantern Head.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/lantern-head-asset_45.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "00fe56c5d2551e569ca7c4e2ccd51cf6dcf8cb55f609cc7f4be9227f85096ad7",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_a3f0ba463087",
+      "source_path": "Shadow Monastery/Hydra Engine/Oracle Head.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/oracle-head-asset_a3.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "596eb6b93f037db1de661ec13ec5b0865a536dcff22b4b170e9855b08e09f318",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_97f312000d17",
+      "source_path": "Shadow Monastery/Hydra Engine/Scribe Head.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/scribe-head-asset_97.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "18abc8555c1bdb1ef94ffb2223caa0e7b305808cd4c1fa75d8dfc5e0c9422922",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_8bc4213549ee",
+      "source_path": "Shadow Monastery/Hydra Engine/Signal Head.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/signal-head-asset_8b.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "b015f05fe3d623a20d79c2036646fdcbbadc2489b0e9a563dcaf7b7b1db96ed3",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_fa8e4bbfe7e6",
+      "source_path": "Shadow Monastery/Hydra Engine/Spider Head.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/spider-head-asset_fa.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "4a6d0920b1a7b985fdd51b41dbd9c984ead8c88a54c57fb5b6d9460224263e31",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_15284acbeec8",
+      "source_path": "Shadow Monastery/Hydra Engine/Sun Head.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/sun-head-asset_15.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "d5a6758619a9081dd091e82dbe1dff4cfe67c646a26c9690d70e2c544f54009c",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_5035ddc6ba67",
+      "source_path": "Shadow Monastery/Hydra Engine/Tracker Head.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/tracker-head-asset_50.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "d5fc2218df208b7e278e72bfb0b70f8108f3c5b6e33bd91a907b1d2a6b265a6d",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_4a87577e34c8",
+      "source_path": "Shadow Monastery/Hydra Engine/Treasury Head.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/treasury-head-asset_4a.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "ad3339b5b44669ed3a675b66ad0908fea378804a29747cd3a4775d4dc4495cad",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_0419da27a7db",
+      "source_path": "Shadow Monastery/Orders/Black Spider Lotus/Hidden Pattern.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/hidden-pattern-asset_04.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "34191b8924344dee7fa5947faddd9d75c7faeb8f8043098480de570f3dd39c4e",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_8e263824ea0a",
+      "source_path": "Shadow Monastery/Orders/Black Spider Lotus/Premium Chamber.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/premium-chamber-asset_8e.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "053b5d7c63ea5880be73720f41731c8c5deddacbbb08c0440cf5ee5465af2512",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_433e80b9e89e",
+      "source_path": "Shadow Monastery/Orders/Black Spider Lotus/Ritual Mind.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/ritual-mind-asset_43.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "78098820c16d7fd9fa659452fb9e7d5c0c1f163aae5b68206bfd77107b096cf4",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_3df402ce5bf3",
+      "source_path": "Shadow Monastery/Orders/Black Spider Lotus/Web Doctrine.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/web-doctrine-asset_3d.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "canonical",
+      "checksum_sha256": "cb53abcabe6f4a3da2b20acf0ae4be4f9b5625d0d369abbb60b3195535aa3876",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_636e676917cd",
+      "source_path": "Shadow Monastery/Orders/Enclave of the Serpent Sun/Crown Chamber.md",
+      "normalized_path": "/identity/campaign-001/codex_doc/2026-08-25/crown-chamber-asset_63.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-001",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "68e6827aaff0fde0d66878d4ac6686e63e9f280d2b61850951778faf4c0cbb55",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_092f4538e735",
+      "source_path": "Shadow Monastery/Orders/Enclave of the Serpent Sun/Radiant Ascent.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/radiant-ascent-asset_09.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "3b882d60dec984fccfbf1cb95039b865dcb81730619f1a06aa39f15e9f604093",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_5281169860c8",
+      "source_path": "Shadow Monastery/Orders/Enclave of the Serpent Sun/Solar Judgment.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/solar-judgment-asset_52.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "470a91eeb4d97a2b9953ced979abcea7e8aa788e010d96254f7e53863035d886",
+      "import_batch_id": "batch_20260825"
+    },
+    {
+      "id": "asset_347d433caadc",
+      "source_path": "Shadow Monastery/Orders/Enclave of the Serpent Sun/Sovereignty.md",
+      "normalized_path": "/identity/campaign-unassigned/codex_doc/2026-08-25/sovereignty-asset_34.md",
+      "asset_type": "codex_doc",
+      "faction": "Shadow Monastery",
+      "campaign_id": "campaign-unassigned",
+      "privacy_tier": "public",
+      "canon_status": "approved",
+      "checksum_sha256": "8971ef68ef052af0aa7ed79224cd1ad0fb09aa065e9c0cf41abdc1f751358b76",
+      "import_batch_id": "batch_20260825"
+    }
+  ]
+}
