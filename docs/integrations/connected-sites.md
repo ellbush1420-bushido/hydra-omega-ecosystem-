@@ -2,7 +2,7 @@
 
 This document records the external sites the operator reports as connected to the Hydra/Omega ecosystem. It is an integration inventory, not proof that API credentials, OAuth grants, webhooks, or write permissions have been verified.
 
-The machine-readable source of truth is:
+Machine-readable source of truth:
 
 - `config/integrations/connected-sites.json`
 
@@ -10,67 +10,122 @@ The machine-readable source of truth is:
 
 | Site | Hydra/Omega role | Preferred connection | Current registry state |
 |---|---|---|---|
-| Fanvue | Creator subscriptions, audience operations, insights, publishing workflow | OAuth + hosted MCP/API | User-reported connected |
-| Tumblr | Shadow Monastery lore, discovery, subscriber outreach | OAuth/manual publishing + tracked links | User-reported connected |
-| RM11 | Premium membership, private offers, conversion tracking | Provider-supported integration or manual workflow | User-reported connected |
-| Instagram | Brand discovery and short-form visual funnel | Meta-supported OAuth/manual publishing | User-reported connected |
+| Fanvue | Creator subscriptions, audience operations, insights, publishing and checkout commerce | OAuth + hosted MCP + REST API + signed webhooks | User-reported connected; Checkout Links documented; live auth/webhooks unverified |
+| Tumblr | Shadow Monastery lore, discovery, subscriber outreach | OAuth/manual publishing + tracked links | User-reported connected; live auth unverified |
+| RM11 | Premium membership, private offers, conversion tracking | Provider-supported integration or manual workflow | User-reported connected; authoritative API surface not yet verified |
+| Instagram | Brand discovery and short-form visual funnel | Meta-supported OAuth/manual publishing | User-reported connected; live auth/webhooks unverified |
 | TikTok | Short-form discovery, campaign tests, funnel entry | Content Posting API only when eligible; otherwise draft upload/manual | User-reported connected; public Direct Post disabled pending client audit/eligibility verification |
-| Telegram | Community updates, nurture, operator alerts | Bot API or manual operations | User-reported connected; Bot API 10.2 metadata recorded |
-| CelebMakerAI | Character and campaign asset generation | Bearer API + signed webhooks + manual export | User-reported connected; public API confirmed, credentials not verified |
-| Candy.ai | Affiliate offer and character-experience destination | Affiliate/account link; API if offered | User-reported connected |
-| OurDream.ai | Affiliate offer and character-experience destination | Affiliate/account link; API if offered | User-reported connected |
+| Telegram | Community updates, nurture, operator alerts | Bot API or manual operations | User-reported connected; Bot API 10.3 metadata recorded; live bot/webhook test pending |
+| CelebMakerAI | Character and campaign asset generation | Bearer API + signed webhooks + manual export | Public API confirmed; credentials/webhook delivery unverified |
+| Candy.ai | Affiliate offer and character-experience destination | Affiliate/account link; API only if authoritatively documented | User-reported connected |
+| OurDream.ai | Affiliate offer and character-experience destination | Affiliate/account link; API only if authoritatively documented | User-reported connected |
 
-## 2026-08-10 integration update
+## 2026-08-26 integration update
 
-### Telegram
+### Fanvue — Checkout Links and consent controls
 
-Telegram's official Bot API changelog records **Bot API 10.2** on **2026-07-14**. The release hardened Mini App security by disallowing Mini App methods from origins different from the original Mini App domain, with automatic protection enabled on **2026-07-20**.
+Fanvue's current documentation index now includes creator Checkout Links, checkout attribution, checkout webhooks, creator webhooks, and app-payment rails. Fanvue's legal changelog records the Checkout Links launch on **2026-07-23**.
 
-Hydra requirement:
+Hydra classification:
 
-- Verify every Telegram Mini App's configured origin exactly matches the deployed origin.
-- Do not opt out of origin protection unless a specific reviewed use case requires it.
-- Keep Telegram write operations approval-gated.
+- `checkout_links.status = documented_unverified`
+- Creation or modification of a paid offer remains `approval_required`.
+- Checkout webhook families are tracked as payment, subscription, refund, dispute, installment, and payout.
+- Do not mark checkout commerce production-ready until seller eligibility and one signed webhook delivery are verified.
 
-Reference: `https://core.telegram.org/bots/api-changelog`
-
-### CelebMakerAI
-
-CelebMakerAI now publicly documents a developer API. The public developer surface includes bearer API-key authentication, character listing, image generation, image-edit jobs, video jobs, job polling, credit checks, and signed webhooks. Provider documentation also states API media expires after 30 days.
-
-Hydra classification is therefore upgraded from `api_if_available` to **`api_available_unverified`**. This confirms the provider exposes an API; it does **not** confirm Hydra credentials or live API access.
-
-Required verification before production use:
-
-1. Create a dedicated API key outside the repository.
-2. Verify one read-only/account or character request.
-3. Run one approved test generation workflow.
-4. Configure a signed webhook receiver and verify signature validation.
-5. Persist required output before provider media retention expires.
+Fanvue's **2026-08-11** policy update also added a dedicated appeal path for a depicted person challenging consent and extended the moderation appeal window to **14 calendar days**. Hydra therefore requires consent/release provenance whenever a workflow involves a real person or co-authored content. If valid consent cannot be established, content must not remain in the governed publishing pipeline.
 
 References:
 
-- `https://celebmakerai.com/developers`
-- `https://celebmakerai.com/developers/ai-influencer-api`
+- `https://api.fanvue.com/docs/llms.txt`
+- `https://api.fanvue.com/docs/payments/accept-payments`
+- `https://api.fanvue.com/docs/webhooks/index`
+- `https://legal.fanvue.com/changelog/2026/8/11`
 
-### TikTok
+### TikTok — photo chronology correction and audit controls
 
-TikTok's official Content Posting documentation states that content posted by **unaudited clients is restricted to private viewing mode**. Public Direct Post must remain disabled until the API client completes the required audit and Hydra's use case is confirmed eligible.
+TikTok photo posting is an **existing** Content Posting API capability, not an August 2026 launch. TikTok's official changelog dates photo support to **2023-11-03**. The photo reference documentation was refreshed on **2026-08-04**.
 
-TikTok provides both polling and Content Posting webhooks for post status. Hydra should ingest the final posting events into the event/audit ledger and treat webhook processing as idempotent.
-
-Hydra policy:
+Hydra policy remains unchanged:
 
 - `public_direct_posting = disabled_until_client_audit_and_platform_eligibility_verified`
-- Allow approved draft upload/manual completion where permitted.
-- Require explicit creator consent before upload or publishing.
-- Track `post.publish.complete`, `post.publish.failed`, and `post.publish.inbox_delivered` events.
+- Content from unaudited clients remains private-only according to the current Content Posting documentation.
+- Approved draft upload/manual completion may be used where permitted.
+- Post-status polling and webhooks remain part of the verification path.
 
 References:
 
+- `https://developers.tiktok.com/docs/en/changelog`
+- `https://developers.tiktok.com/docs/en/content-posting-api-reference-photo-post`
 - `https://developers.tiktok.com/doc/content-posting-api-reference-direct-post`
-- `https://developers.tiktok.com/doc/content-posting-api-reference-get-video-status`
-- `https://developers.tiktok.com/doc/content-sharing-guidelines/`
+
+### Telegram — Bot API 10.3
+
+Telegram's official Bot API changelog records **Bot API 10.3** on **2026-08-24**.
+
+10.3 adds richer message-button/document/expandable-quotation structures and changes the ephemeral-message send model by introducing `EphemeralMessageParameters` in place of the older `receiver_user_id` / `callback_query_id` parameters on the affected send methods. It also adds the `MessageGenerationStopped` update.
+
+Hydra requirements:
+
+- Regression-test any approval bot or workflow using ephemeral messages.
+- Handle `MessageGenerationStopped` safely if streamed/draft responses are used.
+- Retain the Mini App same-origin verification introduced in 10.2; the protection became automatic on 2026-07-20.
+- Keep Telegram write operations approval-gated.
+
+Reference:
+
+- `https://core.telegram.org/bots/api-changelog`
+
+## Persistent connection-health state
+
+Registry schema `1.2.0` requires these fields for every platform connection:
+
+```json
+{
+  "last_verified_at": null,
+  "last_successful_read": null,
+  "auth_status": "not_verified",
+  "webhook_status": "not_verified",
+  "action_required": true,
+  "verification_blocker": "live_credentials_or_runtime_not_available"
+}
+```
+
+Allowed `auth_status` values:
+
+- `not_verified`
+- `healthy`
+- `degraded`
+- `expired`
+- `revoked`
+- `not_applicable`
+
+Allowed `webhook_status` values:
+
+- `not_verified`
+- `healthy`
+- `degraded`
+- `disabled`
+- `not_configured`
+- `not_applicable`
+
+A platform must not be promoted to `production_ready` without a successful authenticated read and, where webhooks are part of the integration, at least one verified signed webhook delivery.
+
+## Live health-test status
+
+No live credentialed OAuth/API/webhook test is recorded as successful by this PR yet. The repository intentionally stores no secrets, and the current GitHub connector cannot inspect or use GitHub Actions secrets or external account tokens.
+
+Do **not** convert an unavailable test into a passing status.
+
+Required safe tests before moving this PR out of draft:
+
+1. **Fanvue:** complete OAuth with minimum scopes, call `GET /users/me`, record the successful UTC timestamp, verify one signed creator or checkout webhook, and record the Fanvue API version header used.
+2. **Telegram:** call Bot API `getMe`, inspect `getWebhookInfo`, deliver one controlled webhook/update, and regression-test any ephemeral-message approval path against Bot API 10.3.
+3. **Tumblr:** complete the supported OAuth flow and perform one read-only account/blog read.
+4. **Instagram:** verify professional-account eligibility and one authenticated read through the supported Meta integration.
+5. **TikTok:** verify OAuth scopes and client audit/eligibility state; keep public Direct Post disabled until eligibility is confirmed; verify post-status handling in a safe/private test.
+6. **CelebMakerAI:** verify one bearer-authenticated non-destructive read/account/character request and one signed webhook delivery before any production generation automation.
+7. **RM11 / Candy.ai / OurDream.ai:** remain manual/affiliate-style integrations until an authoritative developer surface and credentials are verified.
 
 ## Operating architecture
 
@@ -88,7 +143,7 @@ Hydra/Omega Creator OS
   +-------------------> Fanvue / RM11 membership conversion
           |
           v
-PostgreSQL analytics, audit log, and campaign attribution
+PostgreSQL analytics, audit log, health state, and campaign attribution
 ```
 
 ## Security rules
@@ -99,37 +154,22 @@ PostgreSQL analytics, audit log, and campaign attribution
 4. Require explicit operator approval before publishing, sending messages, changing prices, creating paid offers, or executing bulk actions.
 5. Record every write action in an audit log with the platform, action, actor, timestamp, external ID, and outcome.
 6. Use only official or explicitly permitted APIs and integrations; do not use automation intended to evade platform controls.
+7. Do not mark a connection healthy because public documentation is reachable; health means the authorized Hydra connection itself was tested.
 
 ## Verification workflow
-
-Each site should move through these states:
 
 ```text
 user_reported_connected
         -> credentials_configured
         -> read_access_verified
-        -> sandbox_write_verified
+        -> webhook_verified (where applicable)
+        -> sandbox_write_verified (where applicable)
         -> production_ready
 ```
 
-An additional capability status such as `api_available_unverified` may be used when public API documentation is confirmed but Hydra credentials have not been tested.
-
-Do not mark a platform `production_ready` until all of the following are documented:
-
-- Account owner and responsible operator
-- Authentication method
-- Granted scopes or permissions
-- Callback and webhook URLs
-- Token refresh or rotation behavior
-- Rate limits
-- Read test result
-- Safe write test result
-- Revocation procedure
-- Data retention and deletion procedure
+A documentation-only capability state such as `documented_unverified` or `api_available_unverified` does not satisfy a live verification gate.
 
 ## Environment-variable naming
-
-Use platform-specific prefixes. Examples:
 
 ```env
 FANVUE_CLIENT_ID=
@@ -159,34 +199,11 @@ Do not add secret values to source control.
 
 ## Recommended implementation order
 
-1. **Fanvue:** verify OAuth read access, MCP/API tools, cursor pagination, token refresh, and approval-gated writes.
-2. **Telegram:** establish operator alerts and approval notifications through a bot; verify Mini App origin protection if a Mini App is used.
-3. **Tumblr:** create the Shadow Monastery lore publishing queue and tracked-link attribution.
-4. **Instagram:** connect only through Meta-supported creator/business integrations.
-5. **TikTok:** keep public Direct Post disabled until audit/eligibility is verified; use approved draft upload/manual completion where appropriate.
+1. **Fanvue:** verify OAuth read access, API version pinning, signed creator/checkout webhook delivery, and approval-gated writes.
+2. **Telegram:** verify `getMe`, webhook state, Bot API 10.3 compatibility, and Mini App origin protection.
+3. **Tumblr:** verify OAuth and create the Shadow Monastery lore publishing queue with tracked-link attribution.
+4. **Instagram:** connect only through Meta-supported professional-account integrations and verify one read.
+5. **TikTok:** keep public Direct Post disabled until audit/eligibility is verified; validate safe/private status handling first.
 6. **CelebMakerAI:** verify bearer API access and signed webhooks before moving beyond `api_available_unverified`.
-7. **RM11:** document current supported integration surface before automating.
-8. **Candy.ai and OurDream.ai:** begin with affiliate tracking or account links; add API adapters only when official documentation is available.
-
-## Data model
-
-A normalized connection record should contain:
-
-```json
-{
-  "platform_id": "fanvue",
-  "account_label": "primary-creator",
-  "status": "read_access_verified",
-  "auth_method": "oauth2_pkce",
-  "granted_scopes": ["read:self"],
-  "secret_reference": "vault://fanvue/primary",
-  "last_verified_at": "2026-08-10T16:08:00Z",
-  "last_successful_read": "2026-08-10T16:08:00Z",
-  "auth_status": "healthy",
-  "webhook_status": "healthy_or_not_configured",
-  "action_required": false,
-  "write_actions_require_approval": true
-}
-```
-
-The repository should store only the secret reference, never the secret value.
+7. **RM11:** document the current supported integration surface before automating.
+8. **Candy.ai and OurDream.ai:** begin with affiliate tracking/account links; add API adapters only after authoritative documentation and credentials exist.
