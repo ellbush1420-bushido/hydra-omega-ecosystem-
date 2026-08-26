@@ -1,0 +1,61 @@
+name: Integration Health
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  read-only-health:
+    runs-on: ubuntu-latest
+    env:
+      FANVUE_ACCESS_TOKEN: ${{ secrets.FANVUE_ACCESS_TOKEN }}
+      FANVUE_API_VERSION: '2025-06-26'
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TIKTOK_ACCESS_TOKEN: ${{ secrets.TIKTOK_ACCESS_TOKEN }}
+      CELEBMAKER_API_KEY: ${{ secrets.CELEBMAKER_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Run read-only provider checks
+        run: node scripts/integrations/verify-connected-sites.mjs
+
+      - name: Summarize required live checks
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const report = JSON.parse(fs.readFileSync('artifacts/integration-health.json', 'utf8'));
+          const required = [
+            'fanvue_authenticated_read',
+            'telegram_getMe',
+            'telegram_getWebhookInfo',
+            'tiktok_creator_info',
+            'celebmaker_authenticated_read'
+          ];
+          const byName = new Map(report.results.map((r) => [r.name, r]));
+          let complete = true;
+          for (const name of required) {
+            const result = byName.get(name);
+            const status = result?.status ?? 'missing';
+            console.log(`${name}: ${status}`);
+            if (status !== 'healthy') complete = false;
+          }
+          if (!complete) {
+            console.error('Core credentialed health checks are incomplete. Keep PR #65 in draft.');
+            process.exit(1);
+          }
+          NODE
+
+      - name: Upload health report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: integration-health
+          path: artifacts/integration-health.json
+          if-no-files-found: error
