@@ -1,7 +1,9 @@
 import { logEvent, getEventSummary, resetEvents } from "../../../packages/hydra-eyes/src/index.js";
 import {
-  createMockHarnessAdapter,
+  createLocalHarnessAdapter,
+  createFileRunStore,
   runSoftwareFactory,
+  runSignalBatch,
   summarizeRoutes
 } from "../../../packages/hydra-software-factory/src/index.js";
 
@@ -24,30 +26,55 @@ async function main() {
     ],
     acceptanceCriteria: [
       "Intake normalizes requests",
-      "Seven specialized worker stages are generated",
+      "Nine specialized worker stages are generated",
       "Routing records model and harness choices",
       "Governance stops unsafe or unapproved actions",
+      "Deploy and Observe are first-class stages",
       "Hydra Eyes records orchestration telemetry"
     ]
   };
 
-  const mockHarness = createMockHarnessAdapter({ name: "hydra-mock", retryStages: ["test"] });
+  const store = createFileRunStore();
+  const localHarness = createLocalHarnessAdapter({ name: "hydra-local", retryStages: ["test"] });
   const run = await runSoftwareFactory(request, {
     adapters: {
-      generic: mockHarness
+      generic: localHarness
     },
     maxAttempts: 2,
-    logEvent
+    logEvent,
+    store
+  });
+
+  const demoSignals = Array.from({ length: 31 }, (_, index) => ({
+    id: `sig-${index + 1}`,
+    source: index < 16 ? "ingest" : "linkedin",
+    topic: index % 3 === 0 ? "product" : "ops",
+    text: `Unprocessed dashboard signal ${index + 1}`
+  }));
+
+  const batch = await runSignalBatch(demoSignals, {
+    repository: "ellbush1420-bushido/hydra-omega-ecosystem-",
+    preferredHarness: "generic",
+    maxPerCluster: 8,
+    logEvent,
+    store
   });
 
   console.log(JSON.stringify({
-    app: "Hydra Software Factory Fabric MVP",
+    app: "Hydra Software Factory Fabric",
     status: run.status,
     request: run.request,
     routes: summarizeRoutes(run),
     metrics: run.metrics,
+    persistPath: run.persistPath,
     approvals: run.approvals,
     artifacts: run.artifacts,
+    signalBatch: {
+      requestCount: batch.requestCount,
+      signalsIn: batch.signalsIn,
+      signalsCleared: batch.signalsCleared,
+      signalsRemaining: batch.signalsRemaining
+    },
     hydraEyes: getEventSummary(),
     designRule: "Hydra owns workflow, policy, state, telemetry, and institutional memory. Models and coding harnesses are replaceable execution providers."
   }, null, 2));
