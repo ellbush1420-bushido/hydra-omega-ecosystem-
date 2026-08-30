@@ -1,0 +1,13 @@
+{
+  "version": "v1",
+  "kind": "hydra_scenario_manifest",
+  "approved": true,
+  "routes": [
+    {
+      "id": "initiate",
+      "label": "Initiate Pass",
+      "path": "/initiate"
+    }
+  ]
+}
+
