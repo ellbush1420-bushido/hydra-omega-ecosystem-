@@ -6,7 +6,16 @@ import crypto from 'node:crypto';
 const repoRoot = process.cwd();
 const outputDir = path.join(repoRoot, 'launch-assets', 'final-hydra');
 const migrationDir = path.join(repoRoot, 'migration-packs', 'hydra-creator-app-v69', 'final-hydra');
+const generatedContractPath = path.join(migrationDir, 'destination_integration_contract.json');
 const launchPackPath = path.join(repoRoot, 'launch-assets', 'hydra_launch_asset_pack_v1.json');
+const sourceDateEpoch = process.env.SOURCE_DATE_EPOCH || '0';
+const sourceDate = new Date(Number(sourceDateEpoch) * 1000);
+
+if (!Number.isFinite(sourceDate.getTime())) {
+  throw new Error('SOURCE_DATE_EPOCH must be a Unix timestamp in seconds.');
+}
+
+const runTimestamp = sourceDate.toISOString();
 
 const EXCLUDED_ROOTS = new Set(['.git', '.github', '.agents', 'node_modules']);
 const SOURCE_ROOTS = [
@@ -102,8 +111,10 @@ function listFiles(rootPath) {
   const stack = [rootPath];
   while (stack.length > 0) {
     const current = stack.pop();
+    if (path.resolve(current) === path.resolve(generatedContractPath)) continue;
     const stat = fs.statSync(current);
     if (stat.isDirectory()) {
+      if (path.resolve(current) === path.resolve(outputDir)) continue;
       const base = path.basename(current);
       if (EXCLUDED_ROOTS.has(base)) continue;
       for (const child of fs.readdirSync(current)) {
@@ -126,7 +137,7 @@ function normalizePath(record) {
   const ext = path.extname(record.source_path).toLowerCase();
   const date = record.timestamp.slice(0, 10);
   const slug = record.slug;
-  const shortId = record.asset_id.slice(0, 8);
+  const shortId = record.asset_id.replace(/^asset_/, '').slice(0, 8);
   return `/${record.loop_stage}/${record.campaign_id}/${record.asset_type}/${date}/${slug}-${shortId}${ext}`;
 }
 
@@ -143,7 +154,6 @@ function buildManifest() {
   }
 
   const records = [];
-  const now = new Date().toISOString();
   for (const absFile of files) {
     const rel = toPosix(path.relative(repoRoot, absFile));
     const ext = path.extname(rel).toLowerCase();
@@ -166,13 +176,13 @@ function buildManifest() {
       privacy_tier: inferPrivacyTier(relLower),
       canon_status: inferCanonStatus(relLower),
       checksum_sha256: checksum,
-      timestamp: now,
+      timestamp: runTimestamp,
       slug,
       variant: detectVariant(rel),
       origin_repo: 'ellbush1420-bushido/hydra-omega-ecosystem-',
       origin_commit: process.env.GITHUB_SHA || 'local-worktree',
       origin_asset_path: rel,
-      import_batch_id: `batch_${now.slice(0, 10).replace(/-/g, '')}`,
+      import_batch_id: `batch_${runTimestamp.slice(0, 10).replace(/-/g, '')}`,
       approved_for_final_hydra: true,
       rights_status: 'approved',
       safety_status: 'approved_public_safe'
@@ -186,8 +196,15 @@ function resolveConflicts(records) {
   const byChecksum = new Map();
   const byLogicalKey = new Map();
 
+  const comparePrecedence = (left, right) => {
+    const rank = { canonical: 3, approved: 2, draft: 1 };
+    const rankDifference = (rank[right.canon_status] || 0) - (rank[left.canon_status] || 0);
+    return rankDifference || left.source_path.localeCompare(right.source_path);
+  };
+
   for (const record of records) {
-    if (!byChecksum.has(record.checksum_sha256)) {
+    const checksumMatch = byChecksum.get(record.checksum_sha256);
+    if (!checksumMatch || comparePrecedence(checksumMatch, record) > 0) {
       byChecksum.set(record.checksum_sha256, record);
     }
 
@@ -198,18 +215,13 @@ function resolveConflicts(records) {
       continue;
     }
 
-    const rank = { approved: 3, canonical: 4, draft: 1 };
-    const left = rank[existing.canon_status] || 2;
-    const right = rank[record.canon_status] || 2;
-    if (right > left) {
-      byLogicalKey.set(key, record);
-    } else if (right === left && record.source_path.localeCompare(existing.source_path) < 0) {
+    if (comparePrecedence(existing, record) > 0) {
       byLogicalKey.set(key, record);
     }
   }
 
   return {
-    deduped_binary: Array.from(byChecksum.values()),
+    deduped_binary: Array.from(byChecksum.values()).sort((a, b) => a.source_path.localeCompare(b.source_path)),
     deduped_logical: Array.from(byLogicalKey.values()).sort((a, b) => a.source_path.localeCompare(b.source_path))
   };
 }
@@ -225,7 +237,7 @@ function buildRegistry(records) {
 
   return {
     registry_version: '1.0.0',
-    generated_at: new Date().toISOString(),
+    generated_at: runTimestamp,
     destination_repository: 'm4552fz28w-stack/final-hydra',
     destination_access_status: 'approved_by_user',
     lifecycle_states: ASSET_STATES,
@@ -315,7 +327,7 @@ function validate(registry, manifestRecords) {
 
   return {
     validation_status: errors.length === 0 ? 'pass' : 'fail',
-    checked_at: new Date().toISOString(),
+    checked_at: runTimestamp,
     inventory_count: manifestRecords.length,
     registry_count: registry.assets.length,
     errors
@@ -324,7 +336,7 @@ function validate(registry, manifestRecords) {
 
 function buildRollbackManifest(registry) {
   return {
-    generated_at: new Date().toISOString(),
+    generated_at: runTimestamp,
     import_batch_ids: Array.from(new Set(registry.assets.map((a) => a.import_batch_id))),
     destination_repository: 'm4552fz28w-stack/final-hydra',
     rollback_steps: [
@@ -352,7 +364,7 @@ function main() {
 
   writeJson(path.join(outputDir, 'source_inventory_manifest.json'), manifest);
   writeJson(path.join(outputDir, 'dedupe_report.json'), {
-    generated_at: new Date().toISOString(),
+    generated_at: runTimestamp,
     source_count: manifest.length,
     deduped_binary_count: dedupe.deduped_binary.length,
     deduped_logical_count: dedupe.deduped_logical.length
@@ -387,7 +399,7 @@ function main() {
       'import_batch_id'
     ],
     deterministic_precedence: 'canonical > approved > draft, then lexical source_path',
-    created_at: new Date().toISOString()
+    created_at: runTimestamp
   });
 
   if (validation.validation_status !== 'pass') {
