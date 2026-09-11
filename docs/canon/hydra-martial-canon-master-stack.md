@@ -34,6 +34,7 @@ Before the Five Source Scrolls, before the Hydra 9×9×9 Matrix, and before Sonn
 Within the Hydra martial canon, Systemic Vision explains the human-origin logic behind:
 
 - **9 Gate Philosophy** — perceiving a maturation path rather than isolated principles
+- **A9F (Advanced Nine-Fold Awareness)** — perceiving a full-spectrum nine-state awareness model that sharpens field reading and command sequencing
 - **VFI9** — seeing intensity as a calibrated spectrum rather than a binary switch
 - **Iron Lotus Rooting Body Engine** — recognizing that composure must be embodied, not merely imagined
 - **Nine Halls / Lo Shu Grid** — mapping space into commandable sectors
@@ -57,7 +58,7 @@ The following five systems are now canonically recognized as the **Five Source S
 | **Scroll II** | **VFI9** | Proportionality, force ethics, escalation restraint, and guardianship calibration |
 | **Scroll III** | **Iron Lotus Rooting Body Engine** | Breath, body, root, resilience, Sanchin regulation, and structural composure |
 | **Scroll IV** | **Nine Halls / Lo Shu Grid** | Spatial command map, Hall 5 centering, directional grammar, and positional visualization |
-| **Scroll V** | **GCD 5-Range CO9TE Framework** | Martial geometry, range sequencing, organized execution flow, and structured decision architecture |
+| **Scroll V** | **GCD 5-Range CO9TE Framework** | Martial geometry, Five-Range sequencing, A9F-aware field interpretation, and structured decision architecture |
 
 ### Canon Line
 
@@ -203,7 +204,7 @@ This architecture is cleaner and more marketable because:
 
 # IX. Founder Doctrine Statement
 
-**The Hydra martial canon now stands on a named founder cognitive origin and five foundational scrolls. Elliott Bush’s Systemic Vision explains the core ability to perceive hidden structure within disorder and convert it into disciplined doctrine. From that cognitive origin emerge the 9 Gate Philosophy, VFI9, Iron Lotus Rooting Body Engine, Nine Halls spatial doctrine, and the GCD 5-Range CO9TE Framework. From those foundations arise the Hydra 9×9×9 training matrix and Sonnal 88 synthesis branch. CO9 ShadowVault remains a separate security-tech product lane under the Omega Hydra CEO OS. This separation creates a doctrine stack that is clearer to teach, easier to productize, and stronger to scale.**
+**The Hydra martial canon now stands on a named founder cognitive origin and five foundational scrolls. Elliott Bush’s Systemic Vision explains the core ability to perceive hidden structure within disorder and convert it into disciplined doctrine. From that cognitive origin emerge the 9 Gate Philosophy, A9F awareness framing, VFI9, Iron Lotus Rooting Body Engine, Nine Halls spatial doctrine, and the GCD 5-Range CO9TE Framework. From those foundations arise the Hydra 9×9×9 training matrix and Sonnal 88 synthesis branch. CO9 ShadowVault remains a separate security-tech product lane under the Omega Hydra CEO OS. This separation creates a doctrine stack that is clearer to teach, easier to productize, and stronger to scale.**
 
 ---
 
@@ -218,6 +219,7 @@ This architecture is cleaner and more marketable because:
 - `omega-hydra`
 - `hydra-martial-canon`
 - `systemic-vision`
+- `a9f`
 - `founder-cognitive-origin`
 - `linear-authority`
 - `five-source-scrolls`
@@ -227,6 +229,7 @@ This architecture is cleaner and more marketable because:
 - `nine-halls`
 - `lo-shu-grid`
 - `gcd-5-range-co9te`
+- `five-range`
 - `hydra-9x9x9`
 - `sonnal-88`
 - `co9-shadowvault`
