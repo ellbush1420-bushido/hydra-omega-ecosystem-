@@ -1,0 +1,7 @@
+{
+  "lanes": [
+    { "id": "alpha", "title": "Alpha", "purpose": "AI productivity and agency operations resources.", "audience": "operators" },
+    { "id": "delta", "title": "Delta", "purpose": "Privacy, account safety, and defensive cyber-hygiene education.", "audience": "individuals and small businesses" },
+    { "id": "zeta", "title": "Zeta", "purpose": "Fulfillment, delivery ledger, memberships, and customer automation.", "audience": "customers and administrators" }
+  ]
+}

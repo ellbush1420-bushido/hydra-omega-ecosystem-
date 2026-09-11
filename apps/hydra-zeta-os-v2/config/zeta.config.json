@@ -1,0 +1,6 @@
+{
+  "brand": { "productName": "Hydra Zeta OS v2", "publicPurpose": "Defensive awareness and product fulfillment" },
+  "security": { "publicDataPolicy": "sanitized-only", "requireWebhookSignature": true, "rejectUnknownEventTypes": true, "telemetryRetentionDays": 365 },
+  "admin": { "allowlistEnvVar": "ADMIN_EMAIL_ALLOWLIST" },
+  "integrations": { "providers": ["stripe", "whop", "gumroad", "discord", "n8n"], "defaultMode": "disabled-until-configured" }
+}
