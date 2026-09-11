@@ -1,0 +1,41 @@
+{
+  "contract_version": "1.0.0",
+  "destination_repository": "m4552fz28w-stack/final-hydra",
+  "destination_branch_strategy": "feature/final-hydra-asset-merge then PR to default",
+  "approved_by_user": true,
+  "allowed_privacy_tiers": [
+    "public",
+    "gated",
+    "internal",
+    "ephemeral",
+    "archive"
+  ],
+  "accepted_asset_types": [
+    "codex_doc",
+    "config_doc",
+    "data_pack",
+    "image",
+    "schema_doc",
+    "text_doc",
+    "video"
+  ],
+  "required_metadata_fields": [
+    "asset_id",
+    "source_repo",
+    "source_path",
+    "asset_type",
+    "faction",
+    "campaign_id",
+    "loop_stage",
+    "privacy_tier",
+    "canon_status",
+    "checksum_sha256",
+    "timestamp",
+    "origin_repo",
+    "origin_commit",
+    "origin_asset_path",
+    "import_batch_id"
+  ],
+  "deterministic_precedence": "canonical > approved > draft, then lexical source_path",
+  "created_at": "1970-01-01T00:00:00.000Z"
+}

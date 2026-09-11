@@ -1,0 +1,25 @@
+{
+  "generated_for": "final-hydra merge program",
+  "destination_repository": "m4552fz28w-stack/final-hydra",
+  "approved_by_owner": true,
+  "approval_note": "All are approved for final hydra.",
+  "source_repositories": [
+    { "name": "hydra-omega-ecosystem mono-root", "path": "/", "approved": true },
+    { "name": "launch-assets", "path": "/launch-assets", "approved": true },
+    { "name": "docs", "path": "/docs", "approved": true },
+    { "name": "migration-packs", "path": "/migration-packs", "approved": true },
+    { "name": "apps", "path": "/apps", "approved": true },
+    { "name": "omega-hydra-app", "path": "/omega-hydra-app", "approved": true },
+    { "name": "omega-hydra-core", "path": "/omega-hydra-core", "approved": true },
+    { "name": "automatic-adventure", "path": "/automatic-adventure", "approved": true },
+    { "name": "hydra-os", "path": "/hydra-os", "approved": true },
+    { "name": "hydra-mobile", "path": "/hydra-mobile", "approved": true },
+    { "name": "realm-of-5-crowns", "path": "/realm-of-5-crowns", "approved": true },
+    { "name": "aurelian-os", "path": "/aurelian-os", "approved": true },
+    { "name": "omega_hydra_living_world", "path": "/omega_hydra_living_world", "approved": true },
+    { "name": "intelligence", "path": "/intelligence", "approved": true },
+    { "name": "Shadow Monastery", "path": "/Shadow Monastery", "approved": true }
+  ],
+  "allowed_privacy_tiers": ["public", "gated", "internal", "ephemeral", "archive"],
+  "export_mode": "full"
+}
