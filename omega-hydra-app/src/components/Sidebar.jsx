@@ -12,6 +12,7 @@ const NAV_ITEMS = [
   { id: 'scanner', label: 'Evolution Scanner', icon: '📡' },
   { id: 'jezebel', label: 'Jezebel Ingest', icon: '🧵' },
   { id: 'realm5crowns', label: 'Realm of 5 Crowns', icon: '👑' },
+  { id: 'blackvault', label: 'Black Vault Studio', icon: '⬛' },
 ];
 
 export default function Sidebar({ activeTab, onTabChange, isOpen, onClose }) {
