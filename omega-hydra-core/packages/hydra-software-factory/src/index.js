@@ -1,3 +1,6 @@
+import fs from "node:fs";
+import path from "node:path";
+
 const SAFE_SCOPE = [
   "lawful defensive education",
   "privacy awareness",
@@ -18,26 +21,28 @@ export const AGENT_ROLES = Object.freeze([
   "tester",
   "security",
   "documenter",
-  "reviewer"
+  "reviewer",
+  "deployer",
+  "observer"
 ]);
 
 export const HARNESS_REGISTRY = Object.freeze({
   codex: {
     id: "codex",
     label: "Codex",
-    capabilities: ["plan", "architecture", "build", "test", "security", "docs", "review"],
+    capabilities: ["plan", "architecture", "build", "test", "security", "docs", "review", "deploy", "observe"],
     adapterRequired: true
   },
   "claude-code": {
     id: "claude-code",
     label: "Claude Code",
-    capabilities: ["plan", "architecture", "build", "test", "security", "docs", "review"],
+    capabilities: ["plan", "architecture", "build", "test", "security", "docs", "review", "deploy", "observe"],
     adapterRequired: true
   },
   generic: {
     id: "generic",
     label: "Generic Harness",
-    capabilities: ["plan", "architecture", "build", "test", "security", "docs", "review"],
+    capabilities: ["plan", "architecture", "build", "test", "security", "docs", "review", "deploy", "observe"],
     adapterRequired: false
   }
 });
@@ -79,7 +84,9 @@ const STAGE_DEFINITIONS = Object.freeze([
   { stage: "test", role: "tester", objective: "Run deterministic validation, smoke tests, and regression checks." },
   { stage: "security", role: "security", objective: "Review permissions, secrets, dependencies, unsafe scope, and production-impact risks." },
   { stage: "docs", role: "documenter", objective: "Update operator documentation, runbooks, and change notes." },
-  { stage: "review", role: "reviewer", objective: "Verify acceptance criteria and prepare the change for human approval." }
+  { stage: "review", role: "reviewer", objective: "Verify acceptance criteria and prepare the change for human approval." },
+  { stage: "deploy", role: "deployer", objective: "Deploy only after tests, security review, and required human approval gates pass." },
+  { stage: "observe", role: "observer", objective: "Observe the deployed outcome, record telemetry, and surface regressions or follow-up work." }
 ]);
 
 const UNSAFE_SCOPE_PATTERNS = [
@@ -240,13 +247,13 @@ export function evaluateGovernance(request, task, context = {}) {
     },
     {
       id: "pre-deploy-tests",
-      status: task.stage === "review" && context.testsPassed === false ? "block" : "pass",
-      message: task.stage === "review" && context.testsPassed === false ? "Review blocked because tests failed." : "Test gate does not block this task."
+      status: ["review", "deploy"].includes(task.stage) && context.testsPassed !== true ? "block" : "pass",
+      message: ["review", "deploy"].includes(task.stage) && context.testsPassed !== true ? "Review/deploy blocked until tests pass." : "Test gate does not block this task."
     },
     {
       id: "security-review",
-      status: task.stage === "review" && context.securityPassed === false ? "block" : "pass",
-      message: task.stage === "review" && context.securityPassed === false ? "Review blocked because security review failed." : "Security gate does not block this task."
+      status: ["review", "deploy"].includes(task.stage) && context.securityPassed !== true ? "block" : "pass",
+      message: ["review", "deploy"].includes(task.stage) && context.securityPassed !== true ? "Review/deploy blocked until security review passes." : "Security gate does not block this task."
     }
   ];
 
@@ -321,7 +328,7 @@ function buildRoute(task, request, options) {
   };
 }
 
-function calculateMetrics(run) {
+export function calculateMetrics(run) {
   const tasks = run.tasks;
   const completed = tasks.filter((task) => task.status === "completed").length;
   const failed = tasks.filter((task) => task.status === "failed" || task.status === "blocked").length;
@@ -334,6 +341,7 @@ function calculateMetrics(run) {
     taskCount: tasks.length,
     completionRate: tasks.length ? Number(((completed / tasks.length) * 100).toFixed(1)) : 0,
     failureRate: tasks.length ? Number(((failed / tasks.length) * 100).toFixed(1)) : 0,
+    retryCount: retries,
     retryRate: attempts ? Number(((retries / attempts) * 100).toFixed(1)) : 0,
     cycleTimeMs: Math.max(0, ended - started),
     defectCount: tasks.filter((task) => task.stage === "test" && task.status === "failed").length,
@@ -414,9 +422,9 @@ export async function runSoftwareFactory(input, options = {}) {
 
     const adapter = getAdapterForRoute(route, options.adapters || {});
     if (!adapter) {
-      task.status = "planned";
+      task.status = "blocked";
       telemetry.emit("factory_adapter_missing", { runId: run.id, taskId: task.id, harness: route.harness.id });
-      run.status = "planned";
+      run.status = "blocked";
       break;
     }
 
@@ -456,7 +464,7 @@ export async function runSoftwareFactory(input, options = {}) {
   }
 
   if (run.tasks.every((task) => task.status === "completed")) {
-    run.status = run.request.requiresProductionWrite && !run.request.humanApproval ? "awaiting-approval" : "ready-for-approval";
+    run.status = "observed";
   }
 
   run.completedAt = nowIso();
@@ -465,7 +473,74 @@ export async function runSoftwareFactory(input, options = {}) {
 
   telemetry.emit("factory_run_finished", { runId: run.id, status: run.status, metrics: run.metrics });
   run.telemetry = telemetry.list();
+  if (options.store && typeof options.store.save === "function") {
+    run.persistPath = await options.store.save(run);
+  }
   return run;
+}
+
+
+export function createLocalHarnessAdapter(options = {}) {
+  return createMockHarnessAdapter({ name: "hydra-local", ...options });
+}
+
+export function createFileRunStore(dir = path.resolve(".hydra/factory-runs")) {
+  return {
+    async save(run) {
+      fs.mkdirSync(dir, { recursive: true });
+      const filePath = path.join(dir, `${run.id}.json`);
+      fs.writeFileSync(filePath, JSON.stringify(run, null, 2), "utf8");
+      return filePath;
+    }
+  };
+}
+
+export function clusterSignals(signals = [], { maxPerCluster = 8 } = {}) {
+  const limit = clamp(Number(maxPerCluster || 8), 1, 100);
+  const groups = new Map();
+  for (const signal of signals) {
+    const key = `${signal.source || "unknown"}::${signal.topic || "general"}`;
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(signal);
+  }
+  const clusters = [];
+  for (const [key, items] of groups.entries()) {
+    for (let i = 0; i < items.length; i += limit) {
+      clusters.push({ key, signals: items.slice(i, i + limit) });
+    }
+  }
+  return clusters;
+}
+
+export async function runSignalBatch(signals = [], options = {}) {
+  const clusters = clusterSignals(signals, options);
+  const runs = [];
+  let cleared = 0;
+  for (const cluster of clusters) {
+    const run = await runSoftwareFactory({
+      source: "hydra-console",
+      repository: options.repository || null,
+      title: `Process signal cluster ${cluster.key}`,
+      description: cluster.signals.map((signal) => signal.text || signal.id || "signal").join("\n"),
+      preferredHarness: options.preferredHarness || "generic",
+      acceptanceCriteria: ["classify signals", "produce governed artifact", "record telemetry"]
+    }, {
+      adapters: options.adapters || { generic: createLocalHarnessAdapter() },
+      maxAttempts: options.maxAttempts || 2,
+      logEvent: options.logEvent,
+      store: options.store,
+      context: options.context || {}
+    });
+    runs.push(run);
+    if (run.status === "observed") cleared += cluster.signals.length;
+  }
+  return {
+    requestCount: clusters.length,
+    signalsIn: signals.length,
+    signalsCleared: cleared,
+    signalsRemaining: Math.max(0, signals.length - cleared),
+    runs
+  };
 }
 
 export function summarizeRoutes(run) {
