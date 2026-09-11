@@ -15,12 +15,12 @@ import CEOPythons from './components/tabs/CEOPythons';
 import EvolutionScanner from './components/tabs/EvolutionScanner';
 import Realm5Crowns from './components/tabs/Realm5Crowns';
 import JezebelIngest from './components/tabs/JezebelIngest';
-import OwnerPrivateStudio from './components/tabs/OwnerPrivateStudio';
+import SovereignStudio from './components/tabs/SovereignStudio';
 import PersonaForge from './components/tabs/PersonaForge';
 
 const tabComponents = {
   dashboard: Dashboard,
-  ownerstudio: OwnerPrivateStudio,
+  ownerstudio: SovereignStudio,
   personaforge: PersonaForge,
   sfw: SFWPipeline,
   adult: AdultPipeline,
