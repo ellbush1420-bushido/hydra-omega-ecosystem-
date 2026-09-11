@@ -1,0 +1,103 @@
+{
+  "version": "2026-07-27",
+  "program": "Hydra Lotus Commerce",
+  "principle": "Start with low-risk affiliate and membership value, then add ambassador/dealer channels only after partner approval and compliance review.",
+  "channels": [
+    {
+      "id": "primary-arms",
+      "name": "Primary Arms",
+      "route": ["affiliate", "sponsorship", "dealer"],
+      "initialUse": "content affiliate and buyer-guide routing only",
+      "riskTier": 4,
+      "reviewRequired": true,
+      "allowedMvpUse": ["approved affiliate links", "optics/accessory education", "lawful discount pages", "partner disclosure"],
+      "blockedMvpUse": ["firearms checkout", "ammunition checkout", "weapon parts checkout", "undisclosed sponsorship"]
+    },
+    {
+      "id": "ar500-armored-republic",
+      "name": "AR500 / Armored Republic",
+      "route": ["dealer", "reseller inquiry", "ambassador inquiry"],
+      "initialUse": "compliance-reviewed partner inquiry; no direct body-armor checkout in MVP",
+      "riskTier": 4,
+      "reviewRequired": true,
+      "allowedMvpUse": ["partner research", "safety/compliance notes", "affiliate/dealer inquiry tracking"],
+      "blockedMvpUse": ["automated armor sales", "ballistic claims without evidence", "sale to prohibited customers", "restricted shipping states without review"]
+    },
+    {
+      "id": "combat-corner",
+      "name": "Combat Corner",
+      "route": ["wholesale", "referral", "gym supply partner"],
+      "initialUse": "martial arts and fitness gear supplier for training programs",
+      "riskTier": 2,
+      "reviewRequired": true,
+      "allowedMvpUse": ["pads", "gloves", "uniforms", "gym bags", "training gear buyer guides"],
+      "blockedMvpUse": ["unverified safety claims", "counterfeit brand use", "autoship inventory requirements"]
+    },
+    {
+      "id": "martial-arts-mart",
+      "name": "Martial Arts Mart / martial arts supply providers",
+      "route": ["affiliate", "reseller", "wholesale"],
+      "initialUse": "martial school starter gear and instructor resource pages",
+      "riskTier": 2,
+      "reviewRequired": true,
+      "allowedMvpUse": ["uniforms", "belts", "training pads", "school supplies", "student kits"],
+      "blockedMvpUse": ["weapon checkout", "unsafe youth gear claims", "undisclosed paid placement"]
+    },
+    {
+      "id": "temu-low-cost-sourcing",
+      "name": "Temu-style low-cost sourcing",
+      "route": ["supplier research", "sample testing", "non-branded resale only"],
+      "initialUse": "low-risk devotional, journal, decor, and costume-accessory research after sample inspection",
+      "riskTier": 3,
+      "reviewRequired": true,
+      "allowedMvpUse": ["sample testing", "non-branded devotional accessories", "journals", "decor", "costume accessories"],
+      "blockedMvpUse": ["blind retail dropshipping", "counterfeit goods", "safety gear", "medical claims", "ballistic claims", "regulated weapons", "customer-data sharing without disclosure"]
+    }
+  ],
+  "membershipTiers": [
+    {
+      "id": "free",
+      "name": "Free",
+      "benefits": ["newsletter", "public safety tips", "devotional reflections", "affiliate shop links"],
+      "compensationEligible": false
+    },
+    {
+      "id": "guardian-basic",
+      "name": "Guardian Basic",
+      "benefits": ["monthly checklist", "discipline planner", "discount-code directory"],
+      "compensationEligible": false
+    },
+    {
+      "id": "guardian-pro",
+      "name": "Guardian Pro",
+      "benefits": ["monthly readiness brief", "buyer guides", "product comparison sheets"],
+      "compensationEligible": false
+    },
+    {
+      "id": "instructor-circle",
+      "name": "Instructor Circle",
+      "benefits": ["class-planning templates", "martial school launch kit", "partner directory"],
+      "compensationEligible": false
+    },
+    {
+      "id": "ambassador-circle",
+      "name": "Ambassador Circle",
+      "benefits": ["approved affiliate dashboard", "content kits", "disclosure training", "sales leaderboard"],
+      "compensationEligible": true,
+      "compensationRule": "commission only for verified retail sales or approved content deliverables; no payout merely for recruiting"
+    }
+  ],
+  "excludedMvpCategories": [
+    "firearms",
+    "ammunition",
+    "firearm parts",
+    "explosives",
+    "regulated knives",
+    "stun guns",
+    "pepper spray or mace without legal review and age gating",
+    "body armor checkout without legal review and vendor authorization",
+    "evasion tools",
+    "counterfeit goods",
+    "products with unsupported medical, ballistic, or life-safety claims"
+  ]
+}

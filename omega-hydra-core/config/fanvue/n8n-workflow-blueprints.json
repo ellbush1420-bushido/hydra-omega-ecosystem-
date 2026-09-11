@@ -1,0 +1,87 @@
+{
+  "version": "2026-07-27",
+  "workflows": [
+    {
+      "id": "fanvue_new_subscriber_onboarding",
+      "name": "Fanvue New Subscriber Onboarding",
+      "trigger": "Fanvue webhook or scheduled delta sync for subscriber.created / subscriber.updated",
+      "steps": [
+        "Validate webhook signature or trusted sync source",
+        "Normalize Fanvue subscriber payload",
+        "Upsert hydra_fanvue_fans",
+        "Insert hydra_fanvue_events",
+        "Attach campaign attribution when tracking link metadata exists",
+        "Generate optional OpenAI welcome-message suggestion",
+        "Insert hydra_fanvue_approval_queue record",
+        "Notify creator in Discord or dashboard for review"
+      ],
+      "humanApprovalRequired": true,
+      "outputs": ["fan_crm_record", "event_log", "approval_queue_item", "discord_notification"]
+    },
+    {
+      "id": "fanvue_daily_analytics_digest",
+      "name": "Fanvue Daily Analytics Digest",
+      "trigger": "Cron daily at creator-selected time",
+      "steps": [
+        "Refresh OAuth token with serialized refresh lock when needed",
+        "Fetch insights and earnings deltas",
+        "Fetch tracking-link performance",
+        "Fetch chat workload counts only where authorized",
+        "Upsert hydra_fanvue_daily_metrics",
+        "Generate AI summary with revenue, audience, workload, and campaign notes",
+        "Send report to email or Discord"
+      ],
+      "humanApprovalRequired": false,
+      "outputs": ["daily_metrics_snapshot", "creator_digest", "hydra_analytics_event"]
+    },
+    {
+      "id": "fanvue_chat_workload_summary",
+      "name": "Fanvue Chat Workload Summary",
+      "trigger": "Webhook message.received / message.read, or efficient delta pull",
+      "steps": [
+        "Avoid polling every chat on a fixed interval",
+        "Use webhook event or bulk delta sync when available",
+        "Summarize workload without exposing unnecessary private content",
+        "Draft reply suggestions only when creator enabled",
+        "Insert suggestions into approval queue instead of sending automatically"
+      ],
+      "humanApprovalRequired": true,
+      "outputs": ["unread_workload_summary", "reply_suggestion", "approval_queue_item"]
+    },
+    {
+      "id": "fanvue_campaign_attribution_sync",
+      "name": "Fanvue Campaign Attribution Sync",
+      "trigger": "Scheduled sync or tracking-link event",
+      "steps": [
+        "Fetch tracking links and associated metadata",
+        "Map TikTok / Instagram / X / landing-page UTM values",
+        "Upsert hydra_fanvue_campaigns",
+        "Connect Fanvue fan or revenue events to campaign IDs",
+        "Report campaign ROI and conversion trend"
+      ],
+      "humanApprovalRequired": false,
+      "outputs": ["campaign_records", "attribution_report", "revenue_by_source"]
+    },
+    {
+      "id": "fanvue_discord_role_sync",
+      "name": "Fanvue Discord Role Sync",
+      "trigger": "Subscriber lifecycle change",
+      "steps": [
+        "Validate subscriber lifecycle status",
+        "Check Discord identity mapping and consent",
+        "Create approval item for role changes if required by community policy",
+        "Apply or remove Discord role",
+        "Log action to hydra_fanvue_events"
+      ],
+      "humanApprovalRequired": true,
+      "outputs": ["discord_role_action", "event_log"]
+    }
+  ],
+  "standingRules": [
+    "Prefer webhooks and delta sync over full polling.",
+    "Respect Retry-After and X-RateLimit headers.",
+    "Never send Fanvue messages without creator approval unless a future policy explicitly permits a narrow, disclosed, consented auto-response.",
+    "Do not store plaintext private content when a summary or pointer is sufficient.",
+    "Never log tokens, client secrets, private media URLs, or full message bodies into automation logs."
+  ]
+}
